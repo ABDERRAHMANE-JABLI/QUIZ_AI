@@ -1,0 +1,17 @@
+body{
+    background: linear-gradient(to bottom,white,rgb(174, 196, 255),rgb(253, 253, 253));
+}
+
+.bg-sigin-image{
+    background-image: url('../image/signin.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:contain;
+}
+
+.bg-login-image{
+    background-image: url('../image/login.gif');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size:contain;
+}

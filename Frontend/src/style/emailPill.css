@@ -1,0 +1,26 @@
+.email-pill {
+    display: inline-block;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    background-color: #f0f0f0;
+    color: #333;
+    border-radius: 20px;
+    cursor: pointer;
+  }
+  
+  .email-pill:hover {
+    background-color: #e0e0e0;
+  }
+  
+  .email-pill .delete-icon {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 12px;
+    font-weight: bold;
+    color: #666;
+  }
+  
+  .email-pill .delete-icon:hover {
+    color: #333;
+  }
