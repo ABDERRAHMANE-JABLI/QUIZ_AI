@@ -1,8 +1,10 @@
+import React from 'react';
 import Notification from './Notification';
 import Cadre from './Cadre';
 import Message from './Message';
 import Profile from './Profile';
 import {FaBars, FaSearch, FaBell, FaMailBulk} from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 function toogleBarre(){
     var side = document.getElementById("side-barre");
@@ -15,6 +17,8 @@ function toogleBarre(){
 }
 
 const Navbar = () => {
+  //state c'est reducer dans store.js
+  const {user} = useSelector(state=>state.auth);
   return (
     <div className='navbar navbar-light navbar-expand bg-white shadow mb-4 topbar  static-top'>
       <div className='container-fluid'>
@@ -40,7 +44,7 @@ const Navbar = () => {
               <Message msg="Hi there! I am wondering if you can help me with a problem I've been having" transmitter="jillali med" />
             </Cadre>
             <div className="d-none d-sm-block topbar-divider"></div>
-            <Profile username="User 1"/>
+            <Profile username={`${user?.firstname} ${user?.lastname}`} profile={user?.photo.url} id={user?._id}/>
         </ul>
       </div>
     </div>

@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const cookieParser = require("cookie-parser");
+//const cookieParser = require("cookie-parser");
 //const expressJwt = require("express-jwt");
 
 const connectDB = require('./config/connectionDB');
@@ -13,11 +13,11 @@ const app = express();
 require("dotenv").config();
 
 //middleware
-app.use(cors());
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended:true}));
-app.use(cookieParser());
 
+//cors : 
+app.use(cors());
 // routes ----------------------------------------------------------------------------
 app.use("/api/auth",require('./routes/authRoute'));
 app.use("/api/prof",require('./routes/Professor'));

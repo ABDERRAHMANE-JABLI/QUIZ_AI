@@ -16,7 +16,7 @@ const {Inscriptions} = require('../models/Inscription');
  });
 
 
- 
+
 /**-------------------------------------------------------
  * @desc pour la fonction retirer 
  * @route /api/students/subscrib/:idclass

@@ -1,8 +1,24 @@
-import {Input, Button, Linkbtn} from "./components"
+import {Button, Linkbtn} from "./components"
+import React from 'react';
 import {FaGofore, FaSignInAlt} from 'react-icons/fa'
-
+import { useState } from "react";
+import {toast} from 'react-toastify'
+import {useDispatch} from "react-redux";
+import "react-toastify/dist/ReactToastify.css"
+import { loginUser } from "../../redux/apiCalls/authApiCall";
 
 const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const formLogintHandler = (e) => {
+    e.preventDefault();
+    if (email.trim() === "") return toast.error("Email is required");
+    if (password.trim() === "") return toast.error("Password is required");
+    dispatch(loginUser({email, password}));
+  };
+
   return (
     <div id="Login" className="tab-pane fade show active" role="tabpanel" aria-labelledby="Login-tab">
       <div className="row">
@@ -11,9 +27,25 @@ const Login = () => {
                   <div className="text-center">
                       <h4 className="text-dark mb-4">Bienvenue !</h4>
                   </div>
-                    <form className="user" id="frm_login" action="login">
-                      <Input id='email' placeholder='Votre Email :' type='email' />
-                      <Input id='password' placeholder='Votre Mot de Pass :' type='password' />
+                    <form className="user" onSubmit={formLogintHandler}>
+                      <div className="mb-3">
+                        <input className="form-control form-control-user" 
+                                type="email" 
+                                id="email"  
+                                placeholder='Votre Email :'
+                                onChange={(e) => setEmail(e.target.value)}
+                                value={email}
+                                />
+                      </div>
+                      <div className="mb-3">
+                        <input className="form-control form-control-user" 
+                                type="password" 
+                                id="password"  
+                                placeholder='Votre Mot de Pass :'
+                                onChange={(e) => setPassword(e.target.value)}
+                                value={password}
+                                />
+                      </div>
                       <div className="mb-3">
                         <div className="row">
                             <Button id="btn_connect" text="Se connecter">

@@ -10,7 +10,7 @@ const sidebar = () => {
                 </a>
                 <hr className="sidebar-divider my-0"/>
                 <ul className="navbar-nav text-light mt-5" id="accordionSidebar">
-                    <li className="nav-item"><a className="nav-link" href="/home"><span style={{"fontSize":"20px"}}><FaHome/></span>&nbsp;<span>Acceuil</span></a></li>
+                    <li className="nav-item"><a className="nav-link" href="/Analytics"><span style={{"fontSize":"20px"}}><FaHome/></span>&nbsp;<span>Dashboard</span></a></li>
                     <li className="nav-item"><a className="nav-link act" href="/Classes"><span style={{"fontSize":"20px"}}><FaSchool/></span>&nbsp;<span>Classes</span></a></li>
                     <li className="nav-item"><a className="nav-link" href="/examens"><span style={{"fontSize":"20px"}}><FaBook/></span>&nbsp;<span>Examens</span></a></li>
                     <li className="nav-item"><a className="nav-link" href="/students"><span style={{"fontSize":"20px"}}><FaUserGraduate/></span>&nbsp;<span>Etudiants</span></a></li>

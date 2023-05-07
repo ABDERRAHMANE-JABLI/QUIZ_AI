@@ -5,7 +5,7 @@ import {FaUserGraduate, FaSchool, FaBook, FaDollarSign} from 'react-icons/fa';
 import Barre from '../HomeItems/Barre'
 import Linechart from '../HomeItems/Line';
 import HomeCard from '../HomeItems/HomeCard';
-const Home = () => {
+const Analytics = () => {
     const data = [
                 {annee:"2017",Nbr_Etudiants:105},
                 {annee:"2018",Nbr_Etudiants:120},
@@ -70,4 +70,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default Analytics

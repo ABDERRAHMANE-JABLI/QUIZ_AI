@@ -1,4 +1,4 @@
-export {default as Home} from './components/pages/Home'
+export {default as Analytics} from './components/pages/Analytics'
 export {default as Classes} from './components/pages/Classes'
 export {default as Profile} from './components/pages/Profile'
 export {default as Error} from './components/pages/404'

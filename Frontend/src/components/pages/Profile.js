@@ -1,7 +1,7 @@
 import UserSettings from '../ProfileItems/UserSettings'
 import PhotoSection from '../ProfileItems/PhotoSection'
 import {Sidebar, Footer, Header, Container} from '../components';
-import photo from '../../image/user_img.png';
+//import photo from '../../image/user_img.png';
 
 const Profile = () => {
   return (
@@ -11,7 +11,7 @@ const Profile = () => {
         <div id="content">
           <Header/>
           <Container>
-            <PhotoSection photo={photo}/>
+            <PhotoSection/>
             <UserSettings/>
           </Container>
         </div>

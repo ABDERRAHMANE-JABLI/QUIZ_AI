@@ -13,7 +13,7 @@ const Classes = () => {
 
   const cards = data.map(function(item){
     return <CardClasse id={item.id} Title={item.Title} Description={item.Description} img={item.img}/>
-  })
+  });
 
   return (
     <div id="wrapper">

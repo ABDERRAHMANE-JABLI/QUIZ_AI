@@ -107,7 +107,7 @@ module.exports.registerStudent = asyncHandler(async (req, res) => {
     // generate token jwt
     const token = user.generateAuthToken();
     //response to client
-    res.status(200).json({_id: user._id, firstname:user.firstname, lastname:user.lastname, token});
+    res.status(200).json({_id: user._id, firstname:user.firstname, lastname:user.lastname, photo:user.photo,role:user.role, token});
  });
 
 

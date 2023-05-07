@@ -2,11 +2,26 @@ import React from 'react'
 import Signin from '../LogSignItems/Sign_in'
 import Login from '../LogSignItems/Login'
 import '../../style/Style.css'
-
+import { ToastContainer } from 'react-toastify';
 import { FaSignInAlt, FaUserCircle } from 'react-icons/fa'
+
 const LoginSignin = () => {
+    
+
   return (
     <div className="container">
+        <ToastContainer
+                      position="top-center"
+                      autoClose={2500}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="colored"
+                      />
         <div className="card border-0 shadow o-hidden my-5">
             <div className="card-header d-flex justify-content-center">
                 <ul className="nav nav-pills card-header-pills card-header-pills" id="myTab" role="tablist">
