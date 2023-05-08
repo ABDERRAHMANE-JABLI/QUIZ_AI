@@ -1,7 +1,43 @@
-import {Input, Button, Linkbtn} from "./components"
+import {Button} from "./components"
 import {FaGofore, FaSignInAlt} from 'react-icons/fa'
+import { useState } from "react"
+import {Link} from 'react-router-dom'
+import { useDispatch, useSelector} from "react-redux"
+import { RegistreProf } from "../../redux/apiCalls/authApiCall"
+import swal from 'sweetalert';
+import {toast} from 'react-toastify'
 
 const Signin = () => {
+
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setlastname] = useState("");
+  const [email, setEmailregistre] = useState("");
+  const [tel, setTelregistre] = useState("");
+  const [password, setPassregistre] = useState("");
+
+  const dispatch = useDispatch();
+  const {registreMsgProf} = useSelector(state => state.auth);
+  const formRegister = (e) => {
+    e.preventDefault();
+    if (firstname.trim() === "") return toast.error("Le Nom est Obligatoire");
+    if (lastname.trim() === "") return toast.error("Le Prénom est Obligatoire");
+    if (email.trim() === "") return toast.error("L'Email est Obligatoire");
+    if (tel.trim() === "") return toast.error("Le N° du Tel est Obligatoire");
+    if (password.trim() === "") return toast.error("Le Mot de Pass est Obligatoire");
+    dispatch(RegistreProf({firstname,lastname,email,tel, password}));
+  };
+
+  if(registreMsgProf){
+    swal({
+        title:registreMsgProf,
+        icon:"success"
+    }).then(isOk => {
+        if(isOk){
+            //login 
+        }
+    })
+  }
+
   return (
     <div id="Signin" className="tab-pane fade show" role="tabpanel" aria-labelledby="Signin-tab">
       <div className="row">
@@ -13,15 +49,55 @@ const Signin = () => {
                 <div className="text-center">
                     <h4 className="text-dark mb-4">S'inscrire !</h4>
                 </div>
-                    <form className="user" id="frm_Signin" action="Signin">
+                    <form className="user" onSubmit={formRegister}>
                         <div className="row">
-                            <div className="col-sm-6"><Input id='nom' placeholder='Votre nom :' type='text' /></div>
-                            <div className="col-sm-6"><Input id='prenom' placeholder='Votre prenom :' type='text' /></div>
+                            <div className="col-sm-6 mb-3">
+                                <input className="form-control form-control-user" 
+                                        type="text"  
+                                        placeholder="Votre Nom : "
+                                        onChange={(e) => setFirstname(e.target.value)}
+                                        value={firstname} 
+                                />
+                            </div>
+                            <div className="col-sm-6 mb-3">
+                                <input className="form-control form-control-user" 
+                                        type="text"  
+                                        placeholder="Votre Prénom : "
+                                        onChange={(e) => setlastname(e.target.value)}
+                                        value={lastname} 
+                                />
+                            </div>
                         </div>
-                        <Input id='Tel' placeholder='Votre Teléphone :' type='tel' />
-                        <Input id='useremail' placeholder='Votre Email :' type='email' />
-                        <Input id='userpass1' placeholder='Votre Mot de Pass :' type='password' />
-                        <Input id='userpass2' placeholder='Repéter Le Mot de Pass :' type='password' />
+                        <div className="mb-3">
+                                <input className="form-control form-control-user" 
+                                        type="email"  
+                                        placeholder="Votre Email : "
+                                        onChange={(e) => setEmailregistre(e.target.value)}
+                                        value={email}
+                                />
+                        </div>
+                        <div className="mb-3">
+                                <input className="form-control form-control-user" 
+                                        type="tel"  
+                                        placeholder="Votre Teléphone : " 
+                                        onChange={(e) => setTelregistre(e.target.value)}
+                                        value={tel} 
+                                />
+                        </div>
+                        <div className="mb-3">
+                                <input className="form-control form-control-user" 
+                                        type="password"  
+                                        placeholder="Votre mot de Pass : "
+                                        onChange={(e) => setPassregistre(e.target.value)}
+                                        value={password} 
+                                />
+                        </div>
+                        <div className="mb-3">
+                                <input className="form-control form-control-user" 
+                                        type="text"  
+                                        placeholder="Confirmez Votre mot de Pass : " 
+                                />
+                        </div>
                         <div className="mb-3">
                             <div className="row">
                                 <Button id="btn_inscrire" text="S'inscrire">
@@ -34,7 +110,9 @@ const Signin = () => {
                         </div>
                         <hr/>
                     </form>
-                    <Linkbtn text="déja un Compte?" link="/seconnecter"/>
+                    <div className="text-center">
+                        Vous possédez un Compte ? <Link to="/auth">Se connecter</Link> 
+                    </div>
                 </div>
             </div>
             

@@ -1,8 +1,8 @@
 // send request to the server
 import { authActions } from "../slices/authSlice";
 import {toast} from 'react-toastify'
-//import "react-toastify/dist/ReactToastify.css"
 import axios from "axios"
+
 //login user : 
 export function loginUser(user){
     return async(dispatch) =>{
@@ -20,7 +20,6 @@ export function loginUser(user){
             window.location.href = '/Analytics';   
         } catch (error) {
             toast.error(error.response.data.message);
-           // console.log(error);
         }
     }
 }
@@ -31,5 +30,17 @@ export function logoutUser(){
         dispatch(authActions.logout());
         //window.location.href = '/';
         localStorage.removeItem("userInfo");
+    }
+}
+
+// registre professor : ********************************************************************************
+export function RegistreProf(user){
+    return async(dispatch) =>{
+        try {
+            const {data} = await axios.post("http://localhost:8000/api/auth/register_prof",user);
+            dispatch(authActions.registreProf(data.message));
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
     }
 }
