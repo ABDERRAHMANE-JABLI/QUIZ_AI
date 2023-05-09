@@ -1,0 +1,44 @@
+.profile-image-wrapper {
+    width: 200px;
+    height: 200px;
+    position: relative;
+    text-align: center;
+    display: flex;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+.upload-profile-photo-icon,
+.upload-profile-photo-btn {
+    color: black;
+    background-color: #ebecef;
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 0 5px;
+    position: absolute;
+    bottom: -5px;
+    right: -5px;
+    margin: auto;
+    width: max-content;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 25px;
+}
+
+.upload-profile-photo-btn {
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+    right: -75px;
+}
+
+.upload-profile-photo-btn:hover,.upload-profile-photo-icon:hover{
+    background-color: #d0b757 !important;
+}

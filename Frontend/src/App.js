@@ -11,7 +11,7 @@ function App() {
         <Route path="/Auth" element={<LoginSignin/>}/>
         <Route path="/Analytics" element={user?.role === "prof" || user?.role === "admin" ? <Analytics/> : <Navigate to="/"/>}/>
         <Route path="/Classes" element={user?.role === "prof" || user?.role === "admin" ?<Classes/> : <Navigate to="/"/>}/>
-        <Route path="/Profile" element={user?.role === "prof" || user?.role === "admin" ? <Profile/> : <Navigate to="/"/>}/>
+        <Route path="/Profile/:id" element={user?.role === "prof" || user?.role === "admin" ? <Profile/> : <Navigate to="/"/>}/>
         <Route path="/students" element={user?.role === "prof" || user?.role === "admin" ? <Students/> : <Navigate to="/"/>}/>
         <Route path="/examens" element={user?.role === "prof" || user?.role === "admin" ? <Examens/> : <Navigate to="/"/>}/>
         <Route path="/editer/examens" element={user?.role === "prof" || user?.role === "admin" ? <EditerExamen/> : <Navigate to="/"/>}/>

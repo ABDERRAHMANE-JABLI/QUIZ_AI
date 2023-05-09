@@ -23,7 +23,7 @@ module.exports.getAllProfs = asyncHandler(async (req, res) =>{
  * @desc get sigle prof :
  * @route /api/prof/profile/:id
  * @method GET
- * @access public
+ * @access private only professor him self or admin 
  ---------------------------------------------------*/
 //le nombre des users : Utilisateurs.count
 
@@ -88,7 +88,7 @@ module.exports.updateProf = asyncHandler(async (req, res)=>{
    user.photo = {url: result.secure_url, publicId: result.public_id};
    await user.save();
 
-   
+   fs.unlinkSync(imgPath);
    res.status(200).json(
       {
          message:"profile photo uploaded successfuly", 
@@ -96,7 +96,7 @@ module.exports.updateProf = asyncHandler(async (req, res)=>{
       },
       );
       //in the end remove photo from folder images
-      fs.unlinkSync(imgPath);
+      
  });
 
  /**-------------------------------------------------------

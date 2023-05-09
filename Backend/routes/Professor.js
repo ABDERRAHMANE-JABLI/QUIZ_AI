@@ -1,6 +1,6 @@
 const express = require("express");
 const {getProf, updateProf, userUploadPhoto, deleteProf} = require('../controllers/Professor');
-const {verifyTokenAndUser, verifyToken } = require("../middlewares/verifyToken");
+const {verifyTokenAndUser, verifyToken, verifyProfandAdmin } = require("../middlewares/verifyToken");
 const validateObjectId = require("../middlewares/validateObjectId");
 const photoUpload = require("../middlewares/photoUpload");
 const router = express.Router();
@@ -12,7 +12,7 @@ router.route('/allprofs').get(verifyToken, getAllProfs);
 
 // /api/prof/profile/:id
 router.route('/profile/:id')
-    .get(validateObjectId, getProf)
+    .get(validateObjectId,verifyTokenAndUser, getProf)
     .put(validateObjectId, verifyTokenAndUser, updateProf)
     .delete(validateObjectId, verifyTokenAndUser,deleteProf);
 

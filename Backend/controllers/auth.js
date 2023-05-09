@@ -35,9 +35,9 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
 
     try {
         await new_user.save();
-        res.status(201).json({message : 'Compte créé avec succes'});  
+        res.status(201).json({message : 'Compte crée avec succes'});  
     } catch (error) {
-        res.status(400).json({message:`Erreur MongooDB Num : ${error.code}`});
+        res.status(400).json({error:`MongooDB Num : ${error.code} msg : ${error}`});
     }
 });
 

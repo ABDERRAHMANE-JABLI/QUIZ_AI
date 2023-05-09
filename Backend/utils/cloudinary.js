@@ -14,7 +14,7 @@ const cloudinaryUploadImage = async(file) =>{
         });
         return data;
     } catch (error) {
-        return error
+        console.log(error);
     }
 }
 
@@ -23,7 +23,7 @@ const cloudinaryRemoveImage = async(file) =>{
         const result = await cloudinary.uploader.destroy(file);
         return result;
     } catch (error) {
-        return error
+        console.log(error);
     }
 }
 

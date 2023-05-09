@@ -1,5 +1,4 @@
 //login et register et logout :
-// send request to the server
 import { createSlice } from "@reduxjs/toolkit";
 const authSlice = createSlice({
     name:"auth",
@@ -17,7 +16,11 @@ const authSlice = createSlice({
         },
         registreProf(state, action){
             state.registreMsgProf = action.payload;
-        }
+        },
+        setPhoto(state, action){
+            state.user.photo = action.payload;
+            // payload contient la reponse du serveur
+        },
     }
 });
 

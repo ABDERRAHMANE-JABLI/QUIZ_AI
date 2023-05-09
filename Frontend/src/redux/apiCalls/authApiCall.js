@@ -40,7 +40,7 @@ export function RegistreProf(user){
             const {data} = await axios.post("http://localhost:8000/api/auth/register_prof",user);
             dispatch(authActions.registreProf(data.message));
         } catch (error) {
-            toast.error(error.response.data.message);
+            toast.error(error.response.data.error);
         }
     }
 }
