@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const profileSlice = createSlice({
-    name:"profil",
+    name:"profile",
     initialState : {
        profile : null,
     },
@@ -11,6 +11,9 @@ const profileSlice = createSlice({
         },
         setProfilePhoto(state, action){
             state.profile.photo = action.payload
+        },
+        update_Profile(state, action){
+            state.profile = action.payload;
         }
     }
 });

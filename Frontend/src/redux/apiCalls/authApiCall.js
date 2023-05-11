@@ -37,8 +37,19 @@ export function logoutUser(){
 export function RegistreProf(user){
     return async(dispatch) =>{
         try {
-            const {data} = await axios.post("http://localhost:8000/api/auth/register_prof",user);
+           const{data}  = await axios.post("http://localhost:8000/api/auth/register_prof",user);
             dispatch(authActions.registreProf(data.message));
+        } catch (error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}
+
+export function verify_Email(userId, token){
+    return async(dispatch) =>{
+        try {
+            await axios.get(`http://localhost:8000/api/auth/${userId}/verify/${token}`);
+            dispatch(authActions.setisEmailverified());
         } catch (error) {
             toast.error(error.response.data.error);
         }

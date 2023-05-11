@@ -1,6 +1,9 @@
 const asyncHandler = require('express-async-handler');
 const bcrypt = require("bcryptjs");
 const {Utilisateurs, validateUserData, validateLoginUser} = require("../models/Utilisateur");
+const VerificationToken = require("../models/VerifyToken");
+const crypto = require("crypto");
+const sendEmail = require("../utils/sendEmail");
 
 /**-------------------------------------------------------
  * créer un compte = Sign up = register new user (Professor) : ( router : /api/auth/register_prof) (method : post)
@@ -32,13 +35,26 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
         password : hashedpass,
         role:"prof"
     });
+    await new_user.save();
+    //la verification de l'email :
+    const verifyToken = new VerificationToken({
+        user : new_user._id,
+        token : crypto.randomBytes(32).toString("hex"),
+    });
+    await verifyToken.save();
+    // Le lien
+    const link = `${process.env.DOMAIN}/users/${new_user._id}/verify/${verifyToken.token}`;
+    // Putting the link into an html template
+    const htmlTemplate = `
+        <div>
+             <p>Clicker Sur ce lien pour verifier votre compte sur Exams_AI</p>
+             <a href="${link}">Verify</a>
+        </div>`;
+    await sendEmail(new_user.email, "Verify Your Email", htmlTemplate);
 
-    try {
-        await new_user.save();
-        res.status(201).json({message : 'Compte crée avec succes'});  
-    } catch (error) {
-        res.status(400).json({error:`MongooDB Num : ${error.code} msg : ${error}`});
-    }
+    res.status(201).json({
+        message: "We sent to you an email, please verify your email address",
+    });
 });
 
 /**-------------------------------------------------------
@@ -104,11 +120,41 @@ module.exports.registerStudent = asyncHandler(async (req, res) => {
     if(!isMatch){
         return res.status(400).json({message : "Invalid Email or Password"});
     }
+    if(!user.isVerified){
+        return res.status(400).json({message : "Votre Compte n'est pas active, Verifier Votre Email"});
+    }
     // generate token jwt
     const token = user.generateAuthToken();
     //response to client
     res.status(200).json({_id: user._id, firstname:user.firstname, lastname:user.lastname, photo:user.photo,role:user.role, token});
  });
 
-
+/**-----------------------------------------------
+ * @desc    Verify User Account
+ * @route   /api/auth/:userId/verify/:token
+ * @method  GET
+ * @access  public
+ ------------------------------------------------*/
+ module.exports.verifyUserAccountCtrl = asyncHandler(async (req, res) => {
+    const user = await Utilisateurs.findById(req.params.userId);
+    if (!user) {
+      return res.status(400).json({ message: "invalid link" });
+    }
+  
+    const verificationToken = await VerificationToken.findOne({
+      user: req.params.userId,
+      token: req.params.token,
+    });
+  
+    if (!verificationToken) {
+      return res.status(400).json({ message: "invalid link" });
+    }
+  
+    user.isVerified = true;
+    await user.save();
+  
+    await VerificationToken.findOneAndDelete({user:req.params.userId});
+  
+    res.status(200).json({ message: "Maitenant Votre compte est verifié" });
+  });
    

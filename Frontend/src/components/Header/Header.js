@@ -18,7 +18,9 @@ function toogleBarre(){
 
 const Navbar = () => {
   //state c'est reducer dans store.js
-  const {user} = useSelector(state=>state.auth);
+ // const {user} = useSelector(state=>state.auth);
+ const user = JSON.parse(localStorage.getItem("userInfo"));
+
   return (
     <div className='navbar navbar-light navbar-expand bg-white shadow mb-4 topbar  static-top'>
       <div className='container-fluid'>
@@ -44,7 +46,7 @@ const Navbar = () => {
               <Message msg="Hi there! I am wondering if you can help me with a problem I've been having" transmitter="jillali med" />
             </Cadre>
             <div className="d-none d-sm-block topbar-divider"></div>
-            <Profile username={`${user?.firstname} ${user?.lastname}`} profile={user?.photo.url} id={user?._id}/>
+            <Profile username={`${user.firstname} ${user.lastname}`} profile={user?.photo.url} id={user._id}/>
         </ul>
       </div>
     </div>

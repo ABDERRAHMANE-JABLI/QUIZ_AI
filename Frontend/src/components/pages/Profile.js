@@ -4,36 +4,43 @@ import {Sidebar, Footer, Header, Container} from '../components';
 import { useEffect, useState} from "react";
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { GetUserProfile, updatePhoto } from '../../redux/apiCalls/profileApiCall';
-import {FaSave, FaCamera} from 'react-icons/fa'
+import { GetUserProfile, updatePhoto, updateProfile } from '../../redux/apiCalls/profileApiCall';
+import {FaRecycle, FaCamera} from 'react-icons/fa'
 import {toast, ToastContainer} from 'react-toastify'
 import '../../style/profile.css'
 
 const Profile = () => {
-
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setlastname] = useState("");
-  const [email, setEmailregistre] = useState("");
-  const [tel, setTelregistre] = useState("");
   const [file, setFile] = useState(null);
-  
-  const {profile} = useSelector(state => state.profile);
-  
-  const {id} = useParams();
 
+  const {id} = useParams();
+  const {profile} = useSelector(state => state.profile);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(GetUserProfile(id));
     window.scrollTo(0, 0);
   }, [id]);
 
+    const [firstname, setFirstname] = useState(profile?.firstname);
+    const [lastname, setlastname] = useState(profile?.lastname);
+    const [email, setEmailregistre] = useState(profile?.email);
+    const [tel, setTelregistre] = useState(profile?.tel);
+
   const updatPhotoHandler = (e) => {
     e.preventDefault();
     if(!file) return toast.warning("Veuillez insérer ta photo");
-
     const frm_data = new FormData();
     frm_data.append("image", file);
     dispatch(updatePhoto(frm_data));
+
+  }
+
+  const profile_settings = (e) =>{
+    e.preventDefault();
+    if (String(firstname).trim() === "") return toast.error("Le Nom est Obligatoire");
+    if (String(lastname).trim() === "") return toast.error("Le Prénom est Obligatoire");
+    if (String(email).trim() === "") return toast.error("L'Email est Obligatoire");
+    if (String(tel).trim() === "") return toast.error("Le N° du Tel est Obligatoire");
+    dispatch(updateProfile(id, {firstname,lastname,email,tel}));
   }
 
   return (
@@ -55,7 +62,7 @@ const Profile = () => {
                       theme="colored"
                       />
           <Container>
-            {/** Gegin photo section : ********************************************************** */}
+            {/** Begin photo section : ********************************************************** */}
             <div className="col-12">
               <div className="card mb-3 d-flex bg-light flex-column justify-content-center align-items-center">
                   <div className="card-body bg-light text-center">
@@ -91,7 +98,7 @@ const Profile = () => {
                       <p className="text-primary m-0 fw-bold">Paramètres d'Utilisateurs</p>
                     </div>
                     <div className="card-body">
-                      <form action="/" id="profile_settings">
+                      <form onSubmit={profile_settings}>
                           <div className="row">
                               <div className="col-sm-6 mb-3">
                                 <label className="form-label" htmlFor='nom'><strong>Nom</strong></label>
@@ -100,7 +107,7 @@ const Profile = () => {
                                         id='nom'
                                         placeholder="Votre Nom : "
                                         onChange={(e) => setFirstname(e.target.value)}
-                                        value={firstname} 
+                                        value={firstname ? firstname: profile?.firstname} 
                                 />
                               </div>  
                               <div className="col-sm-6 mb-3">
@@ -110,7 +117,7 @@ const Profile = () => {
                                         id="prenom" 
                                         placeholder="Votre Prénom : "
                                         onChange={(e) => setlastname(e.target.value)}
-                                        value={lastname} 
+                                        value={lastname ? lastname : profile?.lastname} 
                                   />
                               </div>
                               <div className="mb-3">
@@ -120,7 +127,7 @@ const Profile = () => {
                                         id="mail"  
                                         placeholder="Votre Email : "
                                         onChange={(e) => setEmailregistre(e.target.value)}
-                                        value={email}
+                                        value={email ? email : profile?.email}
                                 />
                               </div>   
                               <div className="mb-3">
@@ -130,11 +137,11 @@ const Profile = () => {
                                         id='tel'
                                         placeholder="Votre Teléphone : " 
                                         onChange={(e) => setTelregistre(e.target.value)}
-                                        value={tel} 
+                                        value={tel ? tel : profile?.tel} 
                                 />
                               </div>                       
                           </div>
-                          <div className="mb-3"><button className="btn btn-primary btn-sm" type="submit"><FaSave/>&nbsp;Enregistrer</button></div>
+                          <div className="mb-3"><button className="btn btn-light btn-sm" type="submit"><FaRecycle/>&nbsp;Modifier</button></div>
                       </form>
                     </div>
                 </div>
