@@ -1,6 +1,6 @@
 import './style/App.css';
 import './style/bootstrap.min.css';
-import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,EditerExamen,VerifyEmail } from './Routes';
+import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail } from './Routes';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 function App() {
@@ -16,6 +16,8 @@ function App() {
         <Route path="/students" element={user?.role === "prof" || user?.role === "admin" ? <Students/> : <Navigate to="/"/>}/>
         <Route path="/examens" element={user?.role === "prof" || user?.role === "admin" ? <Examens/> : <Navigate to="/"/>}/>
         <Route path="/editer/examens" element={user?.role === "prof" || user?.role === "admin" ? <EditerExamen/> : <Navigate to="/"/>}/>
+        <Route path="/passer/examens" element={<PasserExamenPage/>}/>
+
         <Route path="*" element={<Error/>}/> 
       </Routes>
     </Router>

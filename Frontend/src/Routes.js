@@ -7,5 +7,7 @@ export {default as Students} from './components/pages/Etudiants'
 export {default as Examens} from './components/pages/Examens'
 export {default as EditerExamen} from './components/pages/EditerExamen'
 export {default as VerifyEmail} from './components/pages/verifyEmail'
+export {default as PasserExamenPage} from './components/pages/PasserExamenPage'
+
 
 
