@@ -14,6 +14,12 @@ const Signin = () => {
   const [email, setEmailregistre] = useState("");
   const [tel, setTelregistre] = useState("");
   const [password, setPassregistre] = useState("");
+  const [password_repeat, setpassword_repeat] = useState("");
+  const [error, setError] = useState(false);
+  
+
+
+  
 
   const dispatch = useDispatch();
   const {registreMsgProf} = useSelector(state => state.auth);
@@ -24,6 +30,9 @@ const Signin = () => {
     if (email.trim() === "") return toast.error("L'Email est Obligatoire");
     if (tel.trim() === "") return toast.error("Le N° du Tel est Obligatoire");
     if (password.trim() === "") return toast.error("Le Mot de Pass est Obligatoire");
+    if (password.trim() !== password_repeat) {
+        setError(true); // Set the error state to true if passwords don't match
+      }
     dispatch(RegistreProf({firstname,lastname,email,tel, password}));
   };
 
@@ -57,6 +66,7 @@ const Signin = () => {
                                         placeholder="Votre Nom : "
                                         onChange={(e) => setFirstname(e.target.value)}
                                         value={firstname} 
+                                        required
                                 />
                             </div>
                             <div className="col-sm-6 mb-3">
@@ -85,7 +95,7 @@ const Signin = () => {
                                 />
                         </div>
                         <div className="mb-3">
-                                <input className="form-control form-control-user" 
+                                <input className={error ? 'form-control form-control-user is-invalid' : 'form-control form-control-user'} 
                                         type="password"  
                                         placeholder="Votre mot de Pass : "
                                         onChange={(e) => setPassregistre(e.target.value)}
@@ -93,10 +103,20 @@ const Signin = () => {
                                 />
                         </div>
                         <div className="mb-3">
-                                <input className="form-control form-control-user" 
-                                        type="text"  
+                                <input className={error ? 'form-control form-control-user is-invalid' : 'form-control form-control-user'}
+                                        id="password_repeat"
+                                        type="password"  
                                         placeholder="Confirmez Votre mot de Pass : " 
+                                        onChange={(e) => { 
+                                            setpassword_repeat(e.target.value); 
+                                            setError(false);
+                                        }
+                                        }
+                                        value={password_repeat} 
                                 />
+                                <div className="invalid-feedback"> 
+                                        les deux mots de passe ne sont pas identique
+                                </div>
                         </div>
                         <div className="mb-3">
                             <div className="row">

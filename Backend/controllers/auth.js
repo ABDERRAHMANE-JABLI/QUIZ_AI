@@ -45,11 +45,41 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
     // Le lien
     const link = `${process.env.DOMAIN}/users/${new_user._id}/verify/${verifyToken.token}`;
     // Putting the link into an html template
-    const htmlTemplate = `
-        <div>
-             <p>Clicker Sur ce lien pour verifier votre compte sur Exams_AI</p>
-             <a href="${link}">Verify</a>
-        </div>`;
+    const htmlTemplate = `<!DOCTYPE html>
+    <html lang="en">
+    
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Email Template</title>
+      <style>
+        /* Ajoutez ici vos styles spécifiques pour les e-mails */
+      </style>
+    </head>
+    
+    <body>
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+        <tr>
+          <td align="center" bgcolor="#f5f5f5" style="padding: 20px;">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%">
+              <tr>
+                <td align="center" bgcolor="#ffffff" style="padding: 20px;">
+                  <h4 style="font-size: 24px; margin-bottom: 10px;">Vérification de votre compte</h4>
+                  <p style="font-size: 16px; margin-bottom: 20px;">Bonjour ${req.body.firstname} ${req.body.lastname}</p>
+                  <p style="font-size: 16px; margin-bottom: 20px;">Cliquez sur le lien ci-dessous pour vérifier votre compte sur Exams_AI</p>
+                  <div style="text-align: center;">
+                    <a href="${link}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Vérifier</a>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </body>
+    
+    </html>
+    `;
     await sendEmail(new_user.email, "Verify Your Email", htmlTemplate);
 
     res.status(201).json({
