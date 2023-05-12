@@ -52,9 +52,6 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Email Template</title>
-      <style>
-        /* Ajoutez ici vos styles spécifiques pour les e-mails */
-      </style>
     </head>
     
     <body>
@@ -65,7 +62,7 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
               <tr>
                 <td align="center" bgcolor="#ffffff" style="padding: 20px;">
                   <h4 style="font-size: 24px; margin-bottom: 10px;">Vérification de votre compte</h4>
-                  <p style="font-size: 16px; margin-bottom: 20px;">Bonjour ${req.body.firstname} ${req.body.lastname}</p>
+                  <p style="font-size: 16px; margin-bottom: 20px;">Bienvenue ${req.body.firstname} ${req.body.lastname}</p>
                   <p style="font-size: 16px; margin-bottom: 20px;">Cliquez sur le lien ci-dessous pour vérifier votre compte sur Exams_AI</p>
                   <div style="text-align: center;">
                     <a href="${link}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Vérifier</a>
