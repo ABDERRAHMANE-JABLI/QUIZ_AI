@@ -24,6 +24,10 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
     if(user){
         return res.status(400).json({message : "Compte déja existe dans la base de donnée"});
     }
+    let tel = await Utilisateurs.findOne({tel: req.body.tel});
+    if(tel){
+        return res.status(400).json({message : "Votre numero de telephone deja associer avec autre compte"});
+    }
     const salt = await bcrypt.genSalt(10);
     const hashedpass = await bcrypt.hash(req.body.password, salt);
 

@@ -1,34 +1,31 @@
 const mongoose = require('mongoose');
 
-const AnswerSchema = new mongoose.Schema({
-    titre:{
-        type: String,
-        maxlength: 250,
-        unique: true,
-        required : true
+const AnswerSchema = new mongoose.Schema(
+  {
+    titre: {
+      type: String,
+      maxlength: 250,
+      unique: true,
+      required: true
     },
-    note:{
-        type : Number
+    note: {
+      type: Number
     },
-    question:{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Questions",
-        required : true,
+    question: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Question',
+      required: true
     },
-    isCorrect : {
-        type : Boolean,
-        default: true,
+    isCorrect: {
+      type: Boolean,
+      default: false
     }
-   
-}
-    ,{
-        timestamps : true, 
-    }
+  },
+  {
+    timestamps: true
+  }
 );
 
+const Answer = mongoose.model('Answer', AnswerSchema);
 
-const Answers = mongoose.model("Answers", AnswerSchema);
-
-module.exports = {
-    Answers,
-}
+module.exports = {Answer};

@@ -10,12 +10,12 @@ function App() {
       <Routes>
         <Route path="/Auth" element={!user ? <LoginSignin/> : <Navigate to="/Analytics"/>}/>
         <Route path="/users/:userId/verify/:token" element={!user ? <VerifyEmail/> : <Navigate to="/Analytics"/>}/>
-        <Route path="/Analytics" element={user?.role === "prof" || user?.role === "admin" ? <Analytics/> : <Navigate to="/"/>}/>
-        <Route path="/Classes" element={user?.role === "prof" || user?.role === "admin" ?<Classes/> : <Navigate to="/"/>}/>
-        <Route path="/Profile/:id" element={user?.role === "prof" || user?.role === "admin" ? <Profile/> : <Navigate to="/"/>}/>
-        <Route path="/students" element={user?.role === "prof" || user?.role === "admin" ? <Students/> : <Navigate to="/"/>}/>
-        <Route path="/examens" element={user?.role === "prof" || user?.role === "admin" ? <Examens/> : <Navigate to="/"/>}/>
-        <Route path="/editer/examens" element={user?.role === "prof" || user?.role === "admin" ? <EditerExamen/> : <Navigate to="/"/>}/>
+        <Route path="/Analytics" element={user?.role === "prof" || user?.role === "admin" ? <Analytics/> : <Navigate to="/Auth"/>}/>
+        <Route path="/Classes" element={user?.role === "prof" || user?.role === "admin" ?<Classes/> : <Navigate to="/Auth"/>}/>
+        <Route path="/Profile/:id" element={user?.role === "prof" || user?.role === "admin" ? <Profile/> : <Navigate to="/Auth"/>}/>
+        <Route path="/students" element={user?.role === "prof" || user?.role === "admin" ? <Students/> : <Navigate to="/Auth"/>}/>
+        <Route path="/examens" element={user?.role === "prof" || user?.role === "admin" ? <Examens/> : <Navigate to="/Auth"/>}/>
+        <Route path="/editer/examens" element={user?.role === "prof" || user?.role === "admin" ? <EditerExamen/> : <Navigate to="/Auth"/>}/>
         <Route path="/passer/examens" element={<PasserExamenPage/>}/>
 
         <Route path="*" element={<Error/>}/> 

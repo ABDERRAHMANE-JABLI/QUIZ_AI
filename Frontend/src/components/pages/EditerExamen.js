@@ -2,7 +2,6 @@ import React from 'react'
 import {Sidebar, Footer, Header, Container} from '../components';
 import EditerExamForm from '../ClassDetails/EditExamenForm';
 import QuestionContainer from '../Questions/Question';
-import TextToData from '../Questions/TextToJson';
 
 const EditerExamen = () => {
   const data = [ {
