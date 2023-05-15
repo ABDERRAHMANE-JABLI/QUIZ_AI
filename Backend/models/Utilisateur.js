@@ -101,9 +101,17 @@ function validateUpdateData(obj){
     return shema.validate(obj);
 }
 
+function validateEmail(obj) {
+    const schema = joi.object({
+        email: joi.string().trim().min(5).max(100).required().email(),
+    });
+    return schema.validate(obj);
+}
+
 module.exports = {
     Utilisateurs,
     validateUserData,
     validateLoginUser,
     validateUpdateData,
+    validateEmail
 }

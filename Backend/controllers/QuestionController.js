@@ -1,6 +1,11 @@
 const { Question } = require('../models/Question');
 
-// Create a new question
+ /**-------------------------------------------------------
+ * @desc get all classes :
+ * @route /api/classrooms/
+ * @method GET
+ * @access private only admin OR professor who create the class :
+ ---------------------------------------------------*/
 async function createQuestion(req, res) {
   try {
     const question = await Question.create(req.body);
@@ -13,8 +18,7 @@ async function createQuestion(req, res) {
 // Get all questions
 async function getAllQuestions(req, res) {
   try {
-    const questions = await Question.findOne({_id:'645f9286f8deb3a6297ff339'}).populate("answers").exec();
-    
+    const questions = await Question.find({_id:'645f9286f8deb3a6297ff339'}).populate("answers").exec();
     // console.log(questions);
     res.status(200).json(questions);
   } catch (error) {

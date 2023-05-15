@@ -30,8 +30,9 @@ const Signin = () => {
     if (email.trim() === "") return toast.error("L'Email est Obligatoire");
     if (tel.trim() === "") return toast.error("Le N° du Tel est Obligatoire");
     if (password.trim() === "") return toast.error("Le Mot de Pass est Obligatoire");
-    if (password.trim() !== password_repeat) {
+    if (password.trim() !== password_repeat.trim()) {
         setError(true); // Set the error state to true if passwords don't match
+        return;
       }
     dispatch(RegistreProf({firstname,lastname,email,tel, password}));
   };

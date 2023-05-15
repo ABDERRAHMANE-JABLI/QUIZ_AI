@@ -1,36 +1,31 @@
 import { FaRegPlusSquare, FaPrint } from "react-icons/fa";
+import { toast } from "react-toastify";
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { createClasse } from "../redux/apiCalls/classeApiCall";
 
 const TitleSection = (props) => {
   const [titre, setTitre] = useState("");
   const [description, setDescription] = useState("");
   const [image, setImage] = useState(null);
 
+  const dispatch = useDispatch();
   const handleSubmit = (event) => {
     event.preventDefault();
+    if (titre.trim() === "") return toast.error("Le titre est obligatoire");
+    if (description.trim() === "") return toast.error("ajouter une description");
+    if (!image) return toast.error("ajouter une image pour cette classe");
+
     const formData = new FormData();
     formData.append('titre', titre);
     formData.append('description', description);
     formData.append('image', image);
-    
-    fetch('http://127.0.0.1:5000/add/Class', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => {
-        if (response.ok) {
-          const colseModal = document.getElementById('colseModal');
-          colseModal.click();
-          setTitre("");
-          setDescription("");
-          setImage(null);
-        } else {
-          alert('Error: ' + response.statusText);
-        }
-      })
-      .catch(error => {
-        alert('Error: ' + error.message);
-      });
+
+    dispatch(createClasse(formData));
+    setTimeout(()=> {document.getElementById('colseModal').click();}, 1000);
+    setTitre("");
+    setDescription("");
+    setImage(null);
   };
 
   return (
@@ -45,7 +40,7 @@ const TitleSection = (props) => {
               </div>
               <div className="modal-body">
                 <div className="mb-3">
-                  <label htmlFor="item-name" className="form-label">Nom</label>
+                  <label htmlFor="item-name" className="form-label">Titre</label>
                   <input
                     type="text"
                     className="form-control"

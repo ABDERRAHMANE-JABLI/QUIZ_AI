@@ -22,6 +22,7 @@ const fs = require('fs');
     const imgPath = path.join(__dirname,`../images/${req.file.filename}`);
    // upload image to cloudinary : 
     const result = await cloudinaryUploadImage(imgPath);
+    fs.unlinkSync(imgPath);
     //create classroom :
     const classroom = await  Classrooms.create({
         titre : req.body.titre,
@@ -29,7 +30,6 @@ const fs = require('fs');
         image : {url: result.secure_url, publicId: result.public_id},
         prof : req.user.id, 
     });
-    fs.unlinkSync(imgPath);
     res.status(201).json(classroom);
  });
  
@@ -41,8 +41,7 @@ const fs = require('fs');
  ---------------------------------------------------*/
 
  module.exports.getAllClasses = asyncHandler(async (req, res) =>{
-    const classes = await Classrooms.find().populate('prof').sort({ createdAt : -1})
-                  .populate("prof",["_id","firstname","lastname","role"]);
+    const classes = await Classrooms.find().populate("prof",["_id","firstname","lastname","role"]).sort({ createdAt : -1});
    res.status(200).json(classes);
  });
 
@@ -55,8 +54,7 @@ const fs = require('fs');
  ---------------------------------------------------*/
 
  module.exports.getProfClasses = asyncHandler(async (req, res) =>{
-   const classes = await Classrooms.find({"prof":req.user.id}).populate('prof').sort({ createdAt : -1})
-                 .populate("prof",["_id","firstname","lastname"]);
+   const classes = await Classrooms.find({"prof":req.user.id}).populate("prof",["_id","firstname","lastname"]).sort({ createdAt : -1});
    if(!classes) res.status(404).json({message:"you Don't Have any classe"});
    else res.status(200).json(classes);
 });
