@@ -26,6 +26,7 @@ app.use("/api/students",require('./routes/Inscription'));
 app.use("/api/Classrooms",require('./routes/Classroom'));
 app.use("/api/questions",require('./routes/QuestionRoutes'));
 app.use("/api/answers",require('./routes/AnswerRoutes'));
+//comment
 app.use("/api/GenerateExamen",require('./routes/GenerateExamen'));
 
 

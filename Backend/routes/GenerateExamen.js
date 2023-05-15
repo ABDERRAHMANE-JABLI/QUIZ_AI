@@ -47,15 +47,7 @@ router.post('/', async (req, res) => {
       const completionText = response.data.choices[0].text;
       console.log(completionText);
       res.send(completionText);
-    //   const regex = /\[(.*?)\]/;
-    //     const match = completionText.match(regex);
-    //     if (match) {
-    //     const extractedText = match[0];
-    //     res.send(extractedText);
-    //     } else {
-    //       res.status(500).send('json syntax generated is  incorrct');
-        
-    //     }
+
   
       
     } catch (error) {
