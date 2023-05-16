@@ -9,28 +9,36 @@ router.post('/', async (req, res) => {
         -Pour les questions à choix multiples, elles doivent contenir au moins deux choix corrects.
         -Pour les questions à choix unique, elles ne doivent contenir qu'une seule réponse correcte.
         -Collectez toutes les questions dans un seul objet JSON comme suit:
-        [{
-                questionText: "Question ?",
-                questionType: "ChoixMultiple",
-                answers: [
-                   { text: "reponse3", correct: false,},
-                    {  text: "reponse3", correct: true,},
-                    {  text: "reponse3", correct: true, },
-                ]
-                },
-                {
-                  questionText: "Question ?",
-                  questionType: "ChoixUnique",
-                  answers: [
-                    { text: "reponse3", correct: false,},
-                    {  text: "reponse3", correct: true,},
-                    {  text: "reponse3", correct: false , },
-                  ]
-                  },
-                  {
-                    questionText: "Question ?",
-                    questionType: "InputText",
-                  }]`;
+        [
+          {
+            "id": 1,
+            "questionText": "Question ?",
+            "questionType": "ChoixMultiple",
+            "answers": [
+              {"id": 1, "text": "reponse1", "correct": false},
+              {"id": 2, "text": "reponse2", "correct": true},
+              {"id": 3, "text": "reponse3", "correct": true}
+            ]
+          },
+          {
+            "id": 2,
+            "questionText": "Question ?",
+            "questionType": "ChoixUnique",
+            "answers": [
+              {"id": 1, "text": "reponse1", "correct": false},
+              {"id": 2, "text": "reponse2", "correct": true},
+              {"id": 3, "text": "reponse3", "correct": false}
+            ]
+          },
+          {
+            "id": 3,
+            "questionText": "Question ?",
+            "questionType": "InputText",
+            "answers": [
+              {"id": 1, "text": "reponse ", "correct": false}
+            ]
+          },...
+        ]`;
   
       const params = {
         prompt: prompt,
@@ -46,7 +54,8 @@ router.post('/', async (req, res) => {
       const response = await axios.post(apiUrl, params, { headers });
       const completionText = response.data.choices[0].text;
       console.log(completionText);
-      res.send(completionText);
+      // const jsonData = JSON.parse(completionText.trim());
+      res.status(200).json(completionText);
 
   
       

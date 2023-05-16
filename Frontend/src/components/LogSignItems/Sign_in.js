@@ -34,6 +34,7 @@ const Signin = () => {
         setError(true); // Set the error state to true if passwords don't match
         return;
       }
+    //   alert(firstname +" "+lastname+" "+email+" "+tel+" "+" "+password)
     dispatch(RegistreProf({firstname,lastname,email,tel, password}));
   };
 

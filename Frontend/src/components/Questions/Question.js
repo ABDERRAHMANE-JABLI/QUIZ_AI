@@ -9,7 +9,7 @@ const QuestionContainer = (props) => {
       key={answer.id}
       id={answer.id}
       correct={answer.correct}
-      score={answer.score}
+      score={0}
       text={answer.text}
       questionType={questionType}
     />

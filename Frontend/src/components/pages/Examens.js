@@ -4,6 +4,8 @@ import NavigationStduentClasses from '../ClassDetails/NavigationStduentClasses' 
 import ExamenCards from '../ClassDetails/ExamenCards';
 import ModalIjouterExamen from '../ClassDetails/ModalAjouterExame';
 import { FaPlus } from 'react-icons/fa';
+import { ToastContainer } from 'react-toastify';
+
 
 const Examens = () => {
 
@@ -67,6 +69,18 @@ const Examens = () => {
  
   return (
     <div id="wrapper">
+        <ToastContainer
+                      position="top-center"
+                      autoClose={2500}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="colored"
+                      />
       <Sidebar/>
       <div className="d-flex flex-column" id="content-wrapper">
         <div id="content">
@@ -74,6 +88,7 @@ const Examens = () => {
           <Header/>
           <NavigationStduentClasses/>
           <Container>
+            
             <div className="card shadow">
                     <div className="card-header py-3">
                         <p className="text-primary m-0 fw-bold">
@@ -82,6 +97,8 @@ const Examens = () => {
                             className="btn btn-outline-success float-end"
                             data-bs-toggle="modal"
                             data-bs-target={'#Add-Examen'}
+                            // data-bs-keyboard={"false"} 
+                            // data-bs-backdrop={"static"}
                         >
                             <FaPlus/>
                             &nbsp; &nbsp;Ajouter

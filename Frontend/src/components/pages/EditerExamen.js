@@ -2,71 +2,52 @@ import React from 'react'
 import {Sidebar, Footer, Header, Container} from '../components';
 import EditerExamForm from '../ClassDetails/EditExamenForm';
 import QuestionContainer from '../Questions/Question';
+import { useLocation } from 'react-router-dom';
+
 
 const EditerExamen = () => {
-  const data = [ {
-    id: 1,
-    questionText: "Quelle est la capitale de la France ?",
-    questionType: "ChoixMultiple",
-    answers: [
-      { id: 1, text: "Londres", correct: false, score: 0 },
-      { id: 2, text: "Paris", correct: true, score: 0.5,},
-      { id: 3, text: "Berlin", correct: true, score: 0.5 , },
-      { id: 4, text: "Madrid", correct: false, score: 0 , }
-    ]
+  // const location = useLocation();
+  //  const jsonString = location.state.data;
+  // //  alert(location.state.data);
+  // //  alert(jsonString);
+  //   console.log(jsonString);
+  //   const jsonData = JSON.parse(jsonString);
+  //   console.log(jsonData);
+  const location = useLocation();
+  const { jsonData } = location.state;
+  const example =[
+    {
+      "id": 1,
+      "questionText": "Quelle est la principale idée derrière la Programmation Orientée Objet (POO) ?",
+      "questionType": "ChoixMultiple",
+      "answers": [
+        {"id": 1, "text": "Définir des classes et leurs interfaces", "correct": true},
+        {"id": 2, "text": "Cacher le code de l'utilisateur final ", "correct": false},
+        {"id": 3, "text": "Organiser le code en fonction des tâches à accomplir", "correct": true}
+      ]
     },
     {
-      id: 2,
-      questionText: "Quelle est la capitale de la France ?",
-      questionType: "ChoixUnique",
-      answers: [
-        { id: 1, text: "Londres", correct: false, score: 0 },
-        { id: 2, text: "Paris", correct: true, score: 1,},
-        { id: 3, text: "Berlin", correct: false, score: 0 , },
-        { id: 4, text: "Madrid", correct: false, score: 0 , }
+      "id": 2,
+      "questionText": "Quel est le mot-clé utilisé en C++ pour définir une classe ?",
+      "questionType": "ChoixUnique",
+      "answers": [
+        {"id": 1, "text": "public", "correct": false},
+        {"id": 2, "text": "class", "correct": true},
+        {"id": 3, "text": "interface", "correct": false}
       ]
-      },
-      {
-        id: 3,
-        questionText: "Quelle est la capitale de la France ?",
-        questionType: "InputText",
-        answers: [
-          { id: 1, text: "Londres", correct: false, score: 1 },
-        ]
-        },{
-          id: 4,
-          questionText: "Quel est le plus grand pays du monde ?",
-          questionType: "ChoixUnique",
-          answers: [
-            { id: 1, text: "Canada", correct: false, score: 0 },
-            { id: 2, text: "Russie", correct: true, score: 1 },
-            { id: 3, text: "Chine", correct: false, score: 0 },
-            { id: 4, text: "États-Unis", correct: false, score: 0 }
-          ]
-        },
-        {
-          id: 5,
-          questionText: "Quel est le plus grand océan du monde ?",
-          questionType: "ChoixMultiple",
-          answers: [
-            { id: 1, text: "Océan Atlantique", correct: false, score: 0 },
-            { id: 2, text: "Océan Pacifique", correct: true, score: 0.5 },
-            { id: 3, text: "Océan Indien", correct: true, score: 0.5 },
-            { id: 4, text: "Océan Arctique", correct: false, score: 0 }
-          ]
-        },
-        {
-          id: 6,
-          questionText: "Quelle est la plus haute montagne du monde ?",
-          questionType: "InputText",
-          answers: [
-            { id: 1, text: "Mont Everest", correct: true, score: 1 }
-          ]
-        }
+    },
+    {
+      "id": 3,
+      "questionText": "Quel est le nom de la fonction virtuelle qui est appelée automatiquement lorsque vous supprimez un objet de la mémoire ?",
+      "questionType": "InputText",
+      "answers": [
+        {"id": 1, "text": "destructeur ", "correct": true},
+      ]
+    }
   ];
 
   // id, question, answers, removeQuestion
-  const cards = data.map(function(item){
+  const cards = jsonData.map(function(item){
     return <QuestionContainer id={item.id} questionText={item.questionText} answers={item.answers} questionType={item.questionType}/>
   })
   return (
