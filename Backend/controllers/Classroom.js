@@ -21,16 +21,24 @@ const fs = require('fs');
     //get the path image :
     const imgPath = path.join(__dirname,`../images/${req.file.filename}`);
    // upload image to cloudinary : 
-    const result = await cloudinaryUploadImage(imgPath);
+   const result = await cloudinaryUploadImage(imgPath);
     fs.unlinkSync(imgPath);
     //create classroom :
-    const classroom = await  Classrooms.create({
-        titre : req.body.titre,
-        description : req.body.description,
-        image : {url: result.secure_url, publicId: result.public_id},
-        prof : req.user.id, 
-    });
-    res.status(201).json(classroom);
+    try{
+      const classroom = await  Classrooms.create({
+         titre : req.body.titre,
+         description : req.body.description,
+         image : {url: result.secure_url, publicId: result.public_id},
+         prof : req.user.id, 
+     });
+     res.status(201).json(classroom);
+    }
+    catch(error){
+      if(error.code == 11000){
+         return res.status(400).json({message : "Le Titre de la classe doit étre unique"});
+      }
+      return res.status(400).json({message : error});
+    }
  });
  
  /**-------------------------------------------------------
@@ -96,7 +104,7 @@ const fs = require('fs');
       await cloudinaryRemoveImage(classe.image.publicId);
 
       res.status(200).json({
-         message: "classe has been deleted successfully",
+         message: "Opération effectué avec succes",
          classeId: classe._id,
        });
 

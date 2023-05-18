@@ -31,7 +31,6 @@ const Profile = () => {
     const frm_data = new FormData();
     frm_data.append("image", file);
     dispatch(updatePhoto(frm_data));
-
   }
 
   const profile_settings = (e) =>{

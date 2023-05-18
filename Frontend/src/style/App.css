@@ -96,7 +96,7 @@
   display: none;
 }
 
-.act{
+a.active{
   margin-left: 10px;
   font-size: 20px;
   color: rgb(12, 91, 202) !important;
@@ -105,4 +105,8 @@
   /*border-bottom-left-radius: 20%;
   border-top-right-radius: -20px;
   border-bottom-right-radius: -20px;*/
+}
+
+.spn{
+  cursor: pointer;
 }

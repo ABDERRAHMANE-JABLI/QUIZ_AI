@@ -1,5 +1,6 @@
 import { FaRegPlusSquare, FaPrint } from "react-icons/fa";
 import { toast } from "react-toastify";
+import swal from 'sweetalert'
 import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { createClasse } from "../redux/apiCalls/classeApiCall";
@@ -22,10 +23,14 @@ const TitleSection = (props) => {
     formData.append('image', image);
 
     dispatch(createClasse(formData));
-    setTimeout(()=> {document.getElementById('colseModal').click();}, 1000);
+    setTimeout(()=> {document.getElementById('colseModal').click();}, 1500);
     setTitre("");
     setDescription("");
     setImage(null);
+    swal({
+      title:"Classe Ajouté Avec Success",
+      icon:"success"
+    });
   };
 
   return (

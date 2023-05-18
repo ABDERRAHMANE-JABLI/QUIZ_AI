@@ -1,4 +1,5 @@
-import {FaUserGraduate, FaSchool, FaHome, FaBook, FaUserLock} from 'react-icons/fa';
+import {NavLink} from 'react-router-dom'
+import {FaUserGraduate, FaSchool, FaHome, FaBook} from 'react-icons/fa';
 import logo from '../image/Logo_ai.png'
 const sidebar = () => {
   return (
@@ -10,11 +11,10 @@ const sidebar = () => {
                 </a>
                 <hr className="sidebar-divider my-0"/>
                 <ul className="navbar-nav text-light mt-5" id="accordionSidebar">
-                    <li className="nav-item"><a className="nav-link" href="/Analytics"><span style={{"fontSize":"20px"}}><FaHome/></span>&nbsp;<span>Dashboard</span></a></li>
-                    <li className="nav-item"><a className="nav-link act" href="/Classes"><span style={{"fontSize":"20px"}}><FaSchool/></span>&nbsp;<span>Classes</span></a></li>
-                    <li className="nav-item"><a className="nav-link" href="/examens"><span style={{"fontSize":"20px"}}><FaBook/></span>&nbsp;<span>Examens</span></a></li>
-                    <li className="nav-item"><a className="nav-link" href="/students"><span style={{"fontSize":"20px"}}><FaUserGraduate/></span>&nbsp;<span>Etudiants</span></a></li>
-                    <li className="nav-item"><a className="nav-link" href="/Profile"><span style={{"fontSize":"20px"}}><FaUserLock/></span>&nbsp;<span>Profile</span></a></li>
+                    <li className="nav-item"><NavLink className="nav-link" to="/Analytics"><span style={{"fontSize":"20px"}}><FaHome/></span>&nbsp;<span>Dashboard</span></NavLink></li>
+                    <li className="nav-item"><NavLink className="nav-link" to="/Classes"><span style={{"fontSize":"20px"}}><FaSchool/></span>&nbsp;<span>Classes</span></NavLink></li>
+                    <li className="nav-item"><NavLink className="nav-link" to="/examens"><span style={{"fontSize":"20px"}}><FaBook/></span>&nbsp;<span>Examens</span></NavLink></li>
+                    <li className="nav-item"><NavLink className="nav-link" to="/students"><span style={{"fontSize":"20px"}}><FaUserGraduate/></span>&nbsp;<span>Etudiants</span></NavLink></li>
                 </ul>
             </div>
         </nav>

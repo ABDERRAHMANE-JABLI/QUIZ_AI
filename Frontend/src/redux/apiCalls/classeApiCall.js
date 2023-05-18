@@ -27,8 +27,27 @@ export function createClasse(newClasse){
                 "Content-Type" : "multipart/form-data"
             }});
             dispatch(classeActions.setCreateClasse(data));
+            //toast.success("La Classe est ajouté avec succès");
         } catch (error) {
             toast.error(error.response.data.message);
+            console.log(error.response.data.message);
+        }
+    }
+}
+
+// ajouter une nouvelle classe : 
+export function delete_Classe(idClasse){
+    return async(dispatch,getState) =>{
+        try {
+            const {data} = await axios.delete(`http://localhost:8000/api/classrooms/${idClasse}`, {
+                headers : {
+                Authorization : "Bearer "+getState().auth.user.token,
+            }});
+            dispatch(classeActions.setDeleteClasse(data.classeId));
+            toast.success("La Classe est supprimé avec succès");
+        } catch (error) {
+            toast.error(error.response.data.message);
+            console.log(error.response.data.message);
         }
     }
 }

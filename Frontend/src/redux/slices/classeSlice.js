@@ -15,6 +15,9 @@ const classeSlice = createSlice({
         },
         setCreateClasse(state, action){
             state.classes.unshift(action.payload);
+        },
+        setDeleteClasse(state, action){
+            state.classes = state.classes.filter(object => object._id !== action.payload );
         }
     }
 });

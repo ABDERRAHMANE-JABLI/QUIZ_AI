@@ -2,6 +2,7 @@ import { profileActions } from "../slices/profileSlice";
 import {authActions} from "../slices/authSlice";
 import {toast} from 'react-toastify'
 import axios from "axios"
+import swal from 'sweetalert'
 
 export function GetUserProfile(userId){
     return async(dispatch, getState) =>{
@@ -27,10 +28,12 @@ export function updatePhoto(photo){
                     "Content-Type" : "multipart/form-data"
                 }
             });
-            
             dispatch(profileActions.setProfilePhoto(data.photo));
-            toast.success(data.message);
             dispatch(authActions.setPhoto(data.photo));
+            swal({
+                title:"Opération effectué avec succès",
+                icon:"success"
+              });
             const user = JSON.parse(localStorage.getItem("userInfo"));
             user.photo = data.photo;
             localStorage.setItem("userInfo",JSON.stringify(user));
@@ -50,11 +53,15 @@ export function updateProfile(userid, userdata){
             });
             dispatch(profileActions.update_Profile(data));
             dispatch(authActions.setProfile(data));
+            swal({
+                title:"Opération effectué avec succès",
+                icon:"success"
+              });
             var user = JSON.parse(localStorage.getItem("userInfo"));
             user.firstname = data.firstname;
             user.lastname = data.lastname;
             localStorage.setItem("userInfo",JSON.stringify(user));
-            toast.success("Opération effectué avec succès");
+           // toast.success("Opération effectué avec succès");
         } catch (error) {
             toast.error(error.response.data.message);
         }
