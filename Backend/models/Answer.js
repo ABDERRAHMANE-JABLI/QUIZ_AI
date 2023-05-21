@@ -4,9 +4,7 @@ const AnswerSchema = new mongoose.Schema(
   {
     titre: {
       type: String,
-      maxlength: 250,
-      unique: true,
-      required: true
+      maxlength: 1000,
     },
     note: {
       type: Number
@@ -16,7 +14,7 @@ const AnswerSchema = new mongoose.Schema(
       ref: 'Question',
       required: true
     },
-    isCorrect: {
+    correct: {
       type: Boolean,
       default: false
     }

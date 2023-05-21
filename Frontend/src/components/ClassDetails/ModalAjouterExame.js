@@ -9,9 +9,13 @@ import $ from 'jquery';
 const ModalIjouterExamen = () => {
   const [examTitle, setExamTitle] = useState('');
   const [examDescription, setExamDescription] = useState('');
-  const [examDuration, setExamDuration] = useState(60);
-  const [numQuestions, setNumQuestions] = useState(10);
- 
+  const [examDuration, setExamDuration] = useState(0);
+  const [numQuestions, setNumQuestions] = useState(0);
+  const [Date_debut,setDate_debut] = useState();
+  
+  const handleDate_debutChange = (event) => {
+    setDate_debut(event.target.value);
+  };
   const handleExamTitleChange = (event) => {
     setExamTitle(event.target.value);
   };
@@ -53,25 +57,72 @@ const handleFormSubmit = async (event) => {
 
   try {
     // Make a POST request using Axios
-    const response = await axios.post('http://localhost:8000/api/GenerateExamen', { "NbQuestion": numQuestions, "sujet": examDescription });
+    const response = await axios.post('http://localhost:8000/api/examens/GenerateExamen', { "NbQuestion": numQuestions, "sujet": examDescription });
     // Handle the response
-    toast.update(loadingToastId, { render: 'Quiz genreted successfully!', type: toast.TYPE.SUCCESS, autoClose: false });
+    toast.update(loadingToastId, { render: 'Quiz genreted successfully!', type: toast.TYPE.SUCCESS, autoClose: true });
 
     const data = response.data;
-    const jsonData = JSON.parse(`${data}`);
-    console.log(jsonData);
+    const JsonData = JSON.parse(`${data}`);
+    // console.log(jsonData);
 
+    toast.update(loadingToastId, { render: 'wait will storing the data ', type: toast.TYPE.SUCCESS, autoClose: false });
+    const examen = await axios.post('http://localhost:8000/api/examens', {
+      "titre":examTitle,
+      "description":examDescription,
+      "Date_debut":Date_debut,
+      "Durre":examDuration,
+      "classe":"646799a0e4919c3648bdcada"
+  
+  });
+  for (const question of JsonData) {
+    const responseCreatedQuestion = await axios.post('http://localhost:8000/api/questions', {
+      "titre": question.questionText,
+      "note": 0,
+      "type": question.questionType,
+      "Exam": examen.data._id
+    });
+  
+    toast.update(loadingToastId, { render: `Question created successfully ${responseCreatedQuestion.data.titre}`, type: toast.TYPE.SUCCESS, autoClose: false });
+  
+    if (Array.isArray(question.answers)) {
+      for (const answer of question.answers) {
+        console.log(answer);
+        const responseCreatedAnswer = await axios.post('http://localhost:8000/api/answers', {
+          "titre": answer.text,
+          "note": 0,
+          "correct": answer.correct,
+          "question": responseCreatedQuestion.data._id
+        });
+  
+        toast.update(loadingToastId, { render: `Answer created successfully ${responseCreatedAnswer.data.titre}`, type: toast.TYPE.SUCCESS, autoClose: false });
+      }
+    } else {
+      console.log("Answers is not an array for question ID: " + question.id);
+    }
+  }
+  toast.update(loadingToastId, { render: 'Please wait while we redirect you to the list of questions', type: toast.TYPE.INFO, autoClose: false });
+
+  // Simulate a delay before navigating to the list of questions
+  setTimeout(() => {
+    // Perform the navigation here
+    // For example:
+    toast.dismiss(loadingToastId);
+    $('#closeBtn').click();
+    navigate('/editer/examens', { state: {"Examen":examen.data} });
+  }, 3000);
+  
+  //  console.log(examen.data);
+     
     
 
     // Display a success toast
 
     // close modal by jquery here
-    $('#closeBtn').click();
-    navigate('/editer/examens', { state: { jsonData } });
+    
     // Clear the form fields
   } catch (error) {
     // Display an error toast
-    toast.update(loadingToastId, { render: 'Error submitting form. Please try again.', type: toast.TYPE.ERROR ,autoClose: true});
+    toast.update(loadingToastId, { render: error, type: toast.TYPE.ERROR ,autoClose: true});
     console.error('Form submission error:', error);
   }
 };
@@ -129,7 +180,19 @@ const handleFormSubmit = async (event) => {
                     onChange={handleExamDescriptionChange}
                   />
                 </div>
-
+                {/* Exam duration */}
+                <div className="mb-3">
+                  <label className="form-label form-label" htmlFor="Date_debut">
+                    Date du debut
+                  </label>
+                  <input
+                    id="Date_debut"
+                    className="form-control"
+                    type="date"
+                    value={Date_debut}
+                    onChange={handleDate_debutChange}
+                  />
+                </div>
                 {/* Exam duration */}
                 <div className="mb-3">
                   <label className="form-label form-label" htmlFor="exam-duration">
@@ -141,6 +204,7 @@ const handleFormSubmit = async (event) => {
                     type="number"
                     value={examDuration}
                     onChange={handleExamDurationChange}
+                    min={0}
                   />
                 </div>
 
@@ -155,6 +219,7 @@ const handleFormSubmit = async (event) => {
                 type="number"
                 value={numQuestions}
                 onChange={handleNumQuestionsChange}
+                min={0}
               />
             </div>
           </div>

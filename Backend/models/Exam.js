@@ -5,7 +5,6 @@ const ExamSchema = new mongoose.Schema({
     titre:{
         type: String,
         maxlength: 50,
-        unique: true,
         required : true
     },
     description:{
@@ -15,13 +14,17 @@ const ExamSchema = new mongoose.Schema({
     Date_debut : {
         type : Date
     },
+    questions:[{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question'
+    }],
     Durre: {
         type: Number
     },
     classe:{
         type : mongoose.Schema.Types.ObjectId,
         ref : "Classes",
-        required : true,
+        required :true,
     }
 }
     ,{

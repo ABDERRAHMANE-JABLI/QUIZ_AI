@@ -1,5 +1,5 @@
 const { Answer } = require('../models/Answer');
-
+const { Question } = require('../models/Question')
 /**-------------------------------------------------------
  * @desc Create a new answer
  * @route /api/answers
@@ -9,6 +9,15 @@ const { Answer } = require('../models/Answer');
 async function createAnswer(req, res) {
   try {
     const answer = await Answer.create(req.body);
+    Question.findByIdAndUpdate(
+      answer.question,
+      { $push: { answers: answer._id } },
+      { new: true }
+    )
+    .then(updatedQuestion => {
+      console.log(updatedQuestion);
+    });
+
     res.status(201).json(answer);
   } catch (error) {
     res.status(500).json({ error: error });
@@ -103,7 +112,16 @@ async function deleteAnswer(req, res) {
   try {
     const answer = await Answer.findByIdAndDelete(req.params.id);
     if (answer) {
-      res.status(200).json({ message: 'Answer deleted successfully' });
+      Question.findByIdAndUpdate(
+        answer.question,
+        { $pull: { answers: answer._id } },
+        { new: true }
+      )
+      .then(updatedQuestion => {
+        console.log(updatedQuestion);
+        res.status(200).json({ message: 'Answer deleted successfully' });
+
+      })
     } else {
       res.status(404).json({ error: 'Answer not found' });
     }

@@ -31,14 +31,6 @@ const EditerExamForm = (props)=> {
   }, []);
 
 
-  const handleColorButtonClick = () => {
-    colorInputRef.current.click();
-  };
-  
-  const handleColorChange = () => {
-    const color = colorInputRef.current.value;
-    document.execCommand("foreColor", false, color);
-  };
   
   const handleTitleClick = () => {
     setTitleToolbarVisible(true);
@@ -80,6 +72,9 @@ const EditerExamForm = (props)=> {
   const handleOrderedListButtonClick = () => {
     document.execCommand('insertOrderedList', false, null);
   };
+  const  handleSaveButtonClick = ()=>{
+    alert("save");
+  }
 
   return (
     <div style={{ marginBottom: 8}}>
@@ -93,7 +88,7 @@ const EditerExamForm = (props)=> {
               onClick={handleTitleClick}
               
             >
-              Titre de L'Examen
+             {props.titre}
             </h3>
             <hr className="mt-2 mb-3" ref={titleDividerRef} />
             <div id="title-toolbar" className="btn-toolbar" style={{display: titleToolbarVisible ? 'block' : 'none'}}>
@@ -118,6 +113,9 @@ const EditerExamForm = (props)=> {
                 </button>
 
               </div>
+              <button className="btn btn-outline-primary float-end" onClick={handleSaveButtonClick}>
+                  Save
+                </button>
               </div>
             </div>
               <div id="edit_desc" ref={descEditorRef}>
@@ -127,7 +125,7 @@ const EditerExamForm = (props)=> {
               onClick={handleDescClick}
               
             >
-              Description de l'examen
+             {props.description}
             </p>
             <hr className="mt-2 mb-3" ref={descDividerRef} />
             <div id="desc-toolbar" className="btn-toolbar" style={{display: descToolbarVisible ? 'block' : 'none'}}>
@@ -150,18 +148,11 @@ const EditerExamForm = (props)=> {
                 <button className="btn" onClick={handleLinkButtonClick}>
                   <FaLink/>
                 </button>
-                <button className="btn" onClick={handleColorButtonClick}>
-                <FaPalette />
-              </button>
-          <input
-                    type="color"
-                    style={{ display: "none" }}
-                    ref={colorInputRef}
-                    onChange={handleColorChange}
-                  />
-
-
-              </div>
+                
+            </div>
+            <button className="btn btn-outline-primary float-end" onClick={handleSaveButtonClick}>
+                  Save
+                </button>
             </div>
           </div>
 

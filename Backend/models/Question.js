@@ -4,8 +4,7 @@ const QuestionSchema = new mongoose.Schema(
   {
     titre: {
       type: String,
-      maxlength: 250,
-      unique: true,
+      maxlength: 1000,
       required: true
     },
     note: {
@@ -13,12 +12,12 @@ const QuestionSchema = new mongoose.Schema(
     },
     type: {
       type: String,
-      default: 'unique'
+      default: 'ChoixUnique'
     },
     Exam: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Exams',
-      required: false
+      required: true
     },
     answers: [
       {

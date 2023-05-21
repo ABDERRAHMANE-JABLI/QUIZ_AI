@@ -1,4 +1,6 @@
 const { Question } = require('../models/Question');
+const {Exams} = require('../models/Exam')
+const {Answer}=require('../models/Answer')
 
  /**-------------------------------------------------------
  * @desc get all classes :
@@ -9,7 +11,13 @@ const { Question } = require('../models/Question');
 async function createQuestion(req, res) {
   try {
     const question = await Question.create(req.body);
-    res.status(201).json(question);
+    Exams.findByIdAndUpdate(question.Exam,
+      { $push: { questions: question._id } },
+      { new: true }
+    )
+    .then(updatedQuestion => {
+      res.status(201).json(question);
+    });
   } catch (error) {
     res.status(500).json({ error: 'Failed to create question' });
   }
@@ -18,7 +26,7 @@ async function createQuestion(req, res) {
 // Get all questions
 async function getAllQuestions(req, res) {
   try {
-    const questions = await Question.find({_id:'645f9286f8deb3a6297ff339'}).populate("answers").exec();
+    const questions  = await Question.find({}).populate('answers');
     // console.log(questions);
     res.status(200).json(questions);
   } catch (error) {
@@ -29,11 +37,27 @@ async function getAllQuestions(req, res) {
 // Get a question by ID
 async function getQuestionById(req, res) {
   try {
-    const question = await Question.findById(req.params.id);
+    const question = await Question.findById(req.params.id).populate("answers",["_id","titre","note"]).sort({createdAt:-1});
     if (question) {
       res.status(200).json(question);
     } else {
       res.status(404).json({ error: 'Question not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch question' });
+  }
+}
+
+// Get a question by Exam ID
+async function getQuestionByExamId(req, res) {
+  try {
+    const ExamsId =req.params.ExamsId;
+    // console.log(ExamsId);
+    const question = await Question.find({Exam : ExamsId}).populate('answers');
+    if (question) {
+      res.status(200).json(question);
+    } else {
+      res.status(404).json({ error: 'Questions not found' });
     }
   } catch (error) {
     res.status(500).json({ error: 'Failed to fetch question' });
@@ -61,6 +85,16 @@ async function deleteQuestion(req, res) {
   try {
     const question = await Question.findByIdAndDelete(req.params.id);
     if (question) {
+      // Delete associated answers
+      await Answer.deleteMany({ question: question._id });
+
+      // Remove the question reference from the exam
+      const updatedExam = await Exams.findByIdAndUpdate(
+        question.Exam,
+        { $pull: { questions: question._id } },
+        { new: true }
+      );
+
       res.status(200).json({ message: 'Question deleted successfully' });
     } else {
       res.status(404).json({ error: 'Question not found' });
@@ -70,10 +104,12 @@ async function deleteQuestion(req, res) {
   }
 }
 
+
 module.exports = {
   createQuestion,
   getAllQuestions,
   getQuestionById,
   updateQuestion,
   deleteQuestion,
+  getQuestionByExamId,
 };

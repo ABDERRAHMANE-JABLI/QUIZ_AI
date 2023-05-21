@@ -1,0 +1,32 @@
+body {
+    position: relative;
+  }
+  
+  .circle-button {
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 1;
+  }
+  
+  .circle-button .btn {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .circle-button .choice-content {
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    transform: translateY(-50%);
+    background-color: #fff;
+    padding: 10px;
+    display: none;
+  }
+  
+  .circle-button:hover .choice-content {
+    display: block;
+  }
+  
