@@ -39,8 +39,9 @@ const Etudiants = () => {
         <div id="content"> 
           <Header/>
           <ModalInviter/>
-          <Container>
+          
           <NavigationStduentClasses/>
+          <Container>
             <div className="card shadow">
               <div className="card-header py-3">
                 <p className="text-primary m-0 fw-bold">Membres de Classe <button className="btn btn-outline-primary float-end" data-bs-toggle="modal" data-bs-target={"#ModalInviter"}>

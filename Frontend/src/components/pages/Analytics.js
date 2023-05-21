@@ -2,9 +2,9 @@ import React from 'react'
 import {Sidebar, Footer, Header, Container, TitleSection} from '../components';
 import {FaUserGraduate, FaSchool, FaBook, FaDollarSign} from 'react-icons/fa';
 
-import Barre from '../HomeItems/Barre'
-import Linechart from '../HomeItems/Line';
-import HomeCard from '../HomeItems/HomeCard';
+import Barre from '../AnalyticsItems/Barre'
+import Linechart from '../AnalyticsItems/Line';
+import HomeCard from '../AnalyticsItems/analyticsCard';
 const Analytics = () => {
     const data = [
                 {annee:"2017",Nbr_Etudiants:105},

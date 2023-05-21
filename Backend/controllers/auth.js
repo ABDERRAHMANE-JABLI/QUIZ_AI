@@ -84,7 +84,7 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
     await sendEmail(new_user.email, "Verify Your Email", htmlTemplate);
 
     res.status(201).json({
-        message: "We sent to you an email, please verify your email address",
+        message: "Nous avons envoyé un Lien dans votre Adresse Email, Vérifiez S'il vous plait",
     });
 });
 

@@ -18,6 +18,10 @@ const CardClasse = (props) => {
             }
           });
     }
+
+    const storeIdClasse = ()=>{
+        localStorage.setItem("idClasse", props.id);
+    }
  return (
     <div className="col-md-4 col-xl-3">
         <div className="card shadow mb-4">
@@ -39,7 +43,7 @@ const CardClasse = (props) => {
             </div>
             <div className="card-body">
                 <p className="card-text text-truncate">{props.Description}</p>
-                <a className="btn btn-outline-primary" role="button" href={`/Classe?id=${props.id}`}>Voir plus</a>
+                <a className="btn btn-outline-primary" role="button" href={`/Classes/${props.id}/Students`} onClick={storeIdClasse}>Voir plus</a>
             </div>
         </div>
     </div>

@@ -27,9 +27,9 @@ export function loginUser(user){
 // se deconnecter : *********************
 export function logoutUser(){
     return async(dispatch) =>{
-        dispatch(authActions.logout());
-        //window.location.href = '/';
+        dispatch(authActions.logout()); 
         localStorage.removeItem("userInfo");
+        window.location.href = '/';
     }
 }
 

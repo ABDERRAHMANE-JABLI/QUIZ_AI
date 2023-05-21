@@ -1,16 +1,11 @@
-import Nav from 'react-bootstrap/Nav';
+import {NavLink} from 'react-router-dom';
 
 const NavigationStduentClasses = () => {
   return (
-    <Nav className="justify-content-center" defaultActiveKey="/students" as="ul">
-      <Nav.Item as="li">
-        <Nav.Link href="/students">Etudiants</Nav.Link>
-      </Nav.Item>
-      <Nav.Item as="li">
-        <Nav.Link href="/Examens">Examens</Nav.Link>
-      </Nav.Item>
-    </Nav>
-    
+    <nav className="d-flex flex-row justify-content-center align-items-center mt-2 mb-2">
+        <NavLink to={`/Classes/${localStorage.getItem("idClasse")}/Students`} style={{"marginRight":"10px"}}> Etudiants </NavLink>
+        <NavLink to={`/Classes/${localStorage.getItem("idClasse")}/Examens`} style={{"marginLeft":"10px"}}> Examens </NavLink>
+    </nav>
   );
 }
 
