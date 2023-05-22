@@ -1,25 +1,26 @@
 import { useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa';
-import  '../../style/emailPill.css';
-
+import '../../style/emailPill.css';
+import axios from 'axios'
 
 const ModalInviter = () => {
   const [emailPills, setEmailPills] = useState([]);
+  const [emailValue, setEmailValue] = useState('');
+  const [invalidEmail, setInvalidEmail] = useState(false);
 
   const handleEmailKeyDown = (event) => {
     if (event.key === 'Enter') {
       event.preventDefault();
-      const email = event.target.value.trim();
+      const email = emailValue.trim();
       if (validateEmail(email)) {
         setEmailPills((prevPills) => [
           ...prevPills,
           { email, id: new Date().getTime() },
         ]);
-        event.target.value = '';
-        document.getElementById('emailValue').classList.remove('is-invalid');
-
+        setEmailValue('');
+        setInvalidEmail(false);
       } else {
-        document.getElementById('emailValue').classList.add('is-invalid');
+        setInvalidEmail(true);
       }
     }
   };
@@ -32,16 +33,49 @@ const ModalInviter = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(email)) {
       const [_, domain] = email.split('@');
-      if (domain === 'um5.ac.ma') {
+      if (domain === 'um5.ac.ma' || domain === 'gmail.com') {
         return true;
       }
     }
     return false;
   };
 
+  const handleEmailValueChange = (event) => {
+    setEmailValue(event.target.value);
+  };
+
+  const handleInviterClick = () => {
+    // Send the emailPills array to the endpoint for sending emails
+    // Replace the endpointUrl with your actual endpoint URL
+    const endpointUrl = 'http://127.0.0.1:8000/api/students/inviter';
+    const emailList = emailPills.map((pill) => pill.email);
+
+    // Make the POST request to the endpoint
+    // Replace 'payload' with the appropriate field name expected by the endpoint
+    axios.post(endpointUrl, { "emails": emailList })
+      .then((response) => {
+        // Handle the response if needed
+        console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle the error if needed
+        console.error(error);
+      });
+
+    // for(const email of emailList){
+    //   alert(email);
+    // }
+
+    // Clear the emailPills array and close the modal
+    setEmailPills([]);
+    setEmailValue('');
+    setInvalidEmail(false);
+    // Close the modal (you may need to add the necessary logic here)
+  };
+
   return (
     <div
-      id={"ModalInviter"}
+      id={'ModalInviter'}
       className="modal fade"
       tabIndex={-1}
       aria-labelledby="exampleModalLabel"
@@ -69,7 +103,7 @@ const ModalInviter = () => {
                 type="text"
                 placeholder="www.QuizAi.com/278263bxbc"
                 style={{ marginRight: 5 }}
-                readOnly="true"
+                readOnly={true}
               />
               <div className="input-group-append">
                 <button className="btn btn-outline-secondary" type="button">
@@ -94,12 +128,14 @@ const ModalInviter = () => {
               id="emailValue"
               type="text"
               name=""
-              className='form-control'
+              className={`form-control ${invalidEmail ? 'is-invalid' : ''}`}
+              value={emailValue}
               onKeyDown={handleEmailKeyDown}
+              onChange={handleEmailValueChange}
             />
-            <div className="invalid-feedback">
-                Invalid Email
-                </div>
+            {invalidEmail && (
+              <div className="invalid-feedback">Invalid Email</div>
+            )}
           </div>
           <div className="modal-footer">
             <button
@@ -109,7 +145,11 @@ const ModalInviter = () => {
             >
               Fermer
             </button>
-            <button className="btn btn-primary" type="button">
+            <button
+              className="btn btn-primary"
+              type="button"
+              onClick={handleInviterClick}
+            >
               Inviter
             </button>
           </div>

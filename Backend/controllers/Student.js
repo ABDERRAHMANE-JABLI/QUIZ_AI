@@ -133,3 +133,23 @@ module.exports.updateStudent = asyncHandler(async (req, res)=>{
    // send response to client
    res.status(200).json({message:"Deleted successfully"});
  });
+
+/**-------------------------------------------------------
+ * @desc inviter student  :
+ * @route /api/students/profile/:id
+ * @method POST
+ * @access public
+ ---------------------------------------------------*/
+
+ 
+module.exports.InviterStudent = asyncHandler(async (req, res) => {
+   const { emails } = req.body;
+ 
+   for (const email of emails) {
+     console.log(email);
+     // Send email to each email address
+     // You can use a library like nodemailer to send emails
+   }
+ 
+   res.status(200).json({ message: 'ok' });
+ });

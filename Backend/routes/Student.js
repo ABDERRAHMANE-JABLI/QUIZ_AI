@@ -2,7 +2,7 @@ const express = require("express");
 const {verifyTokenAndUser, verifyToken, verifyProfandAdmin } = require("../middlewares/verifyToken");
 const validateObjectId = require("../middlewares/validateObjectId");
 const photoUpload = require("../middlewares/photoUpload");
-const { getAllStudents, getStudent, updateStudent, deleteStudent, userUploadPhoto, TotalStudents} = require("../controllers/Student");
+const { getAllStudents, getStudent, updateStudent, deleteStudent, userUploadPhoto, TotalStudents,InviterStudent} = require("../controllers/Student");
 const router = express.Router();
 
 // /api/students/allStudents
@@ -15,6 +15,8 @@ router.route('/profile/:id')
     .get(validateObjectId, getStudent)
     .put(validateObjectId, verifyToken, updateStudent)
     .delete(validateObjectId, verifyTokenAndUser,deleteStudent);
+    // /api/students/inviter
+router.post('/inviter',InviterStudent);
 
 router.route("/profile/upload_photo").post(verifyTokenAndUser, photoUpload.single("image"), userUploadPhoto);
 
