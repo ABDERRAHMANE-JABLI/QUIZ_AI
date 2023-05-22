@@ -110,3 +110,8 @@ a.active{
 .spn{
   cursor: pointer;
 }
+
+.active{
+  margin-right: 10px;
+  font-weight: bold;
+}

@@ -1,4 +1,5 @@
 const { Classrooms, validateData} = require("../models/Classroom");
+const {Inscriptions} = require('../models/Inscription');
 const asyncHandler = require('express-async-handler');
 const path = require('path');
 const {cloudinaryUploadImage, cloudinaryRemoveImage} = require("../utils/cloudinary");
@@ -124,4 +125,15 @@ const fs = require('fs');
    res.status(200).json({count_student : Total});
 });
 
+   /**-------------------------------------------------------
+ * @desc retourner les etudiants inscrient dans une classes:
+ * @route /api/classrooms/:idClasse/Students
+ * @method GET
+ * @access private only the professor or admin
+ ---------------------------------------------------*/
+
+ module.exports.getStudentsOfClasse = asyncHandler(async (req, res) =>{
+   const classe = await Inscriptions.find({"classe":req.params.id}).populate("etudiant",["_id","firstname","lastname","email","tel"]).sort({createdAt : -1});
+   res.status(200).json(classe);
+});
 

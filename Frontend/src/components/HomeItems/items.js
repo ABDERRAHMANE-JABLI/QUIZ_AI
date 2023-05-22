@@ -1,0 +1,7 @@
+export {default as Header} from './Header'
+export {default as Footer} from './footer'
+export {default as About} from './aboutSection'
+export {default as Mainbanner} from './mainBanner'
+export {default as Pricing} from './pricingSection'
+export {default as Services} from './serviceSection'
+export {default as Testimonials} from './Testimonials'
