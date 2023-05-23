@@ -132,8 +132,12 @@ const fs = require('fs');
  * @access private only the professor or admin
  ---------------------------------------------------*/
 
- module.exports.getStudentsOfClasse = asyncHandler(async (req, res) =>{
-   const classe = await Inscriptions.find({"classe":req.params.id}).populate("etudiant",["_id","firstname","lastname","email","tel"]).sort({createdAt : -1});
-   res.status(200).json(classe);
+ module.exports.getStudentsOfClasse = asyncHandler(async (req, res) =>{//,["_id","firstname","lastname","email","tel","photo.url"]
+   const Students = await Inscriptions.find({"classe":req.params.id}).populate("etudiant",["_id","firstname","lastname","email","tel","photo.url"]).select("etudiant -_id").sort({createdAt : -1});
+   const transformedResults = Students.map((item) => {
+      const { _id, firstname, lastname, email, tel, photo } = item.etudiant;
+      return { _id, firstname, lastname, email, tel, photo };
+    });
+   res.status(200).json(transformedResults);
 });
 

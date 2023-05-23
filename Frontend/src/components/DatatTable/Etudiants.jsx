@@ -8,25 +8,25 @@ const TableEtudiants = (props) => {
     const columns = [
         {
           name:'photo',
-          selector:(row) => (<img width={40} height={40} src={row.photo} alt={row.FirstName}/>),
+          selector:(row) => (<img width={40} height={40} src={row.photo.url} alt={row.firstname}/>),
         },
         {
           name:'Nom et Prénom',
-          selector:(row) => row.FirstName+' '+row.LastName,
+          selector:(row) => row.firstname+' '+row.lastname,
           sortable: true,
         },
         {
           name:'Email',
-          selector: (row)=> row.Email,
+          selector: (row)=> row.email,
           sortable : true,
         },
         {
           name:'Tel',
-          selector:(row)=> row.Tel
+          selector:(row)=> row.tel
         },
         {
             name:'Action',
-            cell: (row)=>(<button className='btn btn-outline-danger' title='retirer cet Etudiant' onClick={()=>{alert('etudiant id : '+row.id)}}><FaUserAltSlash/></button>)
+            cell: (row)=>(<button className='btn btn-outline-danger' title='retirer cet Etudiant' onClick={()=>{alert('etudiant id : '+row._id)}}><FaUserAltSlash/></button>)
         }
       ];
 
@@ -36,7 +36,7 @@ const TableEtudiants = (props) => {
                 pagination 
                 fixedHeader 
                 fixedHeaderScrollHeight='400px'
-               />
+      />
   )
 }
 

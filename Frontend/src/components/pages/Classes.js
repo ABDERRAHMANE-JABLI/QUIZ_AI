@@ -1,17 +1,20 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import {Sidebar, Footer, Header, Container, TitleSection} from '../components';
 import CardClasse from '../ClasseItems/CardClasse'
 import { useDispatch, useSelector } from 'react-redux';
 import { getClasses } from '../../redux/apiCalls/classeApiCall';
 import { ToastContainer } from 'react-toastify';
-/*import {toast} from 'react-toastify'
-import axios from "axios"
-import { useState } from 'react';*/
-const Classes = () => {
+import Loader from './Loader';
 
+const Classes = () => {
+ 
+  const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
   useEffect(()=>{
-    dispatch(getClasses());
+    setTimeout(() => {
+      dispatch(getClasses());
+      setLoading(false);
+    }, 1000);
   },[]);
 
   const {classes} = useSelector(state=>state.classe);
@@ -20,6 +23,10 @@ const Classes = () => {
                 });  
                 
   return (
+    <>
+    {loading ? (
+        <Loader />
+      ) : (
     <div id="wrapper">
       <Sidebar/>
       <div className="d-flex flex-column" id="content-wrapper">
@@ -46,7 +53,7 @@ const Classes = () => {
         </div>
         <Footer/>
       </div>
-    </div>
+    </div>)}</>
   )
 }
 

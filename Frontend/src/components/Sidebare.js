@@ -7,7 +7,7 @@ const sidebar = () => {
             <div className="container-fluid d-flex flex-column p-0">
                 <a className="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="/">
                     <div className="sidebar-brand-icon rotate-n-15"><img src={logo} alt="Logo Examen AI" width="50px" height="50px"/></div>
-                    <div className="sidebar-brand-text mx-3"><span>Examen AI</span></div>
+                    <div className="sidebar-brand-text mx-3"><span>QuiZ-AI</span></div>
                 </a>
                 <hr className="sidebar-divider my-0"/>
                 <ul className="navbar-nav text-light mt-5" id="accordionSidebar">

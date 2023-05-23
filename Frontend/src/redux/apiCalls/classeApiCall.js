@@ -51,3 +51,19 @@ export function delete_Classe(idClasse){
         }
     }
 }
+
+//http://localhost:8000/api/classrooms/646222d30a1f14f48c25c8cd/Students
+//Afficher  les etudiants qui appartient a la classe selectionné: 
+export function getStudents(idClasse){
+    return async(dispatch,getState) =>{
+        try {
+            const {data} = await axios.get(`http://localhost:8000/api/classrooms/${idClasse}/Students`,{
+                headers : {
+                Authorization : "Bearer "+getState().auth.user.token,
+            }});
+            dispatch(classeActions.setStudentsClasse(data));
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
+}
