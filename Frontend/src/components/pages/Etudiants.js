@@ -7,8 +7,11 @@ import TableEtudiants from '../DatatTable/Etudiants';
 import exportFromJSON from 'export-from-json'  
 import { ToastContainer } from 'react-toastify';
 import { useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react';
+import { getStudents } from '../../redux/apiCalls/classeApiCall';
+import { useDispatch, useSelector } from 'react-redux';
+import Loader from './Loader';
+
+
 const Etudiants = () => {
         const [loading, setLoading] = useState(true);
         const {idClasse} = useParams();

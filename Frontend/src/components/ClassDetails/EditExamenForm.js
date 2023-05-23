@@ -113,9 +113,6 @@ const EditerExamForm = (props)=> {
                 </button>
 
               </div>
-              <button className="btn btn-outline-primary float-end" onClick={handleSaveButtonClick}>
-                  Save
-                </button>
               </div>
             </div>
               <div id="edit_desc" ref={descEditorRef}>
@@ -150,11 +147,11 @@ const EditerExamForm = (props)=> {
                 </button>
                 
             </div>
-            <button className="btn btn-outline-primary float-end" onClick={handleSaveButtonClick}>
-                  Save
-                </button>
             </div>
           </div>
+          <button className="btn btn-outline-primary float-end" onClick={handleSaveButtonClick}>
+                  Save
+          </button>
 
           </div>
           
