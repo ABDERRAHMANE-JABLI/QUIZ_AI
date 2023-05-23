@@ -46,8 +46,8 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
         token : crypto.randomBytes(32).toString("hex"),
     });
     await verifyToken.save();
-    // Le lien
-    const link = `${process.env.DOMAIN}/users/${new_user._id}/verify/${verifyToken.token}`;
+    // Le lien${process.env.DOMAIN}
+    const link = `http://localhost:3000/users/${new_user._id}/verify/${verifyToken.token}`;
     // Putting the link into an html template
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -185,7 +185,6 @@ module.exports.registerStudent = asyncHandler(async (req, res) => {
     await user.save();
   
     await VerificationToken.findOneAndDelete({user:req.params.userId});
-  
     res.status(200).json({ message: "Maitenant Votre compte est verifié" });
   });
    

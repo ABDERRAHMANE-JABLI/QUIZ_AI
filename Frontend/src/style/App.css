@@ -10,6 +10,17 @@
   
   min-height: 95vh !important;
 }
+.infoExam{
+  font-size: 20px;
+  font-weight: bold;
+  display: flex;
+}
+
+.logo_quiz{
+  width: 150px !important;
+  height: 70px;
+  display: flex;
+}
 
 .navbar--apple .apple-logo {
   font-size: 21px;
