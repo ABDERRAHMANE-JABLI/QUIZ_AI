@@ -1,4 +1,5 @@
 const ExamenCards = (props)=>{
+  const examensUrl = `http://localhost:3000/editer/Examens/${props.id}`;
     return(<div className="col-md-4">
     <div className="card shadow-sm mb-4">
       <div className="card-body">
@@ -16,17 +17,17 @@ const ExamenCards = (props)=>{
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
               <li>
                 <a className="dropdown-item" href="#">
-                  Action
+                  Modifier
                 </a>
               </li>
               <li>
                 <a className="dropdown-item" href="#">
-                  Another action
+                  Supprimer
                 </a>
               </li>
               <li>
-                <a className="dropdown-item" href="#">
-                  Something else here
+                <a className="dropdown-item" href={examensUrl}>
+                  Voir plus
                 </a>
               </li>
             </ul>
@@ -34,13 +35,13 @@ const ExamenCards = (props)=>{
         </div>
         <p className="card-text">{props.description}</p>
         <ul className="list-group list-group-flush">
-          <li className="list-group-item">
-            <span>Facilité: </span>
-            <span className="font-weight-bold">{props.niveau}</span>
+        <li className="list-group-item">
+            <span>Nombre de Question : </span>
+            <span className="font-weight-bold">{props.NbQuestion}</span>
           </li>
           <li className="list-group-item">
-            <span>Nombre de questions: </span>
-            <span className="font-weight-bold">{props.NbQuestion}</span>
+            <span>Date debut : </span>
+            <span className="font-weight-bold">{props.Date_debut}</span>
           </li>
           <li className="list-group-item">
             <span>Durée: </span>

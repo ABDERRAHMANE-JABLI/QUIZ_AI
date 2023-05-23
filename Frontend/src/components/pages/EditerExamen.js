@@ -10,16 +10,19 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../../style/ButtonAjouter.css'
+import { useParams } from 'react-router-dom';
 
 
 
 
 
 const EditerExamen = () => {
-  const location = useLocation();
-  const { Examen } = location.state;
-  const ExamsId = Examen._id;
-  const endPoint = `http://localhost:8000/api/questions/${ExamsId}/questions`;
+  // const location = useLocation();
+  // const { Examen } = location.state;
+  const { ExamId } = useParams();
+  const ExamsId =ExamId;
+
+  const endPoint = `http://localhost:8000/api/questions/${ExamId}/questions`;
 
   {/*handle necessery event for editer modals */}
   const [data, setData] = useState([]);

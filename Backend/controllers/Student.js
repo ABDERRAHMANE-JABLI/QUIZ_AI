@@ -3,6 +3,8 @@ const asyncHandler = require('express-async-handler');
 const bcrypt = require('bcryptjs');
 const path = require('path');
 const {cloudinaryUploadImage,cloudinaryRemoveImage} = require("../utils/cloudinary");
+const sendEmail = require("../utils/sendEmail");
+
 /*const _ = require('lodash');
 const formidable = require("formidable");*/
 const fs = require('fs');
@@ -142,14 +144,41 @@ module.exports.updateStudent = asyncHandler(async (req, res)=>{
  ---------------------------------------------------*/
 
  
-module.exports.InviterStudent = asyncHandler(async (req, res) => {
+ module.exports.InviterStudent = asyncHandler(async (req, res) => {
    const { emails } = req.body;
- 
-   for (const email of emails) {
-     console.log(email);
-     // Send email to each email address
-     // You can use a library like nodemailer to send emails
-   }
- 
-   res.status(200).json({ message: 'ok' });
- });
+   const link = `http://www.example.com`;
+   const htmlTemplate = `<html lang="fr">
+   <head>
+       <meta charset="UTF-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <title>Invitation à la classe en ligne</title>
+   </head>
+   <body>
+       <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+           <tr>
+               <td align="center" bgcolor="#f5f5f5" style="padding: 20px;">
+                   <table border="0" cellpadding="0" cellspacing="0" width="100%">
+                       <tr>
+                           <td align="center" bgcolor="#ffffff" style="padding: 20px;">
+                               <h4 style="font-size: 24px; margin-bottom: 10px;">Invitation à la classe en ligne</h4>
+                               <p style="font-size: 16px; margin-bottom: 20px;">Cher étudiant(e),</p>
+                               <p style="font-size: 16px; margin-bottom: 20px;">Nous sommes ravis de vous inviter à participer à notre classe en ligne.</p>
+                               <div style="text-align: center;">
+                               <a href="${link}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Participer</a>
+                             </div>
+                           </td>
+                       </tr>
+                   </table>
+               </td>
+           </tr>
+       </table>
+   </body>
+   </html>`;
+
+   const emailPromises = emails.map(email => sendEmail(email, "Participer à notre classe en ligne", htmlTemplate));
+   await Promise.all(emailPromises);
+
+   res.status(201).json({
+      message: "Nous avons envoyé un lien dans votre adresse email, veuillez vérifier s'il vous plaît.",
+   });
+});

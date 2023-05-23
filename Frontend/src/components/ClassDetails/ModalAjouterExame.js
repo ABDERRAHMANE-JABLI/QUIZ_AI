@@ -4,9 +4,11 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import $ from 'jquery';
+import { useParams } from 'react-router-dom';
 
 
 const ModalIjouterExamen = () => {
+  const { idClasse } = useParams();
   const [examTitle, setExamTitle] = useState('');
   const [examDescription, setExamDescription] = useState('');
   const [examDuration, setExamDuration] = useState(0);
@@ -71,7 +73,7 @@ const handleFormSubmit = async (event) => {
       "description":examDescription,
       "Date_debut":Date_debut,
       "Durre":examDuration,
-      "classe":"646799a0e4919c3648bdcada"
+      "classe":idClasse
   
   });
   for (const question of JsonData) {
@@ -108,7 +110,7 @@ const handleFormSubmit = async (event) => {
     // For example:
     toast.dismiss(loadingToastId);
     $('#closeBtn').click();
-    navigate('/editer/examens', { state: {"Examen":examen.data} });
+    navigate(`/editer/examens/${examen.data._id}`);
   }, 3000);
   
   //  console.log(examen.data);
@@ -188,7 +190,7 @@ const handleFormSubmit = async (event) => {
                   <input
                     id="Date_debut"
                     className="form-control"
-                    type="date"
+                    type="datetime-local"
                     value={Date_debut}
                     onChange={handleDate_debutChange}
                   />

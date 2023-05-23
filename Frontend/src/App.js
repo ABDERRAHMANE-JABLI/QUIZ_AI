@@ -27,7 +27,7 @@ function App() {
 
         <Route path="/Classes/:idClasse/Examens" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <Examens/>}/>
 
-        <Route path="/editer/examens" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <EditerExamen/>}/>
+        <Route path="/editer/examens/:ExamId" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <EditerExamen/>}/>
 
         <Route path="/passer/examens" element={<PasserExamenPage/>}/>
 

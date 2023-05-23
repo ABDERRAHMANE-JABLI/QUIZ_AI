@@ -5,6 +5,7 @@ import ModalInviter from '../ClassDetails/ModalInviter';
 import {FaUserPlus, FaFileExcel } from 'react-icons/fa';
 import TableEtudiants from '../DatatTable/Etudiants';
 import exportFromJSON from 'export-from-json'  
+import { ToastContainer } from 'react-toastify';
 
 const Etudiants = () => {
          
@@ -34,6 +35,18 @@ const Etudiants = () => {
       
   return (
     <div id="wrapper">
+      <ToastContainer
+                      position="top-center"
+                      autoClose={2500}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="colored"
+                      />
       <Sidebar/>
       <div className="d-flex flex-column" id="content-wrapper">
         <div id="content"> 

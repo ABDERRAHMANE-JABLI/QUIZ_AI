@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FaRegCopy } from 'react-icons/fa';
 import '../../style/emailPill.css';
 import axios from 'axios'
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const ModalInviter = () => {
   const [emailPills, setEmailPills] = useState([]);
@@ -48,25 +50,34 @@ const ModalInviter = () => {
     // Send the emailPills array to the endpoint for sending emails
     // Replace the endpointUrl with your actual endpoint URL
     const endpointUrl = 'http://127.0.0.1:8000/api/students/inviter';
+    const loadingToastId = toast.loading("Veuillez patienter pendant que nous invitons les étudiants...", { autoClose: false });
+
+
     const emailList = emailPills.map((pill) => pill.email);
 
     // Make the POST request to the endpoint
     // Replace 'payload' with the appropriate field name expected by the endpoint
     axios.post(endpointUrl, { "emails": emailList })
       .then((response) => {
-        // Handle the response if needed
-        console.log(response.data);
+               toast.update(loadingToastId, { render:`${response.data.message}`, type: toast.TYPE.SUCCESS, autoClose: false });
+
+        // console.log(response.data);
       })
       .catch((error) => {
         // Handle the error if needed
+        toast.update(loadingToastId, { render:`${error}`, type: toast.TYPE.SUCCESS, autoClose: false });
         console.error(error);
       });
-
+      setTimeout(() => {
+        toast.dismiss(loadingToastId);
+      }, 3000);
     // for(const email of emailList){
     //   alert(email);
     // }
+    document.getElementById('close-btn').click();
 
     // Clear the emailPills array and close the modal
+    
     setEmailPills([]);
     setEmailValue('');
     setInvalidEmail(false);
@@ -85,10 +96,11 @@ const ModalInviter = () => {
         <div className="modal-content">
           <div className="modal-header">
             <h5 id="exampleModalLabel" className="modal-title">
-              Inviter Membres
+              Inviter des Etudiants
             </h5>
             <button
               className="btn-close"
+              id='close-btn'
               type="button"
               data-bs-dismiss="modal"
               aria-label="Close"

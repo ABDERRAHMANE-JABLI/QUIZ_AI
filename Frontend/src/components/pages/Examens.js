@@ -1,71 +1,43 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import { useParams } from 'react-router-dom';
 import {Sidebar, Footer, Header, Container } from '../components';
 import NavigationStduentClasses from '../ClassDetails/NavigationStduentClasses' ;
 import ExamenCards from '../ClassDetails/ExamenCards';
 import ModalIjouterExamen from '../ClassDetails/ModalAjouterExame';
 import { FaPlus } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
+import { useState } from 'react';
 
 
 const Examens = () => {
-
-
-    const data = [
-        {
-            id: "1",
-            titre: "Mathématique",
-            description: "Examen de mathématiques niveau facile",
-            niveau: "facile",
-            NbQuestion: "30",
-            duree: "60",
-        },
-        {
-            id: "2",
-            titre: "Physique",
-            description: "Examen de physique niveau moyen",
-            niveau: "moyen",
-            NbQuestion: "20",
-            duree: "90",
-        },
-        {
-            id: "3",
-            titre: "Histoire",
-            description: "Examen d'histoire niveau difficile",
-            niveau: "difficile",
-            NbQuestion: "50",
-            duree: "120",
-        },
-        {
-            id: "4",
-            titre: "Anglais",
-            description: "Examen d'anglais niveau facile",
-            niveau: "facile",
-            NbQuestion: "40",
-            duree: "45",
-        },
-        {
-            id: "5",
-            titre: "Informatique",
-            description: "Examen d'informatique niveau moyen",
-            niveau: "moyen",
-            NbQuestion: "25",
-            duree: "75",
-        },
-    ];
-    
-      
-      const cardExamns = data.map(function(item) {
-        return (
-          <ExamenCards
-            id={item.id}
-            titre={item.titre}
-            description={item.description}
-            niveau={item.niveau}
-            NbQuestion={item.NbQuestion}
-            duree={item.duree}
-          />
-        );
-      });
+    const { idClasse } = useParams();
+    const [examensData, setExamensData] = useState([]);
+  
+    useEffect(() => {
+      fetchExamensData();
+    }, []);
+  
+    const fetchExamensData = async () => {
+      try {
+        const response = await fetch(`http://127.0.0.1:8000/api/examens/${idClasse}/examens`);
+        const data = await response.json();
+        setExamensData(data);
+      } catch (error) {
+        console.log('Error fetching examens data:', error);
+      }
+    };
+  
+    const cardExamns = examensData.map((item) => (
+      <ExamenCards
+        key={item.id}
+        id={item.id}
+        titre={item.titre}
+        NbQuestion={item.NbQuestion}
+        description={item.description}
+        Date_debut={item.Date_debut}
+        duree={item.Durre}
+      />
+    ));
  
   return (
     <div id="wrapper">
@@ -92,7 +64,7 @@ const Examens = () => {
             <div className="card shadow">
                     <div className="card-header py-3">
                         <p className="text-primary m-0 fw-bold">
-                        Examen list
+                        Quiz
                         <button
                             className="btn btn-outline-success float-end"
                             data-bs-toggle="modal"
@@ -139,9 +111,16 @@ const Examens = () => {
                             </div>
                         </div>
                         </div>
-                        <div className="row">{/* put your exams here */}
-                        {cardExamns}
-                        </div>
+                        <div className="row" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                            {cardExamns.length > 0 ? (
+                                // Render the exams
+                                cardExamns
+                            ) : (
+                                // Render a message when there are no exams
+                                <p style={{ textAlign: 'center' }}>No data available</p>
+                            )}
+                            </div>
+
                         <div className="row">
                         <div className="col-md-6 align-self-center">
                             <p

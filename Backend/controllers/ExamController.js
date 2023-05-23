@@ -21,7 +21,29 @@ async function getAllExam(req,res){
     }catch(error){
         res.status(500).send({error : error});
     }
-}  
+} 
+async function getExamByClassId(req, res) {
+  try {
+    const exams = await Exams.find({ classe: req.params.classId });
+    const count = await Exams.countDocuments({ classe: req.params.classId });
+
+    const examsWithCount = exams.map((exam) => {
+      return {
+        id: exam.id,
+        titre: exam.titre,
+        description: exam.description,
+        Date_debut:exam.Date_debut,
+        Durre: exam.Durre,
+        NbQuestion: count,
+      };
+    });
+
+    res.status(200).json(examsWithCount);
+  } catch (error) {
+    res.status(500).send({ error: error });
+  }
+}
+
 async function getExamById(req,res){
     try{
         const examen = await Exams.findById(req.params.id).populate({
@@ -104,5 +126,5 @@ async function generateQuiz(req, res) {
       }
 }
   
-  module.exports = { generateQuiz,CreatExamen,getAllExam ,getExamById};
+  module.exports = { generateQuiz,CreatExamen,getAllExam ,getExamById,getExamByClassId};
   

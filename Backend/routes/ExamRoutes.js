@@ -13,6 +13,12 @@ router.get('/', ExamenController.getAllExam);
 // Get Quizs by Id 
 router.get('/:id', ExamenController.getExamById);
 
+router.get('/:classId/examens', ExamenController.getExamByClassId);
+
+
+
+
+
 
 
 // // Get a question by ID
