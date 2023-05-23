@@ -8,16 +8,23 @@ import { GetUserProfile, updatePhoto, updateProfile } from '../../redux/apiCalls
 import {FaRecycle, FaCamera} from 'react-icons/fa'
 import {toast, ToastContainer} from 'react-toastify'
 import '../../style/profile.css'
+import Loader from './Loader';
+
 
 const Profile = () => {
   const [file, setFile] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const {id} = useParams();
   const {profile} = useSelector(state => state.profile);
+
   const dispatch = useDispatch();
+
   useEffect(() => {
-    dispatch(GetUserProfile(id));
-    window.scrollTo(0, 0);
+    setTimeout(() => {
+      dispatch(GetUserProfile(id));
+      setLoading(false);
+    }, 1000);
   }, [id]);
 
     const [firstname, setFirstname] = useState(profile?.firstname);
@@ -43,6 +50,10 @@ const Profile = () => {
   }
 
   return (
+    <>
+    {loading ? (
+      <Loader />
+    ) : (
     <div id="wrapper">
       <Sidebar/>
       <div className="d-flex flex-column" id="content-wrapper">
@@ -150,7 +161,7 @@ const Profile = () => {
         </div>
         <Footer/>
       </div>
-    </div>
+    </div>)}</>
   )
 }
 

@@ -12,7 +12,7 @@ const mainBanner = () => {
                 <div className="row">
                   <div className="col-lg-12">
                     <h2 className='text-dark'>Seulement Décrivez votre Examen et QUIZ-AI va Faire Tous.</h2>
-                    <p>QUIZ AI est une application basé sur l'intellignece artificiel de OPEN AI, il permet de genérer des Quiz "des question avec un seule choix, multiples choix et avec réponse .etc". destiné aux Professeurs et aux Formateurs pour Evaluer leurs étudiants en toutes Facilité</p>
+                    <p>QUIZ AI est une application basé sur l'intellignece artificiel de OPEN AI, il permet de genérer des Quiz "des question avec un seule choix, multiples choix et ouverts". destiné aux Professeurs et aux Formateurs pour Evaluer leurs étudiants en toutes Facilité</p>
                   </div>
                   <div className="col-lg-12">
                     <div className="white-button first-button scroll-to-section">

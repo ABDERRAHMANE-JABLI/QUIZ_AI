@@ -20,7 +20,7 @@ const classeSlice = createSlice({
         setDeleteClasse(state, action){
             state.classes = state.classes.filter(object => object._id !== action.payload );
         },
-        getstudentsClasse(state, action){
+        setStudentsClasse(state, action){
             state.studentsClasse = action.payload;
         }
     }
