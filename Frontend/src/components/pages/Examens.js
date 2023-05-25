@@ -4,28 +4,19 @@ import { Sidebar, Footer, Header, Container } from '../components';
 import NavigationStduentClasses from '../ClassDetails/NavigationStduentClasses';
 import ExamenCards from '../ClassDetails/ExamenCards';
 import ModalIjouterExamen from '../ClassDetails/ModalAjouterExame';
+import Breadcrumb from '../ClassDetails/Broadcrumb';
 import { FaPlus } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 
 const Examens = () => {
   const { idClasse } = useParams();
-  const [classroomData, setClassroomData] = useState('');
   const [examensData, setExamensData] = useState([]);
 
   useEffect(() => {
-    fetchClassroomData();
     fetchExamensData();
   }, []);
 
-  const fetchClassroomData = async () => {
-    try {
-      const response = await fetch(`http://localhost:8000/api/classrooms/ClassById/${idClasse}`);
-      const data = await response.json();
-      setClassroomData(data.titre);
-    } catch (error) {
-      console.log('Error fetching classroom data:', error);
-    }
-  };
+  
 
   const fetchExamensData = async () => {
     try {
@@ -70,18 +61,11 @@ const Examens = () => {
           <Header />
 
           <Container>
-            <nav aria-label="breadcrumb">
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">
-                  <Link to="/Classes">Classes</Link>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  {classroomData} {'>'}
-                </li>
-              </ol>
-            </nav>
+         
             <NavigationStduentClasses />
 
+            <Breadcrumb idClasse={idClasse}/>
+                   
             <div className="card shadow">
               <div className="card-header py-3">
                 <p className="text-primary m-0 fw-bold">

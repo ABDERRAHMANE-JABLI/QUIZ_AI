@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {Sidebar, Footer, Header, Container,} from '../components';
 import NavigationStduentClasses from '../ClassDetails/NavigationStduentClasses' ;
+import Breadcrumb from '../ClassDetails/Broadcrumb';
 import ModalInviter from '../ClassDetails/ModalInviter';
 import {FaUserPlus, FaFileExcel } from 'react-icons/fa';
 import TableEtudiants from '../DatatTable/Etudiants';
@@ -78,8 +79,10 @@ const Etudiants = () => {
           <Header/>
           <ModalInviter/>
           
-          <NavigationStduentClasses/>
           <Container>
+             <Breadcrumb idClasse={idClasse}/>
+            <NavigationStduentClasses/>
+
             <div className="card shadow">
               <div className="card-header py-3">
                 <p className="text-primary m-0 fw-bold">les Etudiants de Classe <button className="btn btn-outline-primary float-end" data-bs-toggle="modal" data-bs-target={"#ModalInviter"}>
