@@ -30,7 +30,7 @@ function App() {
 
         <Route path="/editer/examens/:ExamId" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <EditerExamen/>}/>
 
-        <Route path="/passer/examens" element={<PasserExamenPage/>}/>
+        <Route path="/passer/examens/:ExamId" element={<PasserExamenPage/>}/>
 
         <Route path="*" element={<Error/>}/> 
 
