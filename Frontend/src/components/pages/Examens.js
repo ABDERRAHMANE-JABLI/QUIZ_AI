@@ -11,12 +11,13 @@ import { ToastContainer } from 'react-toastify';
 const Examens = () => {
   const { idClasse } = useParams();
   const [examensData, setExamensData] = useState([]);
+  const [pageSize, setPageSize] = useState(10);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     fetchExamensData();
   }, []);
-
-  
 
   const fetchExamensData = async () => {
     try {
@@ -28,7 +29,26 @@ const Examens = () => {
     }
   };
 
-  const cardExamns = examensData.map((item) => (
+  const handlePageSizeChange = (event) => {
+    setPageSize(Number(event.target.value));
+    setCurrentPage(1); // Reset current page when page size changes
+  };
+
+  const handleSearchQueryChange = (event) => {
+    setSearchQuery(event.target.value);
+    setCurrentPage(1); // Reset current page when search query changes
+  };
+
+  const filteredExamensData = examensData.filter((item) =>
+    item.titre.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const totalPages = Math.ceil(filteredExamensData.length / pageSize);
+  const startIndex = (currentPage - 1) * pageSize;
+  const endIndex = startIndex + pageSize;
+  const paginatedExamensData = filteredExamensData.slice(startIndex, endIndex);
+
+  const cardExamens = paginatedExamensData.map((item) => (
     <ExamenCards
       key={item.id}
       id={item.id}
@@ -39,6 +59,40 @@ const Examens = () => {
       duree={item.Durre}
     />
   ));
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPagination = () => {
+    if (totalPages <= 1) return null;
+
+    const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
+
+    return (
+      <nav className="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
+        <ul className="pagination">
+          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+            <a className="page-link" aria-label="Previous" href="#" onClick={() => handlePageChange(currentPage - 1)}>
+              <span aria-hidden="true">«</span>
+            </a>
+          </li>
+          {pages.map((page) => (
+            <li key={page} className={`page-item ${currentPage === page ? 'active' : ''}`}>
+              <a className="page-link" href="#" onClick={() => handlePageChange(page)}>
+                {page}
+              </a>
+            </li>
+          ))}
+          <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+            <a className="page-link" aria-label="Next" href="#" onClick={() => handlePageChange(currentPage + 1)}>
+              <span aria-hidden="true">»</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    );
+  };
 
   return (
     <div id="wrapper">
@@ -61,11 +115,11 @@ const Examens = () => {
           <Header />
 
           <Container>
-         
+          <Breadcrumb idClasse={idClasse} />
+
             <NavigationStduentClasses />
 
-            <Breadcrumb idClasse={idClasse}/>
-                   
+
             <div className="card shadow">
               <div className="card-header py-3">
                 <p className="text-primary m-0 fw-bold">
@@ -90,13 +144,14 @@ const Examens = () => {
                     >
                       <label className="form-label">
                         Show&nbsp;
-                        <select className="d-inline-block form-select form-select-sm">
-                          <option value={10} selected="">
-                            10
-                          </option>
-                          <option value={25}>25</option>
-                          <option value={50}>50</option>
-                          <option value={100}>100</option>
+                        <select
+                          className="d-inline-block form-select form-select-sm"
+                          value={pageSize}
+                          onChange={handlePageSizeChange}
+                        >  
+                          <option value={3}>3</option>
+                          <option value={6}>6</option>
+                          <option value={9}>9</option>
                         </select>
                       </label>
                     </div>
@@ -112,6 +167,8 @@ const Examens = () => {
                           type="search"
                           aria-controls="dataTable"
                           placeholder="Search"
+                          value={searchQuery}
+                          onChange={handleSearchQueryChange}
                         />
                       </label>
                     </div>
@@ -125,9 +182,9 @@ const Examens = () => {
                     alignItems: 'center',
                   }}
                 >
-                  {cardExamns.length > 0 ? (
+                  {cardExamens.length > 0 ? (
                     // Render the exams
-                    cardExamns
+                    cardExamens
                   ) : (
                     // Render a message when there are no exams
                     <p style={{ textAlign: 'center' }}>No data available</p>
@@ -142,39 +199,11 @@ const Examens = () => {
                       role="status"
                       aria-live="polite"
                     >
-                      Showing 1 to 10 of 27
+                      Showing {startIndex + 1} to {Math.min(endIndex, filteredExamensData.length)} of {filteredExamensData.length}
                     </p>
                   </div>
                   <div className="col-md-6">
-                    <nav className="d-lg-flex justify-content-lg-end dataTables_paginate paging_simple_numbers">
-                      <ul className="pagination">
-                        <li className="page-item disabled">
-                          <a className="page-link" aria-label="Previous" href="#">
-                            <span aria-hidden="true">«</span>
-                          </a>
-                        </li>
-                        <li className="page-item active">
-                          <a className="page-link" href="#">
-                            1
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
-                            2
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" href="#">
-                            3
-                          </a>
-                        </li>
-                        <li className="page-item">
-                          <a className="page-link" aria-label="Next" href="#">
-                            <span aria-hidden="true">»</span>
-                          </a>
-                        </li>
-                      </ul>
-                    </nav>
+                    {renderPagination()}
                   </div>
                 </div>
               </div>
