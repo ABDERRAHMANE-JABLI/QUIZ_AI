@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { createClassroom, getClasse, getProfClasses, TotalClasses, deleteClass, getStudentsOfClasse } = require("../controllers/Classroom");
+const { createClassroom, getClasse, getProfClasses, TotalClasses, deleteClass,getClasseById, getStudentsOfClasse } = require("../controllers/Classroom");
 const photoUpload = require("../middlewares/photoUpload");
 const validateObjectId = require("../middlewares/validateObjectId");
 const { verifyProfandAdmin } = require("../middlewares/verifyToken");
@@ -16,6 +16,7 @@ router.route('/count').get(verifyProfandAdmin, TotalClasses);
 router.route('/:id')
     .get(validateObjectId, verifyProfandAdmin, getClasse)
     .delete(validateObjectId, verifyProfandAdmin, deleteClass);
+router.get('/ClassById/:id',getClasseById);
 
 // /api/classroms/:id/students
 router.route('/:id/Students').get(getStudentsOfClasse);

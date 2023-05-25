@@ -317,6 +317,7 @@ const handleCorrectChange = (event) => {
     <div id="content">
       <Header />
       <Container>
+      
         <ToastContainer
           position="top-center"
           autoClose={2500}
@@ -329,7 +330,7 @@ const handleCorrectChange = (event) => {
           pauseOnHover
           theme="colored"
         />
-        <EditerExamForm id={ExamsId} titre={"Examen.titre"} description={"Examen.description"} />
+        <EditerExamForm id={ExamsId} />
 
         <div className="card">
           <div className="card-header">

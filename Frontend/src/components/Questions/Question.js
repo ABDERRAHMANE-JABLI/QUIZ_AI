@@ -1,161 +1,136 @@
-import { useEffect, useState, useRef } from "react";
-import {
-  FaAngleDown,
-  FaTrash,
-  FaBold,
-  FaItalic,
-  FaLink,
-  FaUnderline,
-  FaListOl,
-  FaListUl,
-} from "react-icons/fa";
+import React, { useState } from "react";
+import { Modal, Button } from "react-bootstrap";
+import { FaAngleDown ,FaEdit} from "react-icons/fa";
 import axios from "axios";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 const QuestionContainer = (props) => {
-  const [titleToolbarVisible, setTitleToolbarVisible] = useState(false);
-  const titleEditorRef = useRef(null);
-  const titleDividerRef = useRef(null);
-  const [formattedQuestionText, setFormattedQuestionText] = useState("");
-
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (titleEditorRef.current && !titleEditorRef.current.contains(e.target)) {
-        setTitleToolbarVisible(false);
-        titleDividerRef.current.style.display = "none";
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
-
-  const handleTitleClick = () => {
-    setTitleToolbarVisible(true);
-    titleDividerRef.current.style.border = "3px solid #2E5DE4";
-    titleDividerRef.current.style.display = "block";
-  };
-
-  const handleLinkButtonClick = () => {
-    const url = prompt("URL", "http://");
-    document.execCommand("createLink", false, url);
-  };
-
-  const handleBoldButtonClick = () => {
-    document.execCommand("bold", false, null);
-  };
-
-  const handleItalicButtonClick = () => {
-    document.execCommand("italic", false, null);
-  };
-
-  const handleUnderlineButtonClick = () => {
-    document.execCommand("underline", false, null);
-  };
-
-  const handleUnorderedListButtonClick = () => {
-    document.execCommand("insertUnorderedList", false, null);
-  };
-
-  const handleOrderedListButtonClick = () => {
-    document.execCommand("insertOrderedList", false, null);
-  };
-
- 
-
   const { id, questionText, questionType, AddReponse, RemoveQuestion, EditerQuestion } = props;
+
+  const [formattedQuestionText, setFormattedQuestionText] = useState(questionText);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [rotationAngle, setRotationAngle] = useState(0);
+  const [showModal, setShowModal] = useState(false);
+
   const handleSaveButtonClick = () => {
-    EditerQuestion(id,formattedQuestionText);
-};
+    EditerQuestion(id, formattedQuestionText);
+    setShowModal(false);
+  };
+
   const handleAddAnswer = () => {
     AddReponse(id);
   };
+
   const handleRemoveQuestion = () => {
     RemoveQuestion(id);
   };
 
+  const handleCollapseToggle = () => {
+    setIsExpanded((prevExpanded) => !prevExpanded);
+    setRotationAngle((prevAngle) => prevAngle + 180);
+  };
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
     <div id={id} className="question">
-      <div className="card">
-        <div className="card-header">
+      <div className="card shadow-sm">
+        <div className="card-body">
           <div className="d-flex justify-content-between">
             <div className="d-flex flex-row bd-highlight mb-3">
               <div className="p-2 bd-highlight">
                 <a
+                  className="accordion-button"
                   data-bs-toggle="collapse"
                   href={`#collapse_${id}`}
                   role="button"
-                  aria-expanded="true"
+                  aria-expanded={isExpanded}
                   aria-controls={`collapse_${id}`}
-                  style={{ marginTop: "12px" }}
+                  onClick={handleCollapseToggle}
                 >
-                  <FaAngleDown style={{ marginTop: "11px" }} />
+                  <FaAngleDown style={{ transform: `rotate(${rotationAngle}deg)` }} />
                 </a>
               </div>
-              <div id="edit_title" className="p-2 bd-highlight" ref={titleEditorRef} style={{ marginBottom: "1px", marginTop: "2px" }}>
-                <h3
-                  id="title-editor"
-                  className="card-title"
-                  contentEditable={true}
-                  onClick={handleTitleClick}
-                  onInput={(e) => setFormattedQuestionText(e.target.innerHTML)}
-                  dangerouslySetInnerHTML={{ __html: questionText }}
-                >
-                  {/* {questionText} */}
-                </h3>
-                <hr className="mt-2 mb-3" ref={titleDividerRef} />
-                <div id="title-toolbar" className="btn-toolbar" style={{ display: titleToolbarVisible ? "block" : "none" }}>
-                  <div className="btn-group" role="group">
-                    <button className="btn" onClick={handleBoldButtonClick}>
-                      <FaBold />
-                    </button>
-                    <button className="btn" onClick={handleItalicButtonClick}>
-                      <FaItalic />
-                    </button>
-                    <button className="btn" onClick={handleUnderlineButtonClick}>
-                      <FaUnderline />
-                    </button>
-                    <button className="btn" onClick={handleUnorderedListButtonClick}>
-                      <FaListUl />
-                    </button>
-                    <button className="btn" onClick={handleOrderedListButtonClick}>
-                      <FaListOl />
-                    </button>
-                    <button className="btn" onClick={handleLinkButtonClick}>
-                      <FaLink />
-                    </button>
-                  </div>
-                  <button className="btn btn-outline-primary float-end" onClick={handleSaveButtonClick}>
-                    Save
-                  </button>
-                </div>
-              </div>
+              <h5
+                id="title-editor"
+                className="card-title p-2 bd-highlight"
+                dangerouslySetInnerHTML={{ __html: questionText }}
+              ></h5>
             </div>
             <div className="p-2 bd-highlight">
-              <a className="float-end removeQuestion" role="button" onClick={handleRemoveQuestion}>
-                <FaTrash />
-              </a>
+              <div className="dropdown">
+                <a
+                  id="dropdownMenuLink"
+                  className="btn btn-sm dropdown-toggle"
+                  role="button"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                />
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <li>
+                    <a className="dropdown-item" onClick={handleOpenModal}>
+                      Modifier
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" onClick={handleRemoveQuestion}>
+                      Supprimer
+                    </a>
+                  </li>
+                </ul>
+              </div>
             </div>
           </div>
-        </div>
-        <div id={`collapse_${id}`} className="card-body collapse show">
-          <ul id={`answerList_${id}`} className="list-group list-group-flush choix_Multiple">
-            {props.children}
-            {questionType !== "InputText" ? (
-              <li className="list-group-item">
-                <button className="btn btn-primary float-end addAnswer" onClick={handleAddAnswer} type="button" data-id={`answerList_${id}`}>
-                  Ajouter réponse
-                </button>
-              </li>
-            ) : (
-              <div></div>
-            )}
-          </ul>
+          <div id={`collapse_${id}`} className="card-body collapse show">
+            <ul id={`answerList_${id}`} className="list-group list-group-flush choix_Multiple">
+              {props.children}
+              {questionType !== "InputText" ? (
+                <li className="list-group-item">
+                  <button
+                    className="btn btn-primary float-end addAnswer"
+                    onClick={handleAddAnswer}
+                    type="button"
+                    data-id={`answerList_${id}`}
+                  >
+                    Ajouter réponse
+                  </button>
+                </li>
+              ) : (
+                <div></div>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
       <hr className="mt-2 mb-3" />
+
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>Modifier la question</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ReactQuill
+            value={formattedQuestionText}
+            onChange={(value) => setFormattedQuestionText(value)}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            Annuler
+          </Button>
+          <Button variant="primary" onClick={handleSaveButtonClick}>
+            Enregistrer
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

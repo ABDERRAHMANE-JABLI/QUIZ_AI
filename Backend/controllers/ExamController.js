@@ -1,3 +1,4 @@
+const { func } = require('joi');
 const { Answer } = require('../models/Answer');
 const { Exams, validateData } = require('../models/Exam');
 const { Question } = require('../models/Question');
@@ -125,6 +126,22 @@ async function generateQuiz(req, res) {
         res.status(500).send('An error occurred');
       }
 }
+
+async function updateExamen(req,res){
+  try {
+    const exam = await Exams.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    if (exam) {
+      res.status(200).json(exam);
+    } else {
+      res.status(404).json({ error: 'Examen not found' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update Examen' });
+  }
+}
+
   
-  module.exports = { generateQuiz,CreatExamen,getAllExam ,getExamById,getExamByClassId};
+  module.exports = { generateQuiz,CreatExamen,getAllExam ,getExamById,getExamByClassId,updateExamen};
   

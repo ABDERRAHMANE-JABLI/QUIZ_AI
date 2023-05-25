@@ -25,7 +25,7 @@ router.get('/:classId/examens', ExamenController.getExamByClassId);
 // router.get('/:id', questionController.getQuestionById);
 
 // // Update a question
-// router.put('/:id', questionController.updateQuestion);
+router.put('/:id', ExamenController.updateExamen);
 
 // // Delete a question
 // router.delete('/:id', questionController.deleteQuestion);

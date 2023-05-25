@@ -84,6 +84,20 @@ const fs = require('fs');
          res.status(403).json({ message: "access denied, forbidden" });
       }
  });
+   /**-------------------------------------------------------
+ * @desc get classe by Id :
+ * @route /api/classrooms/:id
+ * @method GET
+ * @access private only admin or the professor who create the classe
+ ---------------------------------------------------*/
+ module.exports.getClasseById = asyncHandler(async (req, res) =>{
+   const classe = await Classrooms.findById(req.params.id);
+   if(classe){
+      res.status(200).json(classe);
+   }else{
+      res.status(403).json({ message: "class not Found" });
+   }
+});
 
    /**-------------------------------------------------------
  * @desc Delete classe :
