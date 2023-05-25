@@ -3,6 +3,7 @@ import imgBanner from '../../image/1679098103287.png'
 const mainBanner = () => {
   return (
     <div className="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
+    
      <div className="container">
       <div className="row">
         <div className="col-lg-12">

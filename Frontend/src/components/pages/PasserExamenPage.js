@@ -1,6 +1,9 @@
 import React from "react";
-import ExamenInfoCard from "../PasserExamen/ExamenInfo";
+import {FcTodoList, FcAlarmClock, FcQuestions} from 'react-icons/fc'
 import QuestionCard from "../PasserExamen/QuestionCard";
+import {Footer} from '../HomeItems/items'
+import logo from '../../image/logo_quiz2.png';
+
 const PasserExamenPage= (props)=>{
   
     const data = [ {
@@ -65,18 +68,24 @@ const PasserExamenPage= (props)=>{
       ];
       const cards = data.map(function(item){
         return <QuestionCard  questionTitre={item.questionText} questionDescription={'description'} answers={item.answers} questionType={item.questionType}/>
-      })
+      });
       
      return(
-            <div className="container">
-                   <div className="row"> 
-                        <ExamenInfoCard titre ={'examen informatique'} description={'une description'} duree={'60'} niveau={'facile'} nbQuestion={'12'}/>
+      <>
+          <div className="container d-flex justify-content-center p-3">
+            <img src={logo} className="logo_quiz" alt="quiz ai" width="100px"  height="70px"/>
+          </div>
+            <div className="container mt-5">
+              <div className="d-flex justify-content-between"><p className="infoExam"><FcQuestions/>&nbsp;&nbsp;Examen Informatique</p> <p className="infoExam"><FcAlarmClock/>&nbsp;&nbsp;Durée 1h</p> <p className="infoExam"><FcTodoList/>&nbsp;&nbsp; 10 Questions</p></div>
+                   <div className="row mt-3"> 
                          <form > {/*onSubmit={handleOnSubmitExamen}*/}
                            {cards}
                            <input type="submit" value="Submit" className="btn btn-primary float-end" />
                          </form>
                    </div>
             </div>
+          <Footer/>
+      </>
      )
 }
 export default PasserExamenPage;
