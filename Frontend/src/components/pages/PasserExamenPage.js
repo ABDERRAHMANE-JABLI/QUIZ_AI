@@ -78,12 +78,15 @@ const PasserExamenPage = (props) => {
           <p className="infoExam" dangerouslySetInnerHTML={{__html:description}}></p>
         </div>
         {remainingTime !== null && (
-          <div className="timer-container"  style={{
+          <div className="timer-container"  
+          style={{
             position: "fixed",
-            top: "10px",
+            bottom: "10px",
             right: "10px",
             zIndex: "9999",
-          }}>
+          }}
+          >
+  
            <p className="infoExam">Temps restant: {formatTime(remainingTime)}</p>
         </div>
         )}

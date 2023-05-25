@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 const ExamenCards = (props) => {
   const examensUrl = `http://localhost:3000/editer/Examens/${props.id}`;
   
@@ -32,8 +33,13 @@ const ExamenCards = (props) => {
                     Editer
                   </a>
                 </li>
+          
                 <li>
                   <a className="dropdown-item">Supprimer</a>
+                </li>
+                <li>
+                    <Link className="dropdown-item" to={`/passer/examens/${props.id}`} target="_blank">partager lien </Link>
+  
                 </li>
               </ul>
             </div>
