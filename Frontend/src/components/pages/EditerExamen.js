@@ -186,17 +186,20 @@ const handleCorrectChange = (event) => {
   };
   const handleSubmit = (event) => {
     event.preventDefault();
-
+    if (!questionType) {
+      toast.error("Please select Question Type");
+      return;
+    }
     // Retrieve form input values
-     // Replace with the actual exam ID
-
+    // Replace with the actual exam ID
+  
     // Construct the request body
     const data = {
-      titre:"__blank Question",
+      titre: "__blank Question",
       type: questionType,
       Exam: ExamsId,
     };
-
+  
     // Send the POST request to the endpoint
     fetch('http://localhost:8000/api/questions', {
       method: 'POST',
@@ -207,19 +210,52 @@ const handleCorrectChange = (event) => {
     })
       .then((response) => {
         if (response.ok) {
-          // Handle success, e.g., display a success message
           toast.success("Question added successfully");
-          fetchData();
+          return response.json(); // Parse the response as JSON
         } else {
-          // Handle error response
-          toast.error('Failed to add question');
+          throw new Error('Failed to add question'); // Throw an error if the response is not successful
+        }
+      })
+      .then((responseData) => {
+        const questionId = responseData._id;
+        console.log(questionId);
+  
+        if (questionType === "InputText") {
+          // Add additional logic for question type "InputText"
+  
+          const answerData = {
+            titre: "",
+            note: 0,
+            question: questionId,
+            correct: false,
+          };
+          return fetch('http://localhost:8000/api/answers', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(answerData),
+          });
+        } else {
+          return Promise.resolve(); // Resolve the promise to continue to the next .then block
+        }
+      })
+      .then((answerResponse) => {
+        if (answerResponse && answerResponse.ok) {
+          fetchData();
+          // Handle success for input answer creation
+        } else {
+          // Handle error for input answer creation
         }
       })
       .catch((error) => {
         // Handle network error or other exceptions
         console.error(error);
+        toast.error('Failed to add question');
       });
   };
+  
+  
 
 
   {/*end handle event Add Question*/}
