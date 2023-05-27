@@ -146,7 +146,8 @@ module.exports.updateStudent = asyncHandler(async (req, res)=>{
  
  module.exports.InviterStudent = asyncHandler(async (req, res) => {
    const { emails } = req.body;
-   const link = `http://www.example.com`;
+   const idclasse = req.params.id;
+   const link = `http://localhost:3000/Inviter/${idclasse}`;
    const htmlTemplate = `<html lang="fr">
    <head>
        <meta charset="UTF-8">
@@ -179,6 +180,7 @@ module.exports.updateStudent = asyncHandler(async (req, res)=>{
    await Promise.all(emailPromises);
 
    res.status(201).json({
-      message: "Nous avons envoyé un lien dans votre adresse email, veuillez vérifier s'il vous plaît.",
+      message: "Invitation effectué avec succes.",
    });
+
 });

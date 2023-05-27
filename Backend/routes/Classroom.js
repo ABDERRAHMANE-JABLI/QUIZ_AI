@@ -14,11 +14,11 @@ router.route("/")
 router.route('/count').get(verifyProfandAdmin, TotalClasses);
 
 router.route('/:id')
-    .get(validateObjectId, verifyProfandAdmin, getClasse)
+    .get(validateObjectId, getClasse)
     .delete(validateObjectId, verifyProfandAdmin, deleteClass);
 router.get('/ClassById/:id',getClasseById);
 
-// /api/classroms/:id/students
+// /api/classroms/:idclasse/students
 router.route('/:id/Students').get(getStudentsOfClasse);
 
 module.exports = router;

@@ -29,16 +29,16 @@ const Header = () => {
       </div>
     </div>
   </header>
-  <div class="modal modal-sm fade" id="myModal">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Vous étes ?</h4>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <div className="modal modal-sm fade" id="myModal">
+  <div className="modal-dialog">
+    <div className="modal-content">
+      <div className="modal-header">
+        <h4 className="modal-title">Vous étes ?</h4>
+        <button type="button" className="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body d-flex justify-content-around">
-            <a href="/auth" class="btn btn-primary" style={{"width":"100px"}}>Professeur</a>
-            <a href="/auth/Student" class="btn btn-primary" style={{"width":"100px"}}>Etudiant</a>
+            <a href="/auth" className=" gradient btn " style={{"width":"100px"}}>Professeur</a>
+            <a href="/auth/Student" className="gradient btn " style={{"width":"100px"}}>Etudiant</a>
       </div>
     </div>
   </div>

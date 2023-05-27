@@ -1,10 +1,15 @@
 const router = require("express").Router();
-const {verifyStudent } = require("../middlewares/verifyToken");
-const { SubscribStudent } = require("../controllers/Inscription");
+const {verifyStudent, verifyProfandAdmin } = require("../middlewares/verifyToken");
+const { subscribStudent, unsubscribe_Student } = require("../controllers/Inscription");
 const validateObjectId = require("../middlewares/validateObjectId");
 
-// /api/students/subscrib/:id
+// /api/students/subscrib/:idclasse
 router.route('/subscrib/:id')
-    .get(validateObjectId, verifyStudent,SubscribStudent);
+    .post(validateObjectId, verifyStudent, subscribStudent);
+
+    
+// /api/students/:idStudent/unSubscrib/:idclasse
+router.route('/:etudiant/unSubscrib/:id')
+    .delete(verifyProfandAdmin, unsubscribe_Student);
 
 module.exports = router;

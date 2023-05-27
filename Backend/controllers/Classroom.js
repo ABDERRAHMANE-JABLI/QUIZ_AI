@@ -11,6 +11,7 @@ const fs = require('fs');
  * @method POST
  * @access private only admin or professor
  ---------------------------------------------------*/
+ 
  module.exports.createClassroom = asyncHandler(async (req, res) =>{
     //image validation : 
     if(!req.file){ return res.status(400).json({message: "no image provided"});}
@@ -70,19 +71,15 @@ const fs = require('fs');
 
 
   /**-------------------------------------------------------
- * @desc get classe :
+ * @desc get classe : just title, image and prof :
  * @route /api/classrooms/:id
  * @method GET
- * @access private only admin or the professor who create the classe
+ * @access public 
  ---------------------------------------------------*/
  module.exports.getClasse = asyncHandler(async (req, res) =>{
-      const classe = await Classrooms.findById(req.params.id).sort({createdAt : -1})
-                     .populate("prof",["_id","firstname","lastname"]);
-      if(req.user.role === "admin" || req.user.id === classe.prof.toString()){
-         res.status(200).json(classe);
-      }else{
-         res.status(403).json({ message: "access denied, forbidden" });
-      }
+      const classe = await Classrooms.findById(req.params.id).select("titre image")
+                     .populate("prof",["firstname","lastname"]);
+      res.status(200).json(classe);
  });
    /**-------------------------------------------------------
  * @desc get classe by Id :

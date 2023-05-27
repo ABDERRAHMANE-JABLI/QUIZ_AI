@@ -17,7 +17,7 @@ export function loginUser(user){
             const {data} = await axios.post("http://localhost:8000/api/auth/Login",user);
             dispatch(authActions.login(data));
             localStorage.setItem("userInfo", JSON.stringify(data));
-            window.location.href = '/Analytics';   
+            data.role === "etudiant" ? window.location.href = '/dashboardStudent': window.location.href = '/analytics';   
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -53,6 +53,18 @@ export function verify_Email(userId, token){
             dispatch(authActions.setisEmailverified());
         } catch (error) {
             toast.error(error.response.data.error);
+        }
+    }
+}
+
+export function loginSubscrib(user){
+    return async(dispatch) =>{
+        try {
+            const {data} = await axios.post("http://localhost:8000/api/auth/Login",user);
+            dispatch(authActions.login(data));
+            localStorage.setItem("userInfo", JSON.stringify(data));
+        } catch (error) {
+            toast.error(error.response.data.message);
         }
     }
 }

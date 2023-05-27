@@ -2,7 +2,7 @@ import './style/App.css';
 import './style/bootstrap.min.css';
 import $ from 'jquery'
 
-import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail, Home } from './Routes';
+import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail, Home,Subscrib } from './Routes';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 function App() {
@@ -14,11 +14,11 @@ function App() {
         
         <Route path="/" element={<Home/>}/>
 
-        <Route path="/Auth" element={!user ? <LoginSignin/> : <Navigate to="/Analytics"/>}/>
+        <Route path="/Auth" element={!user || user?.role === "etudiant" ? <LoginSignin/> : <Navigate to="/Analytics"/>}/>
 
         <Route path="/users/:userId/verify/:token" element={!user ? <VerifyEmail/> : <Navigate to="/Analytics"/>}/>
 
-        <Route path="/Analytics" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <Analytics/>}/>
+        <Route path="/Analytics" element={!user || user?.role === "etudiant" ? <Navigate to="/Auth"/> : <Analytics/>}/>
 
         <Route path="/Classes" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <Classes/>}/>
 
@@ -32,7 +32,9 @@ function App() {
 
         <Route path="/passer/examens/:ExamId" element={<PasserExamenPage/>}/>
 
+        <Route path='/Inviter/:idClasse' element={<Subscrib/>}/>
         <Route path="*" element={<Error/>}/> 
+
 
       </Routes>
     </Router>

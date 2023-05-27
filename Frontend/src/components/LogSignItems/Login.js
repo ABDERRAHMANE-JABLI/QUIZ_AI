@@ -5,7 +5,7 @@ import { useState } from "react";
 import {toast} from 'react-toastify'
 import {useDispatch} from "react-redux";
 import "react-toastify/dist/ReactToastify.css"
-import { loginUser } from "../../redux/apiCalls/authApiCall";
+import { loginSubscrib } from "../../redux/apiCalls/authApiCall";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     if (email.trim() === "") return toast.error("Email is required");
     if (password.trim() === "") return toast.error("Password is required");
-    dispatch(loginUser({email, password}));
+    dispatch(loginSubscrib({email, password}));
   };
 
   return (

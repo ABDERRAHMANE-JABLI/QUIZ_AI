@@ -10,6 +10,7 @@ const Classes = () => {
  
   const [loading, setLoading] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(()=>{
     setTimeout(() => {
       dispatch(getClasses());
@@ -53,7 +54,8 @@ const Classes = () => {
         </div>
         <Footer/>
       </div>
-    </div>)}</>
+    </div>)}
+    </>
   )
 }
 

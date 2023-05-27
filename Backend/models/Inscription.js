@@ -18,7 +18,6 @@ const InscriptionSchema = new mongoose.Schema({
 });
 
 //composite primary key :
-InscriptionSchema.index({ etudiant: 1, classe: 1 }, { unique: true });
 
 const Inscriptions = mongoose.model("Inscriptions", InscriptionSchema);
 

@@ -4,12 +4,16 @@ const classeSlice = createSlice({
     name:"classe",
     initialState : {
         classes : [],
+        classe : null,
         NbrClasses : null,
         studentsClasse : [],
     },
     reducers: {
         setClasses(state,action){
             state.classes = action.payload;
+        },
+        setOneClasse(state,action){
+            state.classe = action.payload;
         },
         setNbrClasses(state, action){
             state.NbrClasses = action.payload;
@@ -22,6 +26,9 @@ const classeSlice = createSlice({
         },
         setStudentsClasse(state, action){
             state.studentsClasse = action.payload;
+        },
+        setUnSubscribe(state, action){
+            state.studentsClasse = state.studentsClasse.filter(object => object._id !== action.payload );
         }
     }
 });

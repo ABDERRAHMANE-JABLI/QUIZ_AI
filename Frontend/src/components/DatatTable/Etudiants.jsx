@@ -1,9 +1,13 @@
 import React from 'react'
 import DataTable from 'react-data-table-component'
 import {FaUserAltSlash} from 'react-icons/fa'
-
+import { useDispatch } from 'react-redux'
+import { unSubscrib } from '../../redux/apiCalls/inscriptionApiCall'
+import swal from 'sweetalert'
 
 const TableEtudiants = (props) => {
+
+  const dispatch = useDispatch();
 
     const columns = [
         {
@@ -26,7 +30,7 @@ const TableEtudiants = (props) => {
         },
         {
             name:'Action',
-            cell: (row)=>(<button className='btn btn-outline-danger' title='retirer cet Etudiant' onClick={()=>{alert('etudiant id : '+row._id)}}><FaUserAltSlash/></button>)
+            cell: (row)=>(<button className='btn btn-outline-danger' title='retirer cet Etudiant' onClick={()=>{swal({ title: 'Vous étes sur?', text: "Vous voulez Retirer Cet Etudiant(e)", icon: 'warning', buttons: true, dangerMode: true }).then((ok) => { if (ok) {dispatch(unSubscrib(localStorage.getItem("idClasse"), row._id)); }});}}><FaUserAltSlash/></button>)
         }
       ];
 

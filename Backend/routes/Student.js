@@ -15,8 +15,9 @@ router.route('/profile/:id')
     .get(validateObjectId, getStudent)
     .put(validateObjectId, verifyToken, updateStudent)
     .delete(validateObjectId, verifyTokenAndUser,deleteStudent);
-    // /api/students/inviter
-router.post('/inviter',InviterStudent);
+
+    // /api/students/inviter/:idclasse
+router.post('/inviter/:id',InviterStudent);
 
 router.route("/profile/upload_photo").post(verifyTokenAndUser, photoUpload.single("image"), userUploadPhoto);
 

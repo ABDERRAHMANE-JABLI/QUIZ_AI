@@ -157,6 +157,9 @@ const Profile = () => {
                 </div>
             </div>
             {/** End user info ********************************************************************************** */}
+            <div className="container mt-1">
+              <button className='btn btn-outline-primary'>Changer Mot de Passe</button>
+            </div>
           </Container>
         </div>
         <Footer/>

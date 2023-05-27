@@ -8,28 +8,16 @@ import HomeCard from '../AnalyticsItems/analyticsCard';
 import Loader from './Loader';
 
 const Analytics = () => {
-       /*
-import Loader from './Loader';
-        const [loading, setLoading] = useState(true);
-  useEffect(()=>{
-          setTimeout(() => {
-            dispatch(getStudents(idClasse));
-            window.scrollTo(0, 0);
-            setLoading(false);
-          }, 1000);
+  
+       const [loading, setLoading] = useState(true);
 
-           <>
-    {loading ? (
-        <Loader />
-      ) : (
-        */
         useEffect(()=>{
           setTimeout(() => {
             setLoading(false);
           }, 1000);
         },[]);
 
-    const [loading, setLoading] = useState(true);
+    
     const data = [
                 {annee:"2017",Nbr_Etudiants:105},
                 {annee:"2018",Nbr_Etudiants:120},

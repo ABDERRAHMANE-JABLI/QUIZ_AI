@@ -16,6 +16,17 @@ export function getClasses(){
         }
     }
 }
+// afficher une seule : 
+export function getSingleClasse(idClasse){
+    return async(dispatch) =>{
+        try {
+            const {data} = await axios.get(`http://localhost:8000/api/classrooms/${idClasse}`);
+            dispatch(classeActions.setOneClasse(data));
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    }
+}
 
 // ajouter une nouvelle classe : 
 export function createClasse(newClasse){

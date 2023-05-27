@@ -47,3 +47,4 @@ module.exports = {
     Exams,
     validateData,
 }
+// annotateur / type annotation : text, image, 

@@ -35,7 +35,7 @@ const ModalInviter = () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (emailRegex.test(email)) {
       const [_, domain] = email.split('@');
-      if (domain === 'um5.ac.ma' || domain === 'gmail.com') {
+      if (domain === 'um5.ac.ma' || domain === 'gmail.com' || domain === 'hotmail.com') {
         return true;
       }
     }
@@ -49,7 +49,7 @@ const ModalInviter = () => {
   const handleInviterClick = () => {
     // Send the emailPills array to the endpoint for sending emails
     // Replace the endpointUrl with your actual endpoint URL
-    const endpointUrl = 'http://127.0.0.1:8000/api/students/inviter';
+    const endpointUrl = `http://127.0.0.1:8000/api/students/inviter/${localStorage.getItem("idClasse")}`;
     const loadingToastId = toast.loading("Veuillez patienter pendant que nous invitons les étudiants...", { autoClose: false });
 
 
@@ -60,7 +60,6 @@ const ModalInviter = () => {
     axios.post(endpointUrl, { "emails": emailList })
       .then((response) => {
                toast.update(loadingToastId, { render:`${response.data.message}`, type: toast.TYPE.SUCCESS, autoClose: false });
-
         // console.log(response.data);
       })
       .catch((error) => {

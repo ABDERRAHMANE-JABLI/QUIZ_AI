@@ -9,5 +9,5 @@ export {default as EditerExamen} from './components/pages/EditerExamen'
 export {default as VerifyEmail} from './components/pages/verifyEmail'
 export {default as PasserExamenPage} from './components/pages/PasserExamenPage'
 export {default as Home} from './components/pages/home'
-
+export {default as Subscrib} from './components/pages/Subscrib'
 
