@@ -1,7 +1,5 @@
 import './style/App.css';
 import './style/bootstrap.min.css';
-import $ from 'jquery'
-
 import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail, Home,Subscrib } from './Routes';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
@@ -28,13 +26,13 @@ function App() {
 
         <Route path="/Classes/:idClasse/Examens" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <Examens/>}/>
 
-        <Route path="/editer/examens/:ExamId" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <EditerExamen/>}/>
+        <Route path="/Classes/:idClasse/Examens/Editer/:ExamId" element={!user || user?.role === "etudiant" ? <Navigate to="/"/> : <EditerExamen/>}/>
 
         <Route path="/passer/examens/:ExamId" element={<PasserExamenPage/>}/>
 
         <Route path='/Inviter/:idClasse' element={<Subscrib/>}/>
-        <Route path="*" element={<Error/>}/> 
 
+        <Route path="*" element={<Error/>}/> 
 
       </Routes>
     </Router>

@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 const ExamenCards = (props) => {
-  const examensUrl = `http://localhost:3000/editer/Examens/${props.id}`;
+  
+  const examensUrl = `/Classes/${localStorage.getItem("idClasse")}/Examens/Editer/${props.id}`;
   
   const truncateDescription = (text, limit) => {
     const words = text.split(' ');
