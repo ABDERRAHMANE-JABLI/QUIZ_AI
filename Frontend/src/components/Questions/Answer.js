@@ -170,7 +170,9 @@ const Answer = (props) => {
                                   step="0.1"
                                   value={score}
                                   />
-                                  <span className="input-group-text">pt</span>
+                                  <span className="input-group-text"><a className="removeAnswer" role="button" onClick={handleEditerAnswer}>
+                                 <FaEdit/>
+                               </a></span>
                           </div>
                        </li>
                         )

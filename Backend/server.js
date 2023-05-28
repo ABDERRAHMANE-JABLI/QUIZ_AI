@@ -28,6 +28,7 @@ app.use("/api/questions",require('./routes/QuestionRoutes'));
 app.use("/api/answers",require('./routes/AnswerRoutes'));
 //comment
 app.use("/api/examens",require('./routes/ExamRoutes'));
+app.use('/api/password-reset',require('./routes/passwordResetRoutes'));
 
 
 

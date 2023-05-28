@@ -85,13 +85,13 @@ const EditerExamForm = (props) => {
     <><nav aria-label="breadcrumb">
       <ol className="breadcrumb">
         <li className="breadcrumb-item">
-          <a href="#">Classes</a>
+          <Link to={`/Classes`}>Classes</Link>  
         </li>
          <li className="breadcrumb-item">
           <Link to={`/Classes/${classId}/Examens`}>Quizs</Link>
         </li>
         <li className="breadcrumb-item active" aria-current="page">
-        {titre}
+        {titre}  &gt;
         </li>
       </ol>
     </nav>

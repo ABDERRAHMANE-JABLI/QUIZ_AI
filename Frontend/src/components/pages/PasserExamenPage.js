@@ -10,6 +10,7 @@ const PasserExamenPage = (props) => {
   const endPoint = `http://localhost:8000/api/examens/${ExamId}`;
   const [examData, setExamData] = useState(null);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [shuffledQuestions, setShuffledQuestions] = useState([]);
 
   useEffect(() => {
     fetchExamData(); // Fetch the exam data when the component mounts
@@ -30,9 +31,17 @@ const PasserExamenPage = (props) => {
     }
   }, [examData]);
 
+  useEffect(() => {
+    if (examData && examData.questions) {
+      // Shuffle the questions array randomly
+      const shuffled = [...examData.questions].sort(() => Math.random() - 0.5);
+      setShuffledQuestions(shuffled);
+    }
+  }, [examData]);
+
   const fetchExamData = async () => {
     try {
-      const response = await fetch(endPoint); // Replace "your_api_endpoint" with the actual API endpoint to fetch the exam data
+      const response = await fetch(endPoint); 
       const data = await response.json();
       setExamData(data);
     } catch (error) {
@@ -45,13 +54,12 @@ const PasserExamenPage = (props) => {
     return null;
   }
 
-  const { Durre, titre, description, questions } = examData;
+  const { Durre, titre, description } = examData;
 
-  const cards = questions.map((item) => (
+  const cards = shuffledQuestions.map((item) => (
     <QuestionCard
       key={item._id}
       questionTitre={item.titre}
-      questionDescription={'description'}
       answers={item.answers}
       questionType={item.type}
     />
@@ -72,7 +80,7 @@ const PasserExamenPage = (props) => {
         <div className="d-flex justify-content-between">
           <p className="infoExam"><FcQuestions />&nbsp;&nbsp;{titre}</p>
           <p className="infoExam"><FcAlarmClock />&nbsp;&nbsp;Durée {Durre} min</p>
-          <p className="infoExam"><FcTodoList />&nbsp;&nbsp;{questions.length} Questions</p>
+          <p className="infoExam"><FcTodoList />&nbsp;&nbsp;{shuffledQuestions.length} Questions</p>
         </div>
         <div className="d-flex justify-content-center">
           <p className="infoExam" dangerouslySetInnerHTML={{__html:description}}></p>
