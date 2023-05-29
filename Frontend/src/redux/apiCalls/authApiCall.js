@@ -17,7 +17,7 @@ export function loginUser(user){
             const {data} = await axios.post("http://localhost:8000/api/auth/Login",user);
             dispatch(authActions.login(data));
             localStorage.setItem("userInfo", JSON.stringify(data));
-            data.role === "etudiant" ? window.location.href = '/dashboardStudent': window.location.href = '/analytics';   
+            data.role === "etudiant" ? window.location.href = '/Students-Dashboard': window.location.href = '/Analytics';   
         } catch (error) {
             toast.error(error.response.data.message);
         }
@@ -39,7 +39,20 @@ export function RegistreProf(user){
     return async(dispatch) =>{
         try {
            const{data}  = await axios.post("http://localhost:8000/api/auth/register_prof",{"firstname":user.firstname,"lastname":user.lastname,"email":user.email,"tel":user.tel,"password":user.password});
-            dispatch(authActions.registreProf(data.message));
+            dispatch(authActions.registreUser(data.message));
+        } catch (error) {
+            toast.error(error.response.data.error);
+        }
+    }
+}
+
+// registre Student : ********************************************************************************
+export function RegistreStudent(user){
+    //  alert();
+    return async(dispatch) =>{
+        try {
+           const{data}  = await axios.post("http://localhost:8000/api/auth/register_student",{"firstname":user.firstname,"lastname":user.lastname,"email":user.email,"tel":user.tel,"password":user.password});
+            dispatch(authActions.registreUser(data.message));
         } catch (error) {
             toast.error(error.response.data.error);
         }
@@ -57,6 +70,7 @@ export function verify_Email(userId, token){
     }
 }
 
+// lorsque etudiant veut s'inscrire dans une classe il doit s'indentifier pour cela on applique cette methode
 export function loginSubscrib(user){
     return async(dispatch) =>{
         try {

@@ -18,7 +18,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //cors : 
 app.use(cors());
-// routes ----------------------------------------------------------------------------
+//************************************************************************** */
+// ------------------------------------------------------------ routes ----------------------------------------------------------------------------
 app.use("/api/auth",require('./routes/authRoute'));
 app.use("/api/prof",require('./routes/Professor'));
 app.use("/api/students",require('./routes/Student'));
@@ -26,12 +27,8 @@ app.use("/api/students",require('./routes/Inscription'));
 app.use("/api/Classrooms",require('./routes/Classroom'));
 app.use("/api/questions",require('./routes/QuestionRoutes'));
 app.use("/api/answers",require('./routes/AnswerRoutes'));
-//comment
 app.use("/api/examens",require('./routes/ExamRoutes'));
-app.use('/api/password-reset',require('./routes/passwordResetRoutes'));
-
-
-
+app.use("/api/password",require("./routes/passwordRoute"));
 
 //------------------------------------------------------------------------------------
 

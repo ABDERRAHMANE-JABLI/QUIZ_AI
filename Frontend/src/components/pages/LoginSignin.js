@@ -1,6 +1,7 @@
 import React from 'react'
 import Signin from '../LogSignItems/Sign_in'
 import Login from '../LogSignItems/Login'
+import logo from '../../image/logo_quiz2.png';
 import '../../style/Style.css'
 import { ToastContainer } from 'react-toastify';
 import { FaSignInAlt, FaUserCircle } from 'react-icons/fa'
@@ -9,6 +10,10 @@ const LoginSignin = () => {
     
 
   return (
+    <>
+    <div className="container-fluid d-flex justify-content-center shadow p-2">
+        <img src={logo} className="logo_quiz" alt="quiz ai" width="100px" height="70px" />
+      </div>
     <div className="container">
         <ToastContainer
                       position="top-center"
@@ -36,7 +41,8 @@ const LoginSignin = () => {
                 </div>
             </div>
         </div>
-    </div>           
+    </div>  
+    </>         
   )
 }
 

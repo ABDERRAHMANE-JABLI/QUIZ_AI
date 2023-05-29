@@ -1,6 +1,6 @@
 import './style/App.css';
 import './style/bootstrap.min.css';
-import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail, Home,Subscrib } from './Routes';
+import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail, Home,Subscrib, ForgotPassword, StudentDashboard, ResetPassword } from './Routes';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 function App() {
@@ -14,7 +14,9 @@ function App() {
 
         <Route path="/Auth" element={!user || user?.role === "etudiant" ? <LoginSignin/> : <Navigate to="/Analytics"/>}/>
 
-        <Route path="/users/:userId/verify/:token" element={!user ? <VerifyEmail/> : <Navigate to="/Analytics"/>}/>
+        <Route path="/profs/:userId/verify/:token" element={!user ? <VerifyEmail/> : <Navigate to="/Analytics"/>}/>
+
+        <Route path="/students/:userId/verify/:token" element={!user ? <VerifyEmail/> : <Navigate to="/Students-Dashboard"/>}/>
 
         <Route path="/Analytics" element={!user || user?.role === "etudiant" ? <Navigate to="/Auth"/> : <Analytics/>}/>
 
@@ -31,6 +33,12 @@ function App() {
         <Route path="/passer/examens/:ExamId" element={<PasserExamenPage/>}/>
 
         <Route path='/Inviter/:idClasse' element={<Subscrib/>}/>
+
+        <Route path='/Forgot-Password' element={<ForgotPassword/>}/>
+
+        <Route path='/reset-password/:userId/:token' element={<ResetPassword/>}/>
+
+        <Route path='/Students-Dashboard' element={<StudentDashboard/>}/>
 
         <Route path="*" element={<Error/>}/> 
 

@@ -3,7 +3,7 @@ import {FaGofore, FaSignInAlt} from 'react-icons/fa'
 import { useState } from "react"
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector} from "react-redux"
-import { RegistreProf } from "../../redux/apiCalls/authApiCall"
+import { RegistreProf, RegistreStudent } from "../../redux/apiCalls/authApiCall"
 import swal from 'sweetalert';
 import {toast} from 'react-toastify'
 
@@ -16,13 +16,15 @@ const Signin = () => {
   const [password, setPassregistre] = useState("");
   const [password_repeat, setpassword_repeat] = useState("");
   const [error, setError] = useState(false);
-  
 
+  const [selectedOption, setSelectedOption] = useState('prof');
 
-  
+  const handleOptionChange = (event) => {
+    setSelectedOption(event.target.value);
+  };
 
   const dispatch = useDispatch();
-  const {registreMsgProf} = useSelector(state => state.auth);
+  const {registreMsg} = useSelector(state => state.auth);
   const formRegister = (e) => {
     e.preventDefault();
     if (firstname.trim() === "") return toast.error("Le Nom est Obligatoire");
@@ -35,16 +37,21 @@ const Signin = () => {
         return;
       }
     //   alert(firstname +" "+lastname+" "+email+" "+tel+" "+" "+password)
-    dispatch(RegistreProf({firstname,lastname,email,tel, password}));
+    if(selectedOption === "prof"){
+        dispatch(RegistreProf({firstname,lastname,email,tel, password}));
+    }
+    else{
+        dispatch(RegistreStudent({firstname,lastname,email,tel, password}));
+    }
   };
 
-  if(registreMsgProf){
+  if(registreMsg){
     swal({
-        title:registreMsgProf,
+        title:registreMsg,
         icon:"success"
     }).then(isOk => {
         if(isOk){
-            //login 
+            //window.location.href = '/Auth'
         }
     })
   }
@@ -119,6 +126,29 @@ const Signin = () => {
                                 <div className="invalid-feedback"> 
                                         les deux mots de passe ne sont pas identique
                                 </div>
+                        </div>
+                        <div className="mb-3 d-flex justify-content-around">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" 
+                                    type="radio" 
+                                    name="inlineRadioOptions" 
+                                    id="inlineRadio1" 
+                                    value="prof"
+                                    checked={selectedOption === 'prof'}
+                                    onChange={handleOptionChange}
+                                />
+                            <label class="form-check-label" for="inlineRadio1">Professeur</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" 
+                                    type="radio" 
+                                    name="inlineRadioOptions" 
+                                    id="inlineRadio2" 
+                                    value="etudiant"
+                                    checked={selectedOption === 'etudiant'}
+                                    onChange={handleOptionChange}/>
+                            <label class="form-check-label" for="inlineRadio2">Etudiant</label>
+                        </div>
                         </div>
                         <div className="mb-3">
                             <div className="row">

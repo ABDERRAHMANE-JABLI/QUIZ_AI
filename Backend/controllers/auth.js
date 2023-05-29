@@ -47,7 +47,7 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
     });
     await verifyToken.save();
     // Le lien${process.env.DOMAIN}
-    const link = `http://localhost:3000/users/${new_user._id}/verify/${verifyToken.token}`;
+    const link = `http://localhost:3000/profs/${new_user._id}/verify/${verifyToken.token}`;
     // Putting the link into an html template
     const htmlTemplate = `<!DOCTYPE html>
     <html lang="en">
@@ -65,9 +65,9 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
             <table border="0" cellpadding="0" cellspacing="0" width="100%">
               <tr>
                 <td align="center" bgcolor="#ffffff" style="padding: 20px;">
-                  <h4 style="font-size: 24px; margin-bottom: 10px;">Vérification de votre compte</h4>
+                  <h4 style="font-size: 24px; margin-bottom: 10px;">Vérification de votre compte sur QuiZ AI</h4>
                   <p style="font-size: 16px; margin-bottom: 20px;">Bienvenue ${req.body.firstname} ${req.body.lastname}</p>
-                  <p style="font-size: 16px; margin-bottom: 20px;">Cliquez sur le lien ci-dessous pour vérifier votre compte sur Exams_AI</p>
+                  <p style="font-size: 16px; margin-bottom: 20px;">Cliquez sur le lien ci-dessous pour vérifier votre compte sur QuiZ AI</p>
                   <div style="text-align: center;">
                     <a href="${link}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Vérifier</a>
                   </div>
@@ -97,34 +97,78 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
  ---------------------------------------------------*/
 
 module.exports.registerStudent = asyncHandler(async (req, res) => {
-    // validation data in model: 
-    const {error} = validateUserData(req.body);
-    if(error){
-        // 400 bad request
-        return res.status(400).json({message : error.details[0].message});
-    }
-    let user = await Utilisateurs.findOne({email: req.body.email});
-    if(user){
-        return res.status(400).json({message : "Compte déja existe dans la base de donnée"});
-    }
-    const salt = await bcrypt.genSalt(10);
-    const hashedpass = await bcrypt.hash(req.body.password, salt);
+   // validation data in model: 
+   const {error} = validateUserData(req.body);
+   if(error){
+       // 400 bad request
+       return res.status(400).json({message : error.details[0].message});
+   }
+   let user = await Utilisateurs.findOne({email: req.body.email});
+   if(user){
+       return res.status(400).json({message : "Compte déja existe dans la base de donnée"});
+   }
+   let tel = await Utilisateurs.findOne({tel: req.body.tel});
+   if(tel){
+       return res.status(400).json({message : "Votre numero de telephone deja associer avec autre compte"});
+   }
+   const salt = await bcrypt.genSalt(10);
+   const hashedpass = await bcrypt.hash(req.body.password, salt);
 
-    let new_user = new Utilisateurs({
-        firstname: req.body.firstname,
-        lastname : req.body.lastname,
-        email : req.body.email,
-        tel : req.body.tel,
-        password : hashedpass,
-        role:"etudiant"
-    });
-    
-    try {
-        await new_user.save();
-        res.status(201).json({message : 'Compte créé avec succes'});  
-    } catch (error) {
-        res.status(400).json({message:`Erreur MongooDB Num : ${error.code}`});
-    }
+   let new_user = new Utilisateurs({
+       firstname: req.body.firstname,
+       lastname : req.body.lastname,
+       email : req.body.email,
+       tel : req.body.tel,
+       password : hashedpass,
+       role:"etudiant"
+   });
+   await new_user.save();
+   //la verification de l'email :
+   const verifyToken = new VerificationToken({
+       user : new_user._id,
+       token : crypto.randomBytes(32).toString("hex"),
+   });
+   await verifyToken.save();
+   // Le lien${process.env.DOMAIN}
+   const link = `http://localhost:3000/students/${new_user._id}/verify/${verifyToken.token}`;
+   // Putting the link into an html template
+   const htmlTemplate = `<!DOCTYPE html>
+   <html lang="en">
+   
+   <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Email Template</title>
+   </head>
+   
+   <body>
+     <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px;">
+       <tr>
+         <td align="center" bgcolor="#f5f5f5" style="padding: 20px;">
+           <table border="0" cellpadding="0" cellspacing="0" width="100%">
+             <tr>
+               <td align="center" bgcolor="#ffffff" style="padding: 20px;">
+                 <h4 style="font-size: 24px; margin-bottom: 10px;">Vérification de votre compte sur QuiZ AI</h4>
+                 <p style="font-size: 16px; margin-bottom: 20px;">Bienvenue ${req.body.firstname} ${req.body.lastname}</p>
+                 <p style="font-size: 16px; margin-bottom: 20px;">Cliquez sur le lien ci-dessous pour vérifier votre compte sur QuiZ AI</p>
+                 <div style="text-align: center;">
+                   <a href="${link}" style="display: inline-block; background-color: #007bff; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Vérifier</a>
+                 </div>
+               </td>
+             </tr>
+           </table>
+         </td>
+       </tr>
+     </table>
+   </body>
+   
+   </html>
+   `;
+   await sendEmail(new_user.email, "Verify Your Email", htmlTemplate);
+
+   res.status(201).json({
+       message: "Nous avons envoyé un Lien dans votre Adresse Email, Vérifiez S'il vous plait",
+   });
    
 });
 

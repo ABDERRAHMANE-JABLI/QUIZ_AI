@@ -5,7 +5,7 @@ import { useState } from "react";
 import {toast} from 'react-toastify'
 import {useDispatch} from "react-redux";
 import "react-toastify/dist/ReactToastify.css"
-import { loginSubscrib } from "../../redux/apiCalls/authApiCall";
+import { loginUser } from "../../redux/apiCalls/authApiCall";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +16,7 @@ const Login = () => {
     e.preventDefault();
     if (email.trim() === "") return toast.error("Email is required");
     if (password.trim() === "") return toast.error("Password is required");
-    dispatch(loginSubscrib({email, password}));
+    dispatch(loginUser({email, password}));
   };
 
   return (
@@ -58,8 +58,7 @@ const Login = () => {
                       </div>
                     <hr/>
                   </form>
-                  <Linkbtn text="Mot de Pass Oublier?" link="/compeoublie"/>
-                  <Linkbtn text="Créer un Compte" link="/"/>
+                  <Linkbtn text="Mot de Pass Oublier?" link="/Forgot-Password"/>
               </div>
             </div>
             <div className="col-lg-6 d-none d-lg-flex">

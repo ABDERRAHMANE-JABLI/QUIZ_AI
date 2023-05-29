@@ -126,3 +126,15 @@ a.active{
   margin-right: 10px;
   font-weight: bold;
 }
+
+.container-centered{
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+}
+.centered{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
