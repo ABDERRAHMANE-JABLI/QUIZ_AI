@@ -3,9 +3,10 @@ import { useEffect, useState } from "react";
 import logo from '../../image/logo_quiz2.png';
 import gif from '../../image/email1.gif'
 import { changePassword, getResetLink } from "../../redux/apiCalls/passwordApiCall";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-
+import { ToastContainer } from "react-toastify";
+import {FaTimesCircle} from'react-icons/fa'
 
 const ResetPassword = () => {
   const [password, setPass] = useState("");
@@ -13,6 +14,8 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const {userId, token} = useParams();
 
+  const {invalidLink} = useSelector(state => state.password);
+  
   useEffect(()=>{
     dispatch(getResetLink(userId, token));
   },[]);
@@ -26,12 +29,25 @@ const ResetPassword = () => {
 
   return (
     <section className="container-centered">
+      <ToastContainer
+                      position="top-center"
+                      autoClose={2500}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="colored"
+                      />
         <div className="container-fluid d-flex justify-content-center p-2 shadow">
             <img src={logo} className="logo_quiz" alt="quiz ai" width="100px" height="70px" />
         </div>
     
         <div className="centered">
-            <img src={gif} alt="verify email" width="250px" height="250px"/>
+          {invalidLink ? <h3 className="text-danger"><FaTimesCircle/>  {invalidLink}</h3> :
+           <><img src={gif} alt="verify email" width="250px" height="250px"/>
             <h3 className="text-capitaliaze">Votre Nouveau Mot de passe</h3>
             <form onSubmit={formSubmitHandler}>
                 <div>
@@ -47,6 +63,7 @@ const ResetPassword = () => {
                 Valider
                 </button>
             </form>
+            </>}
         </div>
       
     </section>

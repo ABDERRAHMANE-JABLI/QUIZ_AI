@@ -26,7 +26,7 @@ module.exports.sendResetPasswordLinkCtrl = asyncHandler(async (req,res) => {
    // 2. Get the Utilisateurs from DB by email
    const utilisateur = await Utilisateurs.findOne({ email: req.body.email });
    if(!utilisateur) {
-    return res.status(404).json({ message: "Utilisateur n'existe pas!" });
+    return res.status(404).json({ message: "Email Utilisateur n'existe pas !" });
    }
 
    // 3. Creating VerificationToken
