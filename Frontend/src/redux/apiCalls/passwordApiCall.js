@@ -1,6 +1,7 @@
 import {toast} from 'react-toastify'
 import axios from "axios"
 import swal from 'sweetalert'
+import { passwordActions } from '../slices/passwordSlice';
 
 // mot de pass oublié : ********************************************************************************
 export function sendResetLink(email){
@@ -12,7 +13,8 @@ export function sendResetLink(email){
            //toast.success(data.message);
         } catch (error) {
             toast.error(error.response.data.message);
-            window.location.href = '/Auth'
+            console.log(error.response.data.message);
+            //window.location.href = '/Auth'
         }
     }
 }
@@ -22,13 +24,13 @@ export function sendResetLink(email){
 // /reset-password/:userId/:token
 export function getResetLink(userid, token){
     //  alert();
-    return async() =>{
+    return async(dispatch) =>{
         try {
            const{data}  = await axios.get(`http://localhost:8000/api/password/reset-password/${userid}/${token}`);
            console.log(data.message);
         } catch (error) {
-            toast.error(error.response.data.message);
-            window.location.href = '/Auth'
+            dispatch(passwordActions.setInvalideLink(error.response.data.message));
+            //window.location.href = '/Auth'
         }
     }
 }
@@ -48,7 +50,7 @@ export function changePassword(userid, token, password){
         })
         } catch (error) {
             toast.error(error.response.data.message);
-            window.location.href = '/Auth'
+            //window.location.href = '/Auth'
         }
     }
 }

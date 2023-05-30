@@ -4,7 +4,7 @@ import logo from '../../image/logo_quiz2.png';
 import gif from '../../image/email1.gif'
 import { useDispatch } from "react-redux";
 import { sendResetLink } from "../../redux/apiCalls/passwordApiCall";
-
+import { ToastContainer } from "react-toastify";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -19,6 +19,18 @@ const ForgotPassword = () => {
 
   return (
     <section className="container-centered">
+      <ToastContainer
+                      position="top-center"
+                      autoClose={2500}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="colored"
+                      />
         <div className="container-fluid d-flex justify-content-center p-2 shadow">
             <img src={logo} className="logo_quiz" alt="quiz ai" width="100px" height="70px" />
         </div>
