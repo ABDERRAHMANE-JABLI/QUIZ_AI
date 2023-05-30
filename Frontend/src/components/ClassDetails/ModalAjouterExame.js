@@ -110,7 +110,7 @@ const handleFormSubmit = async (event) => {
     // For example:
     toast.dismiss(loadingToastId);
     $('#closeBtn').click();
-    navigate(`/editer/examens/${examen.data._id}`);
+    navigate(`/Classes/${idClasse}/Examens/Editer/${examen.data._id}`);
   }, 3000);
   
   //  console.log(examen.data);

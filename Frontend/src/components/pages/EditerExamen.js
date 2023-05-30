@@ -218,6 +218,7 @@ const handleCorrectChange = (event) => {
       })
       .then((responseData) => {
         const questionId = responseData._id;
+        fetchData();
         console.log(questionId);
   
         if (questionType === "InputText") {

@@ -4,6 +4,9 @@ import QuestionCard from "../PasserExamen/QuestionCard";
 import { Footer } from '../HomeItems/items';
 import logo from '../../image/logo_quiz2.png';
 import { useParams } from "react-router-dom";
+import Radio from "../PasserExamen/answers/radio";
+import Checkbox from "../PasserExamen/answers/checkbox";
+import TextArea from "../PasserExamen/answers/textArea";
 
 const PasserExamenPage = (props) => {
   const { ExamId } = useParams();
@@ -34,14 +37,17 @@ const PasserExamenPage = (props) => {
   useEffect(() => {
     if (examData && examData.questions) {
       // Shuffle the questions array randomly
-      const shuffled = [...examData.questions].sort(() => Math.random() - 0.5);
+      const shuffled = [...examData.questions].map((question) => {
+        const shuffledAnswers = [...question.answers].sort(() => Math.random() - 0.5);
+        return { ...question, answers: shuffledAnswers };
+      });
       setShuffledQuestions(shuffled);
     }
   }, [examData]);
 
   const fetchExamData = async () => {
     try {
-      const response = await fetch(endPoint); 
+      const response = await fetch(endPoint);
       const data = await response.json();
       setExamData(data);
     } catch (error) {
@@ -58,11 +64,47 @@ const PasserExamenPage = (props) => {
 
   const cards = shuffledQuestions.map((item) => (
     <QuestionCard
+      id={item._id}
       key={item._id}
       questionTitre={item.titre}
-      answers={item.answers}
       questionType={item.type}
-    />
+      questionId={item._id}
+    >
+      {item.answers.map((answer) => {
+        switch (item.type) {
+          case 'ChoixUnique':
+            return (
+              <Radio
+                key={answer._id}
+                id={answer._id}
+                text={answer.titre}
+                questionType={item.type}
+                questionId={item._id}
+              />
+            );
+          case 'ChoixMultiple':
+            return (
+              <Checkbox
+                key={answer._id}
+                id={answer._id}
+                text={answer.titre}
+                questionType={item.type}
+                questionId={item._id}
+              />
+            );
+          default:
+            return (
+              <TextArea
+                key={answer._id}
+                id={answer._id}
+                text={answer.titre}
+                questionType={item.type}
+                questionId={item._id}
+              />
+            );
+        }
+      })}
+    </QuestionCard>
   ));
 
   const formatTime = (timeInSeconds) => {
@@ -70,6 +112,49 @@ const PasserExamenPage = (props) => {
     const seconds = timeInSeconds % 60;
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
+
+ const handleSubmit = (event) => {
+  event.preventDefault();
+
+  const userAnswers = shuffledQuestions.map((question) => {
+    const questionType = question.type;
+    const questionId = question._id;
+    let answersSelected;
+
+    switch (questionType) {
+      case 'ChoixUnique':
+        const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+        const idAnswer = selectedOption ? selectedOption.value : null;
+        answersSelected = { idAnswer };
+        break;
+
+      case 'ChoixMultiple':
+        const selectedCheckboxes = Array.from(document.querySelectorAll(`input[name="${questionId}"]:checked`));
+        const selectedIds = selectedCheckboxes.map((checkbox) => checkbox.value);
+        answersSelected = selectedIds.map((idAnswer) => ({ idAnswer }));
+        break;
+
+      case 'InputText':
+        const textInput = document.querySelector(`input[name="${questionId}"]`);
+        const text = textInput ? textInput.value : '';
+        answersSelected = { text };
+        break;
+
+      default:
+        break;
+    }
+
+    return {
+      QuestionType: questionType,
+      QuestionId: questionId,
+      answersSelected: answersSelected,
+    };
+  });
+
+  console.log(JSON.stringify(userAnswers));
+  // Perform any necessary logic with the user's answers
+};
+
 
   return (
     <>
@@ -83,23 +168,23 @@ const PasserExamenPage = (props) => {
           <p className="infoExam"><FcTodoList />&nbsp;&nbsp;{shuffledQuestions.length} Questions</p>
         </div>
         <div className="d-flex justify-content-center">
-          <p className="infoExam" dangerouslySetInnerHTML={{__html:description}}></p>
+          <p className="infoExam" dangerouslySetInnerHTML={{ __html: description }}></p>
         </div>
         {remainingTime !== null && (
-          <div className="timer-container"  
-          style={{
-            position: "fixed",
-            bottom: "10px",
-            right: "10px",
-            zIndex: "9999",
-          }}
+          <div
+            className="timer-container"
+            style={{
+              position: "fixed",
+              bottom: "10px",
+              right: "10px",
+              zIndex: "9999",
+            }}
           >
-  
-           <p className="infoExam">Temps restant: {formatTime(remainingTime)}</p>
-        </div>
+            <p className="infoExam">Temps restant: {formatTime(remainingTime)}</p>
+          </div>
         )}
         <div className="row mt-3">
-          <form>
+          <form onSubmit={handleSubmit}>
             {cards}
             <input type="submit" value="Submit" className="btn btn-primary float-end" />
           </form>

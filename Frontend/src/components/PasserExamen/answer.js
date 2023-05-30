@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 const Answer = (props) => {
-  const { text, questionType } = props;
+  const { text, questionType, questionId, formValues, handleAnswerChange } = props;
 
   return (
     <div>
@@ -13,13 +13,15 @@ const Answer = (props) => {
             return (
               <div className="form-check">
                 <input
-                  id="question1Choice1"
+                  id={props.id}
                   className="form-check-input"
                   type="radio"
-                  name="question1"
-                  defaultValue="choice1"
+                  name={questionId}
+                  value={props.id}
+                  checked={formValues[questionId] === props.id}
+                  onChange={handleAnswerChange}
                 />
-                <label className="form-check-label" htmlFor="question1Choice1">
+                <label className="form-check-label" htmlFor={props.id}>
                   {text}
                 </label>
               </div>
@@ -30,13 +32,15 @@ const Answer = (props) => {
             return (
               <div className="form-check">
                 <input
-                  id="question2Choice1"
+                  id={props.id}
                   className="form-check-input"
                   type="checkbox"
-                  name="question2[]"
-                  defaultValue="choice1"
+                  name={questionId}
+                  value={props.id}
+                  checked={formValues[questionId] && formValues[questionId].includes(props.id)}
+                  onChange={handleAnswerChange}
                 />
-                <label className="form-check-label" htmlFor="question2Choice1">
+                <label className="form-check-label" htmlFor={props.id}>
                   {text}
                 </label>
               </div>
@@ -46,9 +50,11 @@ const Answer = (props) => {
           default: {
             return (
               <ReactQuill
-                id="question2Choice1"
+                id={props.id}
                 className="form-control"
-                defaultValue={text}
+                name={questionId}
+                value={formValues[questionId] || ""}
+                onChange={handleAnswerChange}
               />
             );
           }
