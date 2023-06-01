@@ -453,7 +453,7 @@ const handleCorrectChange = (event) => {
               </Form.Group>
               <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
                 <Form.Label>Note</Form.Label>
-                <Form.Control type="number" min={0} value={note} onChange={handleNoteChange} />
+                <Form.Control type="number" min={0} step={0.1} value={note} onChange={handleNoteChange} />
               </Form.Group>
               <Form.Check
                 type="checkbox"

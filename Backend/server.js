@@ -29,6 +29,8 @@ app.use("/api/questions",require('./routes/QuestionRoutes'));
 app.use("/api/answers",require('./routes/AnswerRoutes'));
 app.use("/api/examens",require('./routes/ExamRoutes'));
 app.use("/api/password",require("./routes/passwordRoute"));
+app.use("/api/submitExam",require("./routes/SubmitExamRoutes"));
+
 
 //------------------------------------------------------------------------------------
 

@@ -11,7 +11,7 @@ import { ToastContainer } from 'react-toastify';
 const Examens = () => {
   const { idClasse } = useParams();
   const [examensData, setExamensData] = useState([]);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(3);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 

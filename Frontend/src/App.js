@@ -1,6 +1,6 @@
 import './style/App.css';
 import './style/bootstrap.min.css';
-import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,EditerExamen,VerifyEmail, Home,Subscrib, ForgotPassword, StudentDashboard, ResetPassword } from './Routes';
+import {Error,Analytics,Classes,Profile, LoginSignin,Students,Examens,PasserExamenPage,ResultOffQuiz,EditerExamen,VerifyEmail, Home,Subscrib, ForgotPassword, StudentDashboard, ResetPassword } from './Routes';
 import {BrowserRouter as Router, Routes, Route, Navigate} from 'react-router-dom'
 import { useSelector } from 'react-redux';
 function App() {
@@ -39,6 +39,9 @@ function App() {
         <Route path='/reset-password/:userId/:token' element={<ResetPassword/>}/>
 
         <Route path='/Students-Dashboard' element={<StudentDashboard/>}/>
+        <Route path='/resultOffQuiz/:ExamId' element={<ResultOffQuiz/>}/>
+
+        
 
         <Route path="*" element={<Error/>}/> 
 

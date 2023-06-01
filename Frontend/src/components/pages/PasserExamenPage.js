@@ -13,6 +13,7 @@ const PasserExamenPage = (props) => {
   const endPoint = `http://localhost:8000/api/examens/${ExamId}`;
   const [examData, setExamData] = useState(null);
   const [remainingTime, setRemainingTime] = useState(null);
+  const [isDanger, setDanger] = useState(false);
   const [shuffledQuestions, setShuffledQuestions] = useState([]);
 
   useEffect(() => {
@@ -44,6 +45,24 @@ const PasserExamenPage = (props) => {
       setShuffledQuestions(shuffled);
     }
   }, [examData]);
+
+  useEffect(() => {
+    if (remainingTime !== null) {
+      const minutes = Math.floor(remainingTime / 60);
+      if (minutes <= 5) {
+        setDanger(true);
+      }
+    }
+  }, [remainingTime]);
+  useEffect(() => {
+    if (remainingTime !== null) {
+      const minutes = Math.floor(remainingTime / 60);
+       const seconds = remainingTime % 60;
+      if (minutes <= 0 && seconds<=0) {
+        setRemainingTime(0);
+      }
+    }
+  }, [remainingTime]);
 
   const fetchExamData = async () => {
     try {
@@ -113,48 +132,46 @@ const PasserExamenPage = (props) => {
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
- const handleSubmit = (event) => {
-  event.preventDefault();
+  const handleSubmit = (event) => {
+    event.preventDefault();
 
-  const userAnswers = shuffledQuestions.map((question) => {
-    const questionType = question.type;
-    const questionId = question._id;
-    let answersSelected;
+    const userAnswers = shuffledQuestions.map((question) => {
+      const questionType = question.type;
+      const questionId = question._id;
+      let answersSelected;
 
-    switch (questionType) {
-      case 'ChoixUnique':
-        const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
-        const idAnswer = selectedOption ? selectedOption.value : null;
-        answersSelected = { idAnswer };
-        break;
+      switch (questionType) {
+        case 'ChoixUnique':
+          const selectedOption = document.querySelector(`input[name="${questionId}"]:checked`);
+          const Answer = selectedOption ? selectedOption.value : null;
+          answersSelected = { Answer };
+          break;
 
-      case 'ChoixMultiple':
-        const selectedCheckboxes = Array.from(document.querySelectorAll(`input[name="${questionId}"]:checked`));
-        const selectedIds = selectedCheckboxes.map((checkbox) => checkbox.value);
-        answersSelected = selectedIds.map((idAnswer) => ({ idAnswer }));
-        break;
+        case 'ChoixMultiple':
+          const selectedCheckboxes = Array.from(document.querySelectorAll(`input[name="${questionId}"]:checked`));
+          const selectedIds = selectedCheckboxes.map((checkbox) => checkbox.value);
+          answersSelected = selectedIds.map((Answer) => ({ Answer }));
+          break;
 
-      case 'InputText':
-        const textInput = document.querySelector(`input[name="${questionId}"]`);
-        const text = textInput ? textInput.value : '';
-        answersSelected = { text };
-        break;
+        case 'InputText':
+          const textInput = document.querySelector(`input[name="${questionId}"]`);
+          const text = textInput ? textInput.value : '';
+          answersSelected = { text };
+          break;
 
-      default:
-        break;
-    }
+        default:
+          break;
+      }
 
-    return {
-      QuestionType: questionType,
-      QuestionId: questionId,
-      answersSelected: answersSelected,
-    };
-  });
+      return {
+        question: questionId,
+        reponse: answersSelected,
+      };
+    });
 
-  console.log(JSON.stringify(userAnswers));
-  // Perform any necessary logic with the user's answers
-};
-
+    console.log(JSON.stringify(userAnswers));
+    // Perform any necessary logic with the user's answers
+  };
 
   return (
     <>
@@ -180,7 +197,7 @@ const PasserExamenPage = (props) => {
               zIndex: "9999",
             }}
           >
-            <p className="infoExam">Temps restant: {formatTime(remainingTime)}</p>
+            <p className={isDanger ? `text-danger` : `text-success`}>Temps restant: {formatTime(remainingTime)}</p>
           </div>
         )}
         <div className="row mt-3">

@@ -13,4 +13,6 @@ export {default as Subscrib} from './components/pages/Subscrib'
 export {default as ForgotPassword} from './components/pages/forgotPassword'
 export {default as ResetPassword} from './components/pages/resetPassword'
 export {default as StudentDashboard} from './components/pages/studentDashboard'
+export {default as ResultOffQuiz} from './components/pages/ResultOffQuiz'
+
 
