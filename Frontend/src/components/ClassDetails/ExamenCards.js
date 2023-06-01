@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 const ExamenCards = (props) => {
   
   const examensUrl = `/Classes/${localStorage.getItem("idClasse")}/Examens/Editer/${props.id}`;
+  const voirResultUrl =  `/Classes/${localStorage.getItem("idClasse")}/ExamensResultat/${props.id}`;
   
   const truncateDescription = (text, limit) => {
     const words = text.split(' ');
@@ -41,6 +42,11 @@ const ExamenCards = (props) => {
                 <li>
                     <Link className="dropdown-item" to={`/passer/examens/${props.id}`} target="_blank">partager lien </Link>
   
+                </li>
+                <li>
+                  <a className="dropdown-item" href={voirResultUrl}>
+                    voirs les submissions
+                  </a>
                 </li>
               </ul>
             </div>

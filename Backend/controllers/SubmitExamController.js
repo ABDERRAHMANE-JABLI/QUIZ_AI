@@ -34,15 +34,40 @@ const submitExam = async (req, res) => {
  * @method GET
  * @access on_professeur
  ---------------------------------------------------*/
-const getExamSubmition = async (req,res)=>{
+const getExamSubmitionByExamId = async (req,res)=>{
   try {
     const { exam } = req.params;
 
     // Retrieve exam submissions for the specified examId
-    const submissions = await UserExamSubmission.findOne({ exam })
+    const submissions = await UserExamSubmission.find({ exam })
   .populate({
     path: 'student',
-    select: 'firstname lastname email', // Exclude the password field
+    select: 'firstname lastname email photo', // Exclude the password field
+  })
+  .populate({
+    path: 'exam',
+    select: 'titre description',
+  })
+  .select('-answers')
+  .exec();
+
+    res.status(200).json(submissions);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Server error' });
+  }
+
+} 
+
+const getExamSubmitionByExamAndStudent = async (req,res)=>{
+  try {
+    const { exam ,student } = req.params;
+
+    // Retrieve exam submissions for the specified examId
+    const submissions = await UserExamSubmission.findOne({ student,exam})
+  .populate({
+    path: 'student',
+    select: 'firstname lastname email photo', // Exclude the password field
   })
   .populate({
     path: 'exam',
@@ -69,5 +94,6 @@ const getExamSubmition = async (req,res)=>{
 
 module.exports = {
   submitExam,
-  getExamSubmition,
+  getExamSubmitionByExamId,
+  getExamSubmitionByExamAndStudent,
 };

@@ -5,7 +5,10 @@ const  SubmitExamController = require('../controllers/SubmitExamController');
 
 router.post('/',SubmitExamController.submitExam);
 
-router.get('/:exam',SubmitExamController.getExamSubmition);
+router.get('/:exam',SubmitExamController.getExamSubmitionByExamId);
+
+router.get('/:student/:exam',SubmitExamController.getExamSubmitionByExamAndStudent);
+
 
 
 
