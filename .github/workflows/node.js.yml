@@ -21,7 +21,7 @@ jobs:
       run: |
         cd Backend
         npm install
-        npm run serve
+        ./node_modules/.bin/nodemon server.js
     - name: Set up frontend
       run: |
         cd Frontend
