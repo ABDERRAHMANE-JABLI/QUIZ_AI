@@ -3,6 +3,7 @@ import { FcQuestions } from 'react-icons/fc';
 import logo from '../../image/logo_quiz2.png';
 import ReactQuill from "react-quill";
 import { Modal } from "react-bootstrap";
+import Loader from "../pages/Loader";
 
 const ResultOffQuizModal = (props) => {
   const { ExamId, studentId, onHide } = props;
@@ -45,7 +46,7 @@ const ResultOffQuizModal = (props) => {
   };
 
   if (!data) {
-    return <p>Loading data...</p>;
+    return <Loader/> ;
   }
 
   return (

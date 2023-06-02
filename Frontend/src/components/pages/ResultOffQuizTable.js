@@ -8,6 +8,8 @@ import { Link, useParams } from 'react-router-dom';
 const ResultOffQuizTable = () => {
     const { examId } = useParams();
     const [data, setData] = useState([]);
+    const [currentClass,setCurrentClass]=useState('');
+    const [currentQuiz,setCurrentQuiz]=useState('');
   
     useEffect(() => {
       const fetchData = async () => {
@@ -15,13 +17,15 @@ const ResultOffQuizTable = () => {
           const response = await fetch(`http://localhost:8000/api/submitExam/${examId}`);
           const result = await response.json();
           setData(result);
+          setCurrentClass(result[0].exam.classe);
+          setCurrentQuiz(result[0].exam.titre);
         } catch (error) {
           console.error(error);
         }
       };
   
       // Fetch data every 3 seconds
-      const interval = setInterval(fetchData, 3000);
+      const interval = setInterval(fetchData, 0);
   
       // Clean up the interval when the component unmounts
       return () => clearInterval(interval);
@@ -54,13 +58,13 @@ const ResultOffQuizTable = () => {
                     <Link to="/Classes">Classes</Link>
                     </li>
                     <li className="breadcrumb-item">
-                    <Link to="/Classes">Quizs</Link>
+                    <Link to={`/Classes/${currentClass}/Examens`}>Quizs</Link>
                     </li>
                     <li className="breadcrumb-item">
-                    <Link to="/Classes">Submition</Link>
+                       Soumission
                     </li>
                     <li className="breadcrumb-item active" aria-current="page">
-                      <Link to="/Classes">Quizs</Link>
+                      {currentQuiz} {'>'}
                     </li>
                 </ol>
                 </nav>

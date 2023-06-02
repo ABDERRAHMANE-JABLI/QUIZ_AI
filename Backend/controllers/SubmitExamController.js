@@ -46,7 +46,7 @@ const getExamSubmitionByExamId = async (req,res)=>{
   })
   .populate({
     path: 'exam',
-    select: 'titre description',
+    select: 'titre description classe',
   })
   .select('-answers')
   .exec();

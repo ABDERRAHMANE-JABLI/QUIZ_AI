@@ -12,7 +12,7 @@ const ExamSubmition = (props) => {
     {
       name: 'photo',
       selector: 'student.photo.url',
-      cell: (row) => <img width="10px" height="10px" src={row.student.photo.url} alt={row.student.firstname} />,
+      cell: (row) => <img style={{ width: '40px', height: '40px' }} src={row.student.photo.url} alt={row.student.firstname} />,
     },
     {
       name: 'Nom  ',
@@ -23,44 +23,44 @@ const ExamSubmition = (props) => {
       name: 'Prénom',
       selector: (row) => `${row.student.lastname}`,
       sortable: true,
-    },
-    {
+    },{
       name: 'Action',
       cell: (row) => (
-        <div className="justify-content-evenly bd-highlight">
-        <button
-          className="btn btn-outline-danger p-2 bd-highlight"
-          title="retirer cet Etudiant"
-          onClick={() => {
-            swal({
-              title: 'Vous étes sur?',
-              text: 'Vous voulez Retirer ce record ?',
-              icon: 'warning',
-              buttons: true,
-              dangerMode: true,
-            }).then((ok) => {
-              if (ok) {
-                // Handle removing the record
-              }
-            });
-          }}
-        >
-          <FaTrash />
-        </button>
-        <button
-          className="btn btn-outline-info p-2 bd-highlight"
-          title="voir Soumission"
-          onClick={() => {
-            setSelectedExamId(row.exam._id);
-            setSelectedStudentId(row.student._id);
-          }}
-        >
-          <FaEye />
-        </button>
-      </div>
-      
+        <div className="d-flex justify-content-center">
+          <button
+            className="btn btn-outline-danger p-2"
+            title="retirer cet Etudiant"
+            style={{ marginRight:'20px' }}
+            onClick={() => {
+              swal({
+                title: 'Vous étes sur?',
+                text: 'Vous voulez Retirer ce record ?',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+              }).then((ok) => {
+                if (ok) {
+                  // Handle removing the record
+                }
+              });
+            }}
+          >
+            <FaTrash />
+          </button>
+          <button
+            className="btn btn-outline-info p-2"
+            title="voir Soumission"
+            onClick={() => {
+              setSelectedExamId(row.exam._id);
+              setSelectedStudentId(row.student._id);
+            }}
+          >
+            <FaEye />
+          </button>
+        </div>
       ),
     },
+    
   ];
 
   return (

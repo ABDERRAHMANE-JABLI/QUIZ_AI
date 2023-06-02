@@ -13,7 +13,7 @@ const sendEmail = require("../utils/sendEmail");
  * @access public
  ---------------------------------------------------*/
 
-module.exports.registerProf = asyncHandler(async (req, res) => {
+module.exports.registre = asyncHandler(async (req, res) => {
     // validation data in model: 
     const {error} = validateUserData(req.body);
     if(error){
@@ -37,7 +37,7 @@ module.exports.registerProf = asyncHandler(async (req, res) => {
         email : req.body.email,
         tel : req.body.tel,
         password : hashedpass,
-        role:"prof"
+        role:req.body.role
     });
     await new_user.save();
     //la verification de l'email :

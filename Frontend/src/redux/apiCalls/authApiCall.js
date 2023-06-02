@@ -34,11 +34,11 @@ export function logoutUser(){
 }
 
 // registre professor : ********************************************************************************
-export function RegistreProf(user){
-    //  alert();
+export function Registre(user){
+   console.log(user);
     return async(dispatch) =>{
         try {
-           const{data}  = await axios.post("http://localhost:8000/api/auth/register_prof",{"firstname":user.firstname,"lastname":user.lastname,"email":user.email,"tel":user.tel,"password":user.password});
+           const{data}  = await axios.post("http://localhost:8000/api/auth/registre",{"firstname":user.firstname,"lastname":user.lastname,"email":user.email,"tel":user.tel,"password":user.password,"role":user.role});
             dispatch(authActions.registreUser(data.message));
         } catch (error) {
             toast.error(error.response.data.error);

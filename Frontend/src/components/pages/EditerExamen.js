@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { Sidebar, Footer, Header, Container } from '../components';
 import EditerExamForm from '../ClassDetails/EditExamenForm';
 import QuestionContainer from '../Questions/Question';
-import { useLocation } from 'react-router-dom';
 import {toast,ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Answer from '../Questions/Answer'; 
@@ -10,16 +9,25 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import '../../style/ButtonAjouter.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 
 
 
 
 const EditerExamen = () => {
-  // const location = useLocation();
-  // const { Examen } = location.state;
+ const [toastId, setToastId] = useState(null);
+ const navigate = useNavigate()
+
+
+  const showToast = (message) => {
+    if (toastId) {
+      toast.dismiss(toastId); // Dismiss existing toast if any
+    }
+    setToastId(toast.info(message));
+  };
   const { ExamId } = useParams();
+  // const history = useHistory();
   const ExamsId =ExamId;
 
   const endPoint = `http://localhost:8000/api/questions/${ExamId}/questions`;
@@ -50,18 +58,33 @@ const handleCorrectChange = (event) => {
 
   useEffect(() => {
     fetchData();
+    if(!data){
+      navigate('/*')
+    }
   }, []);
+
+
 
   const fetchData = () => {
     fetch(endPoint)
-      .then(response => response.json())
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Failed to fetch data');
+        }
+      })
       .then(data => {
         setData(data);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
+        toast.error('Invalid URL');
+        window.location.href = '/*';
       });
   };
+ 
+
 
   const handleDeleteAnswer = (answerId) => {
     fetch(`http://localhost:8000/api/answers/${answerId}`, {
@@ -71,7 +94,7 @@ const handleCorrectChange = (event) => {
         if (response.ok) {
           // Answer deleted successfully
           // Fetch the updated data
-          toast.success("Answer Deletd with success");
+          showToast("Answer Deleted with success");
           fetchData();
         } else {
           // Handle error response
@@ -130,8 +153,8 @@ const handleCorrectChange = (event) => {
         if (response.ok) {
           // Handle successful response
           // e.g., show a success message, update the state, etc.
-          toast.success("Answer modified with success");
           fetchData();
+          toast.success("Answer modified with success");
           setShow(false);
         } else {
           // Handle error response
@@ -354,7 +377,7 @@ const handleCorrectChange = (event) => {
     <div id="content">
       <Header />
       <Container>
-      
+         
         <ToastContainer
           position="top-center"
           autoClose={2500}
@@ -406,34 +429,34 @@ const handleCorrectChange = (event) => {
             </div>
           </div>
         </div>
-        <div className="dropdown circle-button">
-              <button
-                className="btn btn-primary mb-3 addQuestion "
-                type="button"
-                id="dropdownMenuButton1"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-              >
-                +
-              </button>
-              <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Another action
-                  </a>
-                </li>
-                <li>
-                  <a className="dropdown-item" href="#">
-                    Something else here
-                  </a>
-                </li>
-              </ul>
-            </div>
+          {/* <div className="dropdown circle-button">
+                <button
+                  className="btn btn-primary mb-3 addQuestion "
+                  type="button"
+                  id="dropdownMenuButton1"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  +
+                </button>
+                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Action
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Another action
+                    </a>
+                  </li>
+                  <li>
+                    <a className="dropdown-item" href="#">
+                      Something else here
+                    </a>
+                  </li>
+                </ul>
+              </div> */}
         {/* <div className="circle-button">
           <button className="btn btn-primary mb-3 addQuestion">+</button>
 

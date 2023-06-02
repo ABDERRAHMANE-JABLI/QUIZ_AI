@@ -38,8 +38,6 @@ const UtilisateursSchema = new mongoose.Schema({
         type: String,
         trim : true,
         unique: true,
-        maxlength: 10,
-        required : true
     },
     password : {
         type : String,
@@ -78,6 +76,7 @@ function validateUserData(obj){
         email : joi.string().trim().max(50).required().email(),
         tel : joi.string().trim().min(10).max(10).required(),
         password : joi.string().trim().required(),
+        role : joi.string().trim().required(),
     });
     return shema.validate(obj);
 }

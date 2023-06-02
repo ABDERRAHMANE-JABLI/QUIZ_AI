@@ -3,7 +3,7 @@ import {FaGofore, FaSignInAlt} from 'react-icons/fa'
 import { useState } from "react"
 import {Link} from 'react-router-dom'
 import { useDispatch, useSelector} from "react-redux"
-import { RegistreProf, RegistreStudent } from "../../redux/apiCalls/authApiCall"
+import { Registre } from "../../redux/apiCalls/authApiCall"
 import swal from 'sweetalert';
 import {toast} from 'react-toastify'
 
@@ -16,8 +16,7 @@ const Signin = () => {
   const [password, setPassregistre] = useState("");
   const [password_repeat, setpassword_repeat] = useState("");
   const [error, setError] = useState(false);
-
-  const [selectedOption, setSelectedOption] = useState('prof');
+  const [role, setSelectedOption] = useState('');
 
   const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
@@ -32,17 +31,14 @@ const Signin = () => {
     if (email.trim() === "") return toast.error("L'Email est Obligatoire");
     if (tel.trim() === "") return toast.error("Le N° du Tel est Obligatoire");
     if (password.trim() === "") return toast.error("Le Mot de Pass est Obligatoire");
+    if (role.trim() === "") return toast.error("selectionnez le type de votre compte");
     if (password.trim() !== password_repeat.trim()) {
         setError(true); // Set the error state to true if passwords don't match
         return;
       }
-    //   alert(firstname +" "+lastname+" "+email+" "+tel+" "+" "+password)
-    if(selectedOption === "prof"){
-        dispatch(RegistreProf({firstname,lastname,email,tel, password}));
-    }
-    else{
-        dispatch(RegistreStudent({firstname,lastname,email,tel, password}));
-    }
+      dispatch(Registre({firstname,lastname,email,tel, password,role}));
+
+   
   };
 
   if(registreMsg){
@@ -51,7 +47,7 @@ const Signin = () => {
         icon:"success"
     }).then(isOk => {
         if(isOk){
-            //window.location.href = '/Auth'
+            window.location.href = '/Auth'
         }
     })
   }
@@ -129,12 +125,16 @@ const Signin = () => {
                         </div>
                         <div className="mb-3 d-flex justify-content-around">
                         <div class="form-check form-check-inline">
+                            
+                            <label class="form-check-label" for="inlineRadio1">Vous etes ?</label>
+                        </div>
+                        <div class="form-check form-check-inline">
                             <input class="form-check-input" 
                                     type="radio" 
                                     name="inlineRadioOptions" 
                                     id="inlineRadio1" 
                                     value="prof"
-                                    checked={selectedOption === 'prof'}
+                                    // checked={role === 'prof'}
                                     onChange={handleOptionChange}
                                 />
                             <label class="form-check-label" for="inlineRadio1">Professeur</label>
@@ -145,7 +145,7 @@ const Signin = () => {
                                     name="inlineRadioOptions" 
                                     id="inlineRadio2" 
                                     value="etudiant"
-                                    checked={selectedOption === 'etudiant'}
+                                    // checked={role === 'etudiant'}
                                     onChange={handleOptionChange}/>
                             <label class="form-check-label" for="inlineRadio2">Etudiant</label>
                         </div>
