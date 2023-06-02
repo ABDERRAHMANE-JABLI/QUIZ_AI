@@ -1,13 +1,10 @@
 const express = require("express");
-const {registre, LoginUser, registerStudent, verifyUserAccountCtrl} = require("../controllers/auth");
+const {registre, LoginUser, verifyUserAccountCtrl} = require("../controllers/auth");
 
 
 const router = express.Router();
-// /api/auth/register_prof : register professor
+// /api/auth/register 
 router.post('/registre',registre);
-
-// /api/auth/register_student : 
-router.post('/register_student',registerStudent);
 
 // /api/auth/login
 router.post('/login',LoginUser);

@@ -23,12 +23,12 @@ const VerifyEmail = () => {
       <div className="centered">
         <img src={gif} alt="verify email" width="300px" height="300px"/>
           {
-            isEmailverified ? <><p className="title-success mt-3">Email verified</p>
+            isEmailverified ? <><p className="title-success text-center mt-3">Email verified</p>
                         <Link to="/auth">Se connecter</Link></>
                         :
                         <>
-                        <p className="title-error">Email Not verified</p>
-                        <Link to="/auth">S'inscrire</Link></>
+                        <p className="title-error text-center">Email Not verified</p>
+                        <Link to="/auth" className='d-block text-center'>S'inscrire</Link></>
           }
       </div>
     </div>

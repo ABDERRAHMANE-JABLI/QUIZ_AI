@@ -42,7 +42,7 @@ const serviceSection = () => {
           <div className="service-item third-service">
             <div className="icon"></div>
             <h4>Obtenir des données</h4>
-            <p>Voir les performances globales de la classNamee, la question ou le sujet le plus difficile et les progrès individuels </p>
+            <p>Voir les performances globales de la class, la question ou le sujet le plus difficile et les progrès individuels </p>
             <div className="text-button">
               <a href="#">Voir plus <i className="fa fa-arrow-right"></i></a>
             </div>
