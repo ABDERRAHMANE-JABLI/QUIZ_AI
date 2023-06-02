@@ -7,8 +7,13 @@ import { useParams } from "react-router-dom";
 import Radio from "../PasserExamen/answers/radio";
 import Checkbox from "../PasserExamen/answers/checkbox";
 import TextArea from "../PasserExamen/answers/textArea";
+import { useSelector } from "react-redux";
+import { ToastContainer,toast} from 'react-toastify';
+
+
 
 const PasserExamenPage = (props) => {
+  const {user} = useSelector(state=>state.auth);
   const { ExamId } = useParams();
   const endPoint = `http://localhost:8000/api/examens/${ExamId}`;
   const [examData, setExamData] = useState(null);
@@ -132,7 +137,7 @@ const PasserExamenPage = (props) => {
     return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const userAnswers = shuffledQuestions.map((question) => {
@@ -169,12 +174,42 @@ const PasserExamenPage = (props) => {
       };
     });
 
-    console.log(JSON.stringify(userAnswers));
+    // console.log(JSON.stringify({exam:ExamId,student:user._id,userAnswers}));
+    try {
+      const response = await fetch('http://localhost:8000/api/submitExam', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ exam: ExamId, student: user._id, userAnswers }),
+      });
+  
+      if (response.ok) {
+        toast.success('Your Answers submitted successfully!');
+      } else {
+        toast.error('Failed to submit exam. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting exam:', error);
+      toast.error('An error occurred while submitting the exam. Please try again.');
+    }
     // Perform any necessary logic with the user's answers
   };
 
   return (
     <>
+    <ToastContainer
+                      position="top-center"
+                      autoClose={2500}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                      theme="colored"
+                      />
       <div className="container d-flex justify-content-center p-3">
         <img src={logo} className="logo_quiz" alt="quiz ai" width="100px" height="70px" />
       </div>

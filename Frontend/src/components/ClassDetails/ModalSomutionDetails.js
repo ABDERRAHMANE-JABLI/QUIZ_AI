@@ -54,9 +54,6 @@ const ResultOffQuizModal = (props) => {
         <Modal.Title>Quiz Result</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="container d-flex justify-content-center p-3">
-          <img src={logo} className="logo_quiz" alt="quiz ai" width="100px" height="70px" />
-        </div>
         <div className="container mt-5">
           <p className="d-flex justify-content-center">Total Note: {calculateTotalNote()}</p>
           <div className="d-flex justify-content-between">
