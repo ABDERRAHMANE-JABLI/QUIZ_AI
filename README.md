@@ -46,5 +46,3 @@ Make sure you have Node.js and npm installed on your machine before running thes
 - You can access the backend server at `http://localhost:8000`.
 - You can access the frontend application at `http://localhost:3000`.
 
-Feel free to modify the formatting or add any additional information as needed.
-Please replace the existing content in your README.md file with this code.
