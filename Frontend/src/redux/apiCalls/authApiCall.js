@@ -1,6 +1,7 @@
 // send request to the server
 import { authActions } from "../slices/authSlice";
 import {toast} from 'react-toastify'
+import swal from 'sweetalert'
 import axios from "axios"
 
 //login user : 
@@ -35,19 +36,23 @@ export function logoutUser(){
 
 // registre professor : ********************************************************************************
 export function Registre(user){
-   console.log(user);
-    return async(dispatch) =>{
+   //console.log(user);
+    return async() =>{
         try {
            const{data}  = await axios.post("http://localhost:8000/api/auth/registre",{"firstname":user.firstname,"lastname":user.lastname,"email":user.email,"tel":user.tel,"password":user.password,"role":user.role});
-            dispatch(authActions.registreUser(data.message));
+            //dispatch(authActions.registreUser(data.message));
+            swal({
+                title:data.message,
+                icon:"success"
+            });
         } catch (error) {
-            toast.error(error.response.data.error);
+            toast.error(error.response.data.message);
         }
     }
 }
 
 // registre Student : ********************************************************************************
-export function RegistreStudent(user){
+/*export function RegistreStudent(user){
     //  alert();
     return async(dispatch) =>{
         try {
@@ -57,7 +62,7 @@ export function RegistreStudent(user){
             toast.error(error.response.data.error);
         }
     }
-}
+}*/
 
 export function verify_Email(userId, token){
     return async(dispatch) =>{

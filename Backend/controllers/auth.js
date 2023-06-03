@@ -37,7 +37,7 @@ module.exports.registre = asyncHandler(async (req, res) => {
         email : req.body.email,
         tel : req.body.tel,
         password : hashedpass,
-        role:req.body.role
+        role: req.body.role
     });
     await new_user.save();
     //la verification de l'email :

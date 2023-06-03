@@ -2,9 +2,8 @@ import {Button} from "./components"
 import {FaGofore, FaSignInAlt} from 'react-icons/fa'
 import { useState } from "react"
 import {Link} from 'react-router-dom'
-import { useDispatch, useSelector} from "react-redux"
+import { useDispatch} from "react-redux"
 import { Registre } from "../../redux/apiCalls/authApiCall"
-import swal from 'sweetalert';
 import {toast} from 'react-toastify'
 
 const Signin = () => {
@@ -23,7 +22,6 @@ const Signin = () => {
   };
 
   const dispatch = useDispatch();
-  const {registreMsg} = useSelector(state => state.auth);
   const formRegister = (e) => {
     e.preventDefault();
     if (firstname.trim() === "") return toast.error("Le Nom est Obligatoire");
@@ -37,8 +35,6 @@ const Signin = () => {
         return;
       }
       dispatch(Registre({firstname,lastname,email,tel, password,role}));
-
-   
   };
 
   if(registreMsg){
@@ -47,7 +43,7 @@ const Signin = () => {
         icon:"success"
     }).then(isOk => {
         if(isOk){
-            // window.location.href = '/Auth'
+            window.location.href = '/Auth'
         }
     })
   }
