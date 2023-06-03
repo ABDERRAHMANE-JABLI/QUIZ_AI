@@ -37,16 +37,6 @@ const Signin = () => {
       dispatch(Registre({firstname,lastname,email,tel, password,role}));
   };
 
-  if(registreMsg){
-    swal({
-        title:registreMsg,
-        icon:"success"
-    }).then(isOk => {
-        if(isOk){
-            window.location.href = '/Auth'
-        }
-    })
-  }
 
   return (
     <div id="Signin" className="tab-pane fade show" role="tabpanel" aria-labelledby="Signin-tab">
