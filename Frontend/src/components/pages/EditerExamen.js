@@ -154,12 +154,13 @@ const handleCorrectChange = (event) => {
           // Handle successful response
           // e.g., show a success message, update the state, etc.
           fetchData();
-          toast.success("Answer modified with success");
+          showToast("Answer updated with success");
           setShow(false);
         } else {
           // Handle error response
           // e.g., show an error message, handle validation errors, etc.
-          toast.success("Error");
+          showToast("Failed to update Answer ");
+          
         }
       })
       .catch(error => {
@@ -186,11 +187,13 @@ const handleCorrectChange = (event) => {
         if (response.ok) {
           // Handle successful response
           // e.g., show a success message, update the state, etc.
-          toast.success("Answer created with success");
+          showToast("Answer created with success ");
+
           fetchData();
         } else {
           // Handle error 
-          toast.error(response.data.error);
+  
+          showToast(response.data.error);
           
           // e.g., show an error message, handle validation errors, etc.
         }
@@ -210,7 +213,7 @@ const handleCorrectChange = (event) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     if (!questionType) {
-      toast.error("Please select Question Type");
+      showToast("Please select Question Type");
       return;
     }
     // Retrieve form input values
@@ -233,7 +236,7 @@ const handleCorrectChange = (event) => {
     })
       .then((response) => {
         if (response.ok) {
-          toast.success("Question added successfully");
+          showToast("Question added successfully");
           return response.json(); // Parse the response as JSON
         } else {
           throw new Error('Failed to add question'); // Throw an error if the response is not successful
@@ -242,7 +245,7 @@ const handleCorrectChange = (event) => {
       .then((responseData) => {
         const questionId = responseData._id;
         fetchData();
-        console.log(questionId);
+  
   
         if (questionType === "InputText") {
           // Add additional logic for question type "InputText"
@@ -275,7 +278,7 @@ const handleCorrectChange = (event) => {
       .catch((error) => {
         // Handle network error or other exceptions
         console.error(error);
-        toast.error('Failed to add question');
+        showToast('Failed to add question');
       });
   };
   
@@ -293,7 +296,7 @@ const handleCorrectChange = (event) => {
         if (response.ok) {
           // Question deleted successfully
           // Perform any additional actions or update UI as needed
-          toast.success('Question deleted successfully');
+          showToast('Question deleted successfully');
           fetchData();
         } else {
           // Handle error response
@@ -325,7 +328,7 @@ const handleCorrectChange = (event) => {
       .then((response) => {
         if (response.ok) {
           // Handle success, e.g., display a success message
-          toast.success("Question Updated successfully");
+          showToast("Question Updated successfully");
           fetchData();
         } else {
           // Handle error response
@@ -429,39 +432,6 @@ const handleCorrectChange = (event) => {
             </div>
           </div>
         </div>
-          {/* <div className="dropdown circle-button">
-                <button
-                  className="btn btn-primary mb-3 addQuestion "
-                  type="button"
-                  id="dropdownMenuButton1"
-                  data-bs-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  +
-                </button>
-                <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Another action
-                    </a>
-                  </li>
-                  <li>
-                    <a className="dropdown-item" href="#">
-                      Something else here
-                    </a>
-                  </li>
-                </ul>
-              </div> */}
-        {/* <div className="circle-button">
-          <button className="btn btn-primary mb-3 addQuestion">+</button>
-
-        </div> */}
-
         {/* editer answer modal */}
         <Modal show={show} onHide={handleClose} backdrop="static" keyboard={false} centered>
           <Modal.Header closeButton>

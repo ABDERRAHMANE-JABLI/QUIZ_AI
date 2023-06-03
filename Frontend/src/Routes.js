@@ -15,6 +15,9 @@ export {default as ResetPassword} from './components/pages/resetPassword'
 export {default as StudentDashboard} from './components/pages/studentDashboard'
 export {default as ResultOffQuiz} from './components/pages/ResultOffQuiz'
 export {default as ResultOffQuizTable} from './components/pages/ResultOffQuizTable'
+export {default as MainPage} from './components/StudentPages/MainPage'
+
+
 
 
 

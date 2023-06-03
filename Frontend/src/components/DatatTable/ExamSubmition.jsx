@@ -3,6 +3,7 @@ import DataTable from 'react-data-table-component';
 import { FaTrash,FaEye } from 'react-icons/fa';
 import swal from 'sweetalert';
 import ResultOffQuizModal from '../ClassDetails/ModalSomutionDetails';
+import Loader from '../pages/Loader';
 
 const ExamSubmition = (props) => {
   const [selectedExamId, setSelectedExamId] = useState(null);

@@ -25,7 +25,7 @@ const ResultOffQuizTable = () => {
       };
   
       // Fetch data every 3 seconds
-      const interval = setInterval(fetchData, 0);
+      const interval = setInterval(fetchData, 500);
   
       // Clean up the interval when the component unmounts
       return () => clearInterval(interval);

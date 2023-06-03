@@ -29,20 +29,6 @@ const Etudiants = () => {
         const {studentsClasse} = useSelector(state => state.classe);
         const [data, setData] = useState(studentsClasse);
         
-        
-
-    /*const studentdata = [
-      etudiant :  {id:"1", FirstName:"John", LastName:"Doe", Email:"johndoe@example.com", Tel:"12345895", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"2", FirstName:"Jane", LastName:"Doe", Email:"janedoe@example.com", Tel:"678907412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"3", FirstName:"Bob", LastName:"Smith", Email:"bobsmith@example.com", Tel:"543274121", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"4", FirstName:"Alice", LastName:"Jones", Email:"alicejones@example.com", Tel:"098767412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"5", FirstName:"Alice", LastName:"Jones", Email:"alicejones@example.com", Tel:"098767412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"6", FirstName:"Alice", LastName:"Jones", Email:"alicejones@example.com", Tel:"098767412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"7", FirstName:"Alice", LastName:"Jones", Email:"alicejones@example.com", Tel:"098767412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"8", FirstName:"Alice", LastName:"Jones", Email:"alicejones@example.com", Tel:"098767412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-        {id:"9", FirstName:"Karami", LastName:"jihen", Email:"alicejones@example.com", Tel:"098767412", photo:"https://cdn.pixabay.com/photo/2017/02/25/22/04/user-icon-2098873_1280.png"},
-      ];
-      */
 
       function handleFilter(e){
         const newdata = studentsClasse.filter(row => {return (row.firstname+' '+row.lastname).toLowerCase().includes(e.target.value.toLowerCase())});

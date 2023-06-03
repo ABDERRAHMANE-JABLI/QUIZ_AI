@@ -47,7 +47,7 @@ const Signin = () => {
         icon:"success"
     }).then(isOk => {
         if(isOk){
-            window.location.href = '/Auth'
+            // window.location.href = '/Auth'
         }
     })
   }

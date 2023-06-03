@@ -1,5 +1,5 @@
 import React from 'react'
-import logo from '../../image/logo_quiz2.png';
+import logo from '../../../image/logo_quiz2.png';  
 import { Link } from 'react-router-dom';
 import { FaSignInAlt } from 'react-icons/fa';
 const Header = () => {
@@ -15,14 +15,10 @@ const Header = () => {
 
             <ul className="nav">
             
-              <li className="scroll-to-section active"><a href={'#top'} >Acceuil</a></li>
-              <li className="scroll-to-section"><a href="#services">Services</a></li>
-              <li className="scroll-to-section"><a href="#about">À propos</a></li>
-              <li className="scroll-to-section"><a href="#pricing">Tarification</a></li>
-              <li className="gradient-button">
-                  <Link to={'/Auth'}><FaSignInAlt /> Utilisez QUIZ-AI</Link>
-              </li>
-             
+              <li className="scroll-to-section active"><a  >Acceuil</a></li>
+              <li className="scroll-to-section"><a >Services</a></li>
+              <li className="scroll-to-section"><a >À propos</a></li>
+              <li className="scroll-to-section"><a >Tarification</a></li>
             </ul>  
             <a className='menu-trigger'>
                 <span>Menu</span>
