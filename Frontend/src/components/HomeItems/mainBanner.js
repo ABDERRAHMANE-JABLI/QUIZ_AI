@@ -1,5 +1,7 @@
 import React from 'react'
 import imgBanner from '../../image/1679098103287.png'
+import {FaSignInAlt} from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 const mainBanner = () => {
   return (
     <div className="main-banner wow fadeIn" id="top" data-wow-duration="1s" data-wow-delay="0.5s">
@@ -17,7 +19,11 @@ const mainBanner = () => {
                   </div>
                   <div className="col-lg-12">
                     <div className="white-button first-button scroll-to-section">
-                      <a href="#contact">Rejoignez-nous </a>
+                    <ul>
+                      <li className="gradient-button">
+                            <Link to={'/Auth'}><FaSignInAlt /> Essayer QUIZ-AI</Link>
+                      </li>
+                    </ul>
                     </div>
                   </div>
                 </div>

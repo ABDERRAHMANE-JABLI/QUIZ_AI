@@ -6,7 +6,6 @@ const ClassroomSchema = new mongoose.Schema({
         type: String,
         trim : true,
         maxlength: 50,
-        unique: true,
         required : true
     },
     description:{

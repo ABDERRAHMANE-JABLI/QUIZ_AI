@@ -144,11 +144,15 @@ const fs = require('fs');
  ---------------------------------------------------*/
 
  module.exports.getStudentsOfClasse = asyncHandler(async (req, res) =>{//,["_id","firstname","lastname","email","tel","photo.url"]
+  try{
    const Students = await Inscriptions.find({"classe":req.params.id}).populate("etudiant",["_id","firstname","lastname","email","tel","photo.url"]).select("etudiant -_id").sort({createdAt : -1});
    const transformedResults = Students.map((item) => {
       const { _id, firstname, lastname, email, tel, photo } = item.etudiant;
       return { _id, firstname, lastname, email, tel, photo };
     });
    res.status(200).json(transformedResults);
+  }catch(error){
+   res.status(500).json({error});
+  }
 });
 

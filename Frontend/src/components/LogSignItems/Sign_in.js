@@ -141,9 +141,11 @@ const Signin = () => {
                                 <Button id="btn_inscrire" text="S'inscrire">
                                     <FaSignInAlt />
                                 </Button>
-                                <Button id="Signin_google" text="Continuer Avec Google">
-                                    <FaGofore />
-                                </Button>
+                                <div className="col-sm-12 col-md-6 mt-2">
+                                    <button className={`btn d-block btn-user w-100  btn-outline-danger`} onClick={()=>toast.info("cette fonctionalite n'est pas disponible pour le moments")} type="button" >
+                                         <FaGofore />&nbsp;Continuer Avec Google
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <hr/>

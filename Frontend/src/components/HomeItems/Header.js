@@ -19,10 +19,7 @@ const Header = () => {
               <li className="scroll-to-section"><a href="#services">Services</a></li>
               <li className="scroll-to-section"><a href="#about">À propos</a></li>
               <li className="scroll-to-section"><a href="#pricing">Tarification</a></li>
-              <li className="gradient-button">
-                  <Link to={'/Auth'}><FaSignInAlt /> Utilisez QUIZ-AI</Link>
-              </li>
-             
+              
             </ul>  
             <a className='menu-trigger'>
                 <span>Menu</span>

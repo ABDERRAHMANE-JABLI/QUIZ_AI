@@ -377,7 +377,7 @@ const handleCorrectChange = (event) => {
     <div id="wrapper">
   <Sidebar />
   <div className="d-flex flex-column" id="content-wrapper">
-    <div id="content">
+    <div > 
       <Header />
       <Container>
          

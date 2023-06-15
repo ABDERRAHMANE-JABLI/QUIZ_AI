@@ -64,8 +64,22 @@ const handleFormSubmit = async (event) => {
     toast.update(loadingToastId, { render: 'Quiz genreted successfully!', type: toast.TYPE.SUCCESS, autoClose: true });
 
     const data = response.data;
-    const JsonData = JSON.parse(`${data}`);
-    // console.log(jsonData);
+    let JsonData;
+    try {
+      JsonData = JSON.parse(data);
+    } catch (error) {
+      // Show error toast for JSON parsing error
+      toast.update(loadingToastId, { render: 'Error parsing JSON data!', type: toast.TYPE.ERROR, autoClose: true });
+      return;
+    }
+    setTimeout(() => {
+      // Perform the navigation here
+      // For example:
+      toast.dismiss(loadingToastId);
+      $('#closeBtn').click();
+    }, 3000);
+   
+   
 
     toast.update(loadingToastId, { render: 'wait will storing the data ', type: toast.TYPE.SUCCESS, autoClose: false });
     const examen = await axios.post('http://localhost:8000/api/examens', {
@@ -113,15 +127,6 @@ const handleFormSubmit = async (event) => {
     navigate(`/Classes/${idClasse}/Examens/Editer/${examen.data._id}`);
   }, 3000);
   
-  //  console.log(examen.data);
-     
-    
-
-    // Display a success toast
-
-    // close modal by jquery here
-    
-    // Clear the form fields
   } catch (error) {
     // Display an error toast
     toast.update(loadingToastId, { render: error, type: toast.TYPE.ERROR ,autoClose: true});

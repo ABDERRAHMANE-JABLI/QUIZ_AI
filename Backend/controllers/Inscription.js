@@ -31,13 +31,25 @@ const {Inscriptions} = require('../models/Inscription');
  ---------------------------------------------------*/
 
  module.exports.unsubscribe_Student = asyncHandler(async (req, res) =>{
-   await Inscriptions.findOneAndDelete({etudiant:req.params.etudiant, classe : req.params.id});
-   res.status(200).json({id:req.params.etudiant, message: "Etudiant retiré avec succès"});
-   /* if(!result){
-        return res.status(404).json({message: "Inscription not found"});
-   }
-    else{
-        await Inscriptions.findByIdAndDelete(result._id);
-         res.status(200).json({id:req.body.etudiant, message: "opération effectué avec succès"});
-    }*/
+  
+   try {
+       await Inscriptions.findOneAndDelete({etudiant:req.params.etudiant, classe : req.params.id});
+        res.status(200).json({id:req.params.etudiant, message: "Etudiant retiré avec succès"});
+      res.status(200).json(inscriptions);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  
  });
+
+ module.exports.getClasses = asyncHandler(async (req, res) => {
+    try {
+      const studentId = req.params.etudiant;
+      const inscriptions = await Inscriptions.find({ etudiant: studentId }).populate('classe');
+      res.status(200).json(inscriptions);
+    } catch (error) {
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+  
+ 

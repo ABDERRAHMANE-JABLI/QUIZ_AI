@@ -3,6 +3,7 @@ import { authActions } from "../slices/authSlice";
 import {toast} from 'react-toastify'
 import swal from 'sweetalert'
 import axios from "axios"
+import 'react-toastify/dist/ReactToastify.css';
 
 //login user : 
 export function loginUser(user){
@@ -35,21 +36,36 @@ export function logoutUser(){
 }
 
 // registre professor : ********************************************************************************
-export function Registre(user){
-   //console.log(user);
-    return async() =>{
-        try {
-           const{data}  = await axios.post("http://localhost:8000/api/auth/registre",{"firstname":user.firstname,"lastname":user.lastname,"email":user.email,"tel":user.tel,"password":user.password,"role":user.role});
-            //dispatch(authActions.registreUser(data.message));
-            swal({
-                title:data.message,
-                icon:"success"
-            });
-        } catch (error) {
-            toast.error(error.response.data.message);
+
+
+export function Registre(user) {
+  return async () => {
+    try {
+      // Afficher un indicateur de chargement
+      toast.promise(
+        axios.post("http://localhost:8000/api/auth/registre", {
+          "firstname": user.firstname,
+          "lastname": user.lastname,
+          "email": user.email,
+          "tel": user.tel,
+          "password": user.password,
+          "role": user.role
+        }),
+        {
+          pending: 'En cour ...',
+          success: (response) => response.data.message,
+          error: (error) => {
+            throw new Error(error.response.data.message);
+          }
         }
+      );
+    } catch (error) {
+      // Afficher un message d'erreur
+      toast.error(error.message);
     }
+  };
 }
+
 
 // registre Student : ********************************************************************************
 /*export function RegistreStudent(user){
