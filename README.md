@@ -1,4 +1,4 @@
-# Exams_AI
+# Quiz_AI
 
 PFE LP TMW:
 
