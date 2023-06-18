@@ -2,7 +2,7 @@
 
 Quiz-AI is a web application for generating quizzes built on ChatGPT Open AI’s API. It is a platform designed specifically for teachers to easily evaluate their students. The main objective of this application is to provide a user-friendly tool that allows teachers to interact with the system to generate quiz questions and obtain detailed information on individual student progress, in order to adapt their teaching to individual student needs and promote more personalized and targeted education.
 
-# Developed by :
+## Developed by :
 
 - JABLI Abderrahmane: [abderrahmane_jabli@um5.ac.ma](mailto:abderrahmane_jabli@um5.ac.ma)
 - DERDOURI Ayoub: [ayoub_derdouri@um5.ac.ma](mailto:ayoub_derdouri@um5.ac.ma)
