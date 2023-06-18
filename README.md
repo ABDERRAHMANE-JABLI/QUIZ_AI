@@ -33,15 +33,16 @@ To set up the frontend:
 1. Open a new terminal and navigate to the `frontend` folder:
 cd frontend
 
-
 2. Install the required dependencies:
 npm install
 
 3. Start the frontend development server:
 npm run start
 
+### Requirements 
 
 Make sure you have Node.js and npm installed on your machine before running these commands.
+Node.js version 19.8.1
 
 ## Additional Notes
 
