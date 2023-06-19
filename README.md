@@ -26,6 +26,8 @@ npm install
 4. Start the backend server:
 npm run serve
 
+- You can access the backend server at `http://localhost:8000`.
+  
 ### Frontend
 
 To set up the frontend:
@@ -39,6 +41,8 @@ npm install
 3. Start the frontend development server:
 npm run start
 
+- You can access the frontend application at `http://localhost:3000`.
+
 ### Requirements 
 
 Make sure you have Node.js and npm installed on your machine before running these commands.
@@ -46,6 +50,7 @@ Node.js version 19.8.1
 
 ## Additional Notes
 
-- You can access the backend server at `http://localhost:8000`.
-- You can access the frontend application at `http://localhost:3000`.
+- How to Get Your OPEN API KEY : [https://youtu.be/nafDyRsVnXU]
+- Super Secret Key for signing JWT : [https://youtu.be/3v5UU7F0tMg]
 
+  
